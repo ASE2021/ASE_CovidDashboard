@@ -1,11 +1,16 @@
 sudo: required
 language: bash
-   services:
-        - docker
-      env:
-  	- DOCKER_COMPOSE_VERSION=1.4.2
+services:
+  - docker
 
-      script:
-  	- docker-compose build
+before_install:
+- docker build --no-cache -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} frontend
+- docker run -d -p 127.0.0.1:80:80 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
+
+script:
+  - curl 127.0.0.1:80
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker tag ${TRAVIS_REPO_SLUG} manuel57/covid-19-dashboard-frontend
+  - docker push manuel57/covid-19-dashboard-frontend:${TRAVIS_COMMIT}
 notifications:
     email: false
