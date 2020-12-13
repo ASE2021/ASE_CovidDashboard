@@ -1,0 +1,18 @@
+sudo: required
+language: bash
+services:
+  - docker
+
+before_install:
+- docker build --no-cache -t covid-19-dashboard-frontend:latest frontend
+- docker run -d -p 127.0.0.1:80:80 covid-19-dashboard-frontend:latest
+
+script:
+  - curl 127.0.0.1:80
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend
+  - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend:${TRAVIS_COMMIT}
+  - docker push manuel57/covid-19-dashboard-frontend
+  - docker push manuel57/covid-19-dashboard-frontend:${TRAVIS_COMMIT}
+notifications:
+    email: false

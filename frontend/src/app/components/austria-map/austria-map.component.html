@@ -1,0 +1,14 @@
+<div style="height: 600px;"
+     leaflet
+     [leafletOptions]="options"
+     [leafletLayers]="layers">
+</div>
+<div>
+  <div class="p-field">
+    <label>Number of Covid cases:</label>
+
+    <p-inputNumber [(ngModel)]="cases" (onInput)="updateCovid($event)" [step]="100"
+                   (ngModelChange)="updateCovid($event)" [showButtons]="true" inputId="minmax-buttons" [min]="0">
+    </p-inputNumber>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="p-grid p-nested-grid">
+  <div class="p-col-12">
+    <h1>COVID-19 Dashboard</h1>
+  </div>
+  <div class="p-col-12">
+    <div class="p-grid">
+      <div class="p-col-4">
+        <p-card header="Active cases in austria">
+          {{activeCases}}
+        </p-card>
+      </div>
+      <div class="p-col-4">
+        <p-card header="Total number of cases">
+          {{numberOfCases}}
+        </p-card>
+      </div>
+      <div class="p-col-4">
+        <p-card header="Deaths">
+          {{deaths}}
+        </p-card>
+      </div>
+    </div>
+  </div>
+  <div class="p-col-12">
+    <div class="p-grid">
+      <div class="p-col-6">
+        <p-chart type="bar" [data]="positiveCasesPerDateData"></p-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
