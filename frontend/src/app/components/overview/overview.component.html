@@ -1,32 +1,99 @@
+<html>
+<body>
 <div class="p-grid p-nested-grid">
   <div class="p-col-12">
-    <h1>COVID-19 Dashboard</h1>
+    <h1 class="display-1">COVID-19 Dashboard</h1>
+    <p-panel header="Project Explanation">
+      <p>This Website was developed as part of our Advanced Software Engineering Project and should give you a
+        nice overview of the current pandemic situation.</p>
+      <p>You can choose between the general view of the COVID cases displayed in several charts and tables
+        or the more region specific Austrian Map views which you can find in the above Tab.</p>
+      <p>Hope you like this page and learn some new interesting facts.</p>
+      <p> Stay happy and healthy!</p>
+      <p> Corinna, Emir, Michael, Manuel, Selene and Chiara :)</p>
+    </p-panel>
   </div>
   <div class="p-col-12">
-    <div class="p-grid">
-      <div class="p-col-4">
-        <p-card header="Active cases in austria">
-          {{activeCases}}
-        </p-card>
+    <div class="overview p-shadow-11">
+      <h2 class="display-2">Overview</h2>
+      <div class="p-grid">
+        <div class="p-col-4">
+          <p-card header="Active cases in Austria" style="background: #85e085">
+            {{activeCases}}
+          </p-card>
+        </div>
+        <div class="p-col-4">
+          <p-card header="Total number of Cases">
+            {{numberOfCases}}
+          </p-card>
+        </div>
+        <div class="p-col-4">
+          <p-card header="Deaths">
+            {{deaths}}
+          </p-card>
+        </div>
       </div>
-      <div class="p-col-4">
-        <p-card header="Total number of cases">
-          {{numberOfCases}}
-        </p-card>
+
+      <div class="p-col-12">
+        <div class="p-grid">
+          <div class="p-col-8 p-offset-2">
+            <p-chart type="bar" [data]="positiveCasesPerDateData"></p-chart>
+          </div>
+        </div>
       </div>
-      <div class="p-col-4">
-        <p-card header="Deaths">
-          {{deaths}}
-        </p-card>
-      </div>
+
     </div>
   </div>
+
+  <!-- TODO: change data of the line and pie charts -->
   <div class="p-col-12">
-    <div class="p-grid">
-      <div class="p-col-6">
-        <p-chart type="bar" [data]="positiveCasesPerDateData"></p-chart>
-      </div>
-    </div>
+    <p-tabView>
+      <p-tabPanel header="Gender Pie Chart">
+        <div class="p-col-12">
+          <div class="p-grid">
+            <div class="p-col-6 p-offset-3">
+              Show Pie chart here
+              <p-chart type="bar" [data]="positiveCasesPerDateData"></p-chart>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Hospital Situation">
+        <div class="p-col-12">
+          <div class="p-grid">
+            <div class="p-col-6 p-offset-3">
+              show line chart here
+              <p-chart type="bar" [data]="positiveCasesPerDateData"></p-chart>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Another Chart">
+        Space for another content
+      </p-tabPanel>
+      <p-tabPanel header="Table Overview">
+        <!-- TODO: fill table with data -->
+        <p-table>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Province</th>
+              <th>Active Cases</th>
+              <th>Deaths</th>
+              <th>Hospitalizations</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-case>
+            <tr>
+              <td>Test1</td>
+              <td>Test2</td>
+              <td>Test3</td>
+              <td>Test4</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-tabPanel>
+    </p-tabView>
   </div>
 </div>
-
+</body>
+</html>
