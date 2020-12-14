@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+    spring:
+        image: manuel57/ase
+        build: ase
+    frontend:
+        image: manuel57/frontend
+        build: frontend
+        ports:
+            - '80:80'
