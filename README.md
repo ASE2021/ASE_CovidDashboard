@@ -1,6 +1,6 @@
 # ASE_CovidDashboard
 
-[![Build Status](https://travis-ci.com/github/ASE-Project-Group/ASE_CovidDashboard)
+[![Build Status](https://travis-ci.com/ASE-Project-Group/ASE_CovidDashboard.svg?branch=master)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ASE-Project-Group_ASE_CovidDashboard&metric=alert_status)](https://sonarcloud.io/dashboard?id=ASE-Project-Group_ASE_CovidDashboard)
 
