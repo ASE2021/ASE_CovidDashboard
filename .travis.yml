@@ -18,5 +18,6 @@ notifications:
     email: false
 addons:
     sonarcloud:
-	organization: ase-project-group
-	token: $SONAR_TOKEN
+	organization: "ase-project-group"
+	token: 
+	    secure: $SONAR_TOKEN
