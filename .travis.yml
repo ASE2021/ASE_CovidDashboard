@@ -16,3 +16,7 @@ script:
   - docker push manuel57/covid-19-dashboard-frontend:${TRAVIS_COMMIT}
 notifications:
     email: false
+addons:
+    sonarcloud:
+	organization: ase-project-group
+	token: $SONAR_TOKEN
