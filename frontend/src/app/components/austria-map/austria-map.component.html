@@ -1,9 +1,18 @@
-<div style="height: 600px;"
-     leaflet
-     [leafletOptions]="options"
-     [leafletLayers]="layers">
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Austrian Map View</title>
+</head>
+<body>
 <div>
+  <div class="p-col-12">
+    <h2 class="display-2">Austrian Map View</h2>
+    <p-panel header="Map View Description">
+      <p>This is our Austrian Map View.</p>
+      <p>Below you can see the Austrian Map separated in regions. Depending on the amount of COVID cases,
+      the regions appear in the three different traffic light colours: Red, Orange and Green.</p>
+    </p-panel>
+  </div>
   <div class="p-field">
     <label>Number of Covid cases:</label>
 
@@ -12,3 +21,12 @@
     </p-inputNumber>
   </div>
 </div>
+<div class="austriaMap p-shadow-15"
+     leaflet
+     [leafletOptions]="options"
+     [leafletLayers]="layers">
+</div>
+
+</body>
+</html>
+

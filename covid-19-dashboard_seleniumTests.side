@@ -1,0 +1,365 @@
+{
+  "id": "76a3383b-4700-4c97-a601-317767d5b8c7",
+  "version": "2.0",
+  "name": "covid-19-dashboard",
+  "url": "http://localhost:4200/overview",
+  "tests": [{
+    "id": "96ce501e-c17a-439c-b25e-ec74d79fba75",
+    "name": "homepageBasicTest",
+    "commands": [{
+      "id": "67b9f667-5b05-443f-bad4-27f1451a9687",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:4200/overview",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a1be6536-e4f3-412c-819f-8d0583c932cb",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x660",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "59083b06-27c7-4ca6-9cc4-a77b610df19f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.display-1",
+      "targets": [
+        ["css=.display-1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'COVID-19 Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d4fb0915-648a-4eb6-8ab2-4acb6d5d92d9",
+      "comment": "",
+      "command": "verifyTitle",
+      "target": "covid-19-dashboard",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d67fd6b7-20ab-47ca-9848-f7a549461d8f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.p-panel-content",
+      "targets": [
+        ["css=.p-panel-content", "css:finder"],
+        ["xpath=//div[@id='p-panel-0-content']/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1b45ff2a-5355-4a50-833f-6ec772ec177b",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.p-panel-content > .ng-tns-c52-0:nth-child(1)",
+      "targets": [
+        ["css=.p-panel-content > .ng-tns-c52-0:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='p-panel-0-content']/div/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'This Website was developed as part of our Advanced Software Engineering Project and should give you a nice overview of the current pandemic situation.')]", "xpath:innerText"]
+      ],
+      "value": "This Website was developed as part of our Advanced Software Engineering Project and should give you a nice overview of the current pandemic situation."
+    }, {
+      "id": "05501bc8-ae9d-4a8f-b553-8f87dd432752",
+      "comment": "",
+      "command": "click",
+      "target": "css=.display-3",
+      "targets": [
+        ["css=.display-3", "css:finder"],
+        ["xpath=//h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'Overview')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3f0e73c4-38bb-41af-9679-02e144c502f8",
+      "comment": "",
+      "command": "verifyTitle",
+      "target": "covid-19-dashboard",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "906bb98c-ce1a-4a69-a2f4-180c055fec1d",
+      "comment": "",
+      "command": "click",
+      "target": "css=#p-tabpanel-0 .p-col-6",
+      "targets": [
+        ["css=#p-tabpanel-0 .p-col-6", "css:finder"],
+        ["xpath=//div[@id='p-tabpanel-0']/div/div/div", "xpath:idRelative"],
+        ["xpath=//p-tabpanel/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "55623306-1aa4-404b-bf16-d39a14d02f4d",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=#p-tabpanel-0 .p-col-6",
+      "targets": [
+        ["css=#p-tabpanel-0 .p-col-6", "css:finder"],
+        ["xpath=//div[@id='p-tabpanel-0']/div/div/div", "xpath:idRelative"],
+        ["xpath=//p-tabpanel/div/div/div/div", "xpath:position"]
+      ],
+      "value": "Show Pie chart here"
+    }, {
+      "id": "a4362b4f-1acd-41c5-a258-0a0c95d9ee92",
+      "comment": "",
+      "command": "click",
+      "target": "css=#p-tabpanel-1-label > .p-tabview-title",
+      "targets": [
+        ["css=#p-tabpanel-1-label > .p-tabview-title", "css:finder"],
+        ["xpath=//a[@id='p-tabpanel-1-label']/span", "xpath:idRelative"],
+        ["xpath=//p-tabview/div/ul/li[2]/a/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Hospital Situation')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "81e8c8b0-da44-425a-931f-e8564ee9a381",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo(0,619.3333129882812)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d18a4d20-b11e-45fd-b9dd-d3d8a1eaf3e9",
+      "comment": "",
+      "command": "click",
+      "target": "css=#p-tabpanel-1 .p-col-6",
+      "targets": [
+        ["css=#p-tabpanel-1 .p-col-6", "css:finder"],
+        ["xpath=//div[@id='p-tabpanel-1']/div/div/div", "xpath:idRelative"],
+        ["xpath=//p-tabpanel[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "95df8a16-bf34-4f9e-a118-53095c7e27a7",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=#p-tabpanel-1 .p-col-6",
+      "targets": [
+        ["css=#p-tabpanel-1 .p-col-6", "css:finder"],
+        ["xpath=//div[@id='p-tabpanel-1']/div/div/div", "xpath:idRelative"],
+        ["xpath=//p-tabpanel[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": "show line chart here"
+    }, {
+      "id": "2e1a317d-c309-4c1b-8c54-aaff4676bcae",
+      "comment": "",
+      "command": "click",
+      "target": "css=#p-tabpanel-2-label > .p-tabview-title",
+      "targets": [
+        ["css=#p-tabpanel-2-label > .p-tabview-title", "css:finder"],
+        ["xpath=//a[@id='p-tabpanel-2-label']/span", "xpath:idRelative"],
+        ["xpath=//li[3]/a/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Another Chart')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3031d879-7540-453a-8402-3068373d82c8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.p-tabview-panels",
+      "targets": [
+        ["css=.p-tabview-panels", "css:finder"],
+        ["xpath=//p-tabview/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6ddcaf2a-046c-4158-b754-85180a113174",
+      "comment": "",
+      "command": "verifyText",
+      "target": "id=p-tabpanel-2",
+      "targets": [
+        ["id=p-tabpanel-2", "id"],
+        ["css=#p-tabpanel-2", "css:finder"],
+        ["xpath=//div[@id='p-tabpanel-2']", "xpath:attributes"],
+        ["xpath=//p-tabpanel[3]/div", "xpath:position"]
+      ],
+      "value": "Space for another content"
+    }, {
+      "id": "48c8159a-16eb-4643-a756-05b41cbd168d",
+      "comment": "",
+      "command": "click",
+      "target": "css=#p-tabpanel-3-label > .p-tabview-title",
+      "targets": [
+        ["css=#p-tabpanel-3-label > .p-tabview-title", "css:finder"],
+        ["xpath=//a[@id='p-tabpanel-3-label']/span", "xpath:idRelative"],
+        ["xpath=//li[4]/a/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Table Overview')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "273d5f1a-6091-4209-9d4d-8fb332407067",
+      "comment": "",
+      "command": "click",
+      "target": "css=.p-tabmenuitem:nth-child(2) .p-menuitem-text",
+      "targets": [
+        ["css=.p-tabmenuitem:nth-child(2) .p-menuitem-text", "css:finder"],
+        ["xpath=//li[2]/a/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Map view')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e9e5f728-3e52-4df5-a3c5-a57fc4933470",
+      "comment": "",
+      "command": "click",
+      "target": "css=.display-2",
+      "targets": [
+        ["css=.display-2", "css:finder"],
+        ["xpath=//h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'Austrian Map View')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c8c969e1-9e3d-4886-8ff5-059a4bd4abd8",
+      "comment": "",
+      "command": "verifyTitle",
+      "target": "covid-19-dashboard",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "26a27fa8-bd60-45e5-a975-05abf0287b63",
+      "comment": "",
+      "command": "click",
+      "target": "css=.p-panel-content",
+      "targets": [
+        ["css=.p-panel-content", "css:finder"],
+        ["xpath=//div[@id='p-panel-1-content']/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fcb8063a-6205-49d8-9f39-b75e61728235",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.p-panel-content > .ng-tns-c52-1:nth-child(1)",
+      "targets": [
+        ["css=.p-panel-content > .ng-tns-c52-1:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='p-panel-1-content']/div/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'This is our Austrian Map View.')]", "xpath:innerText"]
+      ],
+      "value": "This is our Austrian Map View."
+    }, {
+      "id": "bdd9cc81-ff5e-4a97-bea7-a9ac91f62e5e",
+      "comment": "",
+      "command": "click",
+      "target": "id=minmax-buttons",
+      "targets": [
+        ["id=minmax-buttons", "id"],
+        ["css=#minmax-buttons", "css:finder"],
+        ["xpath=//input[@id='minmax-buttons']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "674db4f2-f012-4ff9-b09c-1069dfae0607",
+      "comment": "",
+      "command": "verifyEditable",
+      "target": "id=minmax-buttons",
+      "targets": [
+        ["id=minmax-buttons", "id"],
+        ["css=#minmax-buttons", "css:finder"],
+        ["xpath=//input[@id='minmax-buttons']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "25c3575d-7775-4f3b-8c3e-c22093ad8642",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.p-inputnumber-button-up",
+      "targets": [
+        ["css=.p-inputnumber-button-up", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c2beb74a-92a1-4b59-bfaf-075ff689eb18",
+      "comment": "",
+      "command": "click",
+      "target": "css=.p-inputnumber-button-up",
+      "targets": [
+        ["css=.p-inputnumber-button-up", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "42c8a0b6-01b1-467a-9c50-06f7877fcc71",
+      "comment": "",
+      "command": "click",
+      "target": "css=.p-inputnumber-button-up",
+      "targets": [
+        ["css=.p-inputnumber-button-up", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d26ff917-976d-4009-8c1b-1f83ed5ab120",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.p-inputnumber-button-up",
+      "targets": [
+        ["css=.p-inputnumber-button-up", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0f04894a-9370-4062-9202-0f5bdfb2e899",
+      "comment": "",
+      "command": "click",
+      "target": "css=.p-field",
+      "targets": [
+        ["css=.p-field", "css:finder"],
+        ["xpath=//body/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fc12373e-f92c-4fa8-b59a-2f1d412b3c7f",
+      "comment": "",
+      "command": "verifyValue",
+      "target": "id=minmax-buttons",
+      "targets": [
+        ["id=minmax-buttons", "id"],
+        ["css=#minmax-buttons", "css:finder"],
+        ["xpath=//input[@id='minmax-buttons']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "200"
+    }, {
+      "id": "55b5a0e8-77c1-4fb9-9a69-34e0390ddffb",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//app-austria-map/html",
+      "targets": [
+        ["xpath=//app-austria-map/html", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "64c22922-505b-4210-9885-52b4529bb1b6",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=label",
+      "targets": [
+        ["css=label", "css:finder"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Number of Covid cases:')]", "xpath:innerText"]
+      ],
+      "value": "Number of Covid cases:"
+    }]
+  }],
+  "suites": [{
+    "id": "10e4db9a-a464-4a91-8800-9825e94c0476",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:4200/overview"],
+  "plugins": []
+}

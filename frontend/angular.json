@@ -35,7 +35,9 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeflex/primeflex.css"
             ],
-            "scripts": ["node_modules/chart.js/dist/Chart.js"]
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -130,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "covid-19-dashboar"
+  "defaultProject": "covid-19-dashboar",
+  "cli": {
+    "analytics": "2968d634-8cab-4bea-ba18-2751cf8fb7aa"
+  }
 }
