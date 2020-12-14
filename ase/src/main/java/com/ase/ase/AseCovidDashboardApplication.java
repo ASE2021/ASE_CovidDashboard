@@ -21,7 +21,7 @@ public class AseCovidDashboardApplication {
 	public CommandLineRunner demo(OverviewRepository repository) {
 		return (args) -> {
 			repository.save(new Overview(100, 10, 2, 0));
-			repository.findById(0l);
+			log.info(repository.findById(0l).toString());
 		};
 	}
 
