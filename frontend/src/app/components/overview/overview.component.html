@@ -1,4 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Homepage Overview</title>
+</head>
 <body>
 <div class="p-grid p-nested-grid">
   <div class="p-col-12">
@@ -76,10 +80,10 @@
         <p-table>
           <ng-template pTemplate="header">
             <tr>
-              <th>Province</th>
-              <th>Active Cases</th>
-              <th>Deaths</th>
-              <th>Hospitalizations</th>
+              <th id="province">Province</th>
+              <th id="activeCases">Active Cases</th>
+              <th id="deaths">Deaths</th>
+              <th id="bedUtilization">Hospitalizations</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-case>
