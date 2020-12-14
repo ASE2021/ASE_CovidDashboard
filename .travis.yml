@@ -17,7 +17,7 @@ script:
 notifications:
     email: false
 addons:
-    sonarcloud:
-	organization: "ase-project-group"
-	token: 
-	    secure: $SONAR_TOKEN
+  sonarcloud:
+    organization: "ase-project-group"
+    token: 
+      secure: $SONAR_TOKEN
