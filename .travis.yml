@@ -14,5 +14,14 @@ script:
   - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend:${TRAVIS_COMMIT}
   - docker push manuel57/covid-19-dashboard-frontend
   - docker push manuel57/covid-19-dashboard-frontend:${TRAVIS_COMMIT}
+
+addons:
+  sonarcloud:
+    organization: "ase-project-group"
+    token:
+      secure: $ASE_TOKEN
+
 notifications:
     email: false
+
+
