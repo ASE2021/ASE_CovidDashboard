@@ -12,6 +12,6 @@ public interface AustriaRepository extends JpaRepository<Austria, Long> {
     @Query("Select a.newCases, a.time from Austria a")
     List<Object[]> findAllNewCases();
 
-    @Query("Select a.sumCases-a.sumCured-a.sumCured, a.time from Austria a")
+    @Query("Select a.sumCases-a.sumCured-a.sumDead, a.time from Austria a")
     List<Object[]> findAllActiveCases();
 }
