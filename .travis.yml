@@ -5,6 +5,7 @@ services:
 
 before_install:
 - docker build --no-cache -t covid-19-dashboard-frontend:latest frontend
+- docker build --no-cache -t covid-19-dashboard-backend:latest ase
 - docker run -d -p 127.0.0.1:80:80 covid-19-dashboard-frontend:latest
 
 script:
@@ -14,6 +15,10 @@ script:
   - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend:${TRAVIS_COMMIT}
   - docker push manuel57/covid-19-dashboard-frontend
   - docker push manuel57/covid-19-dashboard-frontend:${TRAVIS_COMMIT}
+  - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend
+  - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend:${TRAVIS_COMMIT}
+  - docker push manuel57/covid-19-dashboard-backend
+  - docker push manuel57/covid-19-dashboard-backend:${TRAVIS_COMMIT}
 
 addons:
   sonarcloud:

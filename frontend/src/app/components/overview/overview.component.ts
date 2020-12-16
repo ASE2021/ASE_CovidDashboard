@@ -36,6 +36,6 @@ export class OverviewComponent implements OnInit {
     this.positiveCasesPerDateData = new ChartModelBuilder()
       .buildBarChartModel('Positive Covid-19 cases per date',
         data.map(item => item.date.split('T')[0]),
-        data.map(item => item.numberOfCases));
+        data.map(item => item.cases));
   }
 }
