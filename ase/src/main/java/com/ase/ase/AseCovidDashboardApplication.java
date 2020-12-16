@@ -1,7 +1,6 @@
 package com.ase.ase;
 
 import com.ase.ase.dao.*;
-import com.ase.ase.services.DownloadOverview;
 import com.ase.ase.services.DownloadPopulationData;
 import com.ase.ase.services.DownloadService;
 import org.slf4j.Logger;
@@ -26,8 +25,7 @@ public class AseCovidDashboardApplication {
 			OverviewRepository repository
 	) {
 		return (args) -> {
-			//repository.save(new Overview(3474856, 330343, 328677, 34537, 291042, 4764, 4418));
-			downloadPopulationData.downloadTimeline();
+			downloadPopulationData.downloadPopulation();
 			service.downloadAllCovidData();
 			log.info(repository.findById(1l).toString());
 		};

@@ -18,7 +18,7 @@ public class DownloadPopulationData {
     @Autowired
     PopulationRepository populationRepository;
 
-    public void downloadTimeline() {
+    public void downloadPopulation() {
         try {
             URL urlProvinces = new URL("https://covid19-dashboard.ages.at/data/CovidFaelle_Timeline.csv");
             HttpURLConnection conProvinces = (HttpURLConnection) urlProvinces.openConnection();

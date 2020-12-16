@@ -1,7 +1,6 @@
 package com.ase.ase.services;
 
 import com.ase.ase.dao.*;
-import com.ase.ase.entities.AgeDistribution;
 import com.ase.ase.entities.Timeline;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
