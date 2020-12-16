@@ -30,10 +30,6 @@ addons:
 script:
   - mvn clean verify sonar:sonar -Pcoverage 
 
-cache:
-  directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
 
 notifications:
     email: false
