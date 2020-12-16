@@ -24,7 +24,7 @@ addons:
   sonarcloud:
     organization: "ase-project-group"
     token: 
-      secure: $ASE_TOKEN
+      secure: travis encrypt TOKEN="f61e11d69b9ee6104b4c2aad9de4558b7650b1c2" --add
 
 script:
   # other script steps might be done before running the actual analysis
