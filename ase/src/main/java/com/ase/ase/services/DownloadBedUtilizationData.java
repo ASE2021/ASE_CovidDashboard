@@ -56,7 +56,7 @@ public class DownloadBedUtilizationData {
         }
     }
 
-    private List<BedUtilization> addBedUtilizations(BufferedReader in, List<BedUtilization> list) throws IOException {
+    public static List<BedUtilization> addBedUtilizations(BufferedReader in, List<BedUtilization> list) throws IOException {
         String head = in.readLine();
         String[] attributes = head.split(";");
 
@@ -84,7 +84,7 @@ public class DownloadBedUtilizationData {
         return list;
     }
 
-    private void updateBedUtilization(List<BedUtilization> list, Date time, float utilizationIB) {
+    private static void updateBedUtilization(List<BedUtilization> list, Date time, float utilizationIB) {
         for (BedUtilization bedUtilization : list) {
             if(bedUtilization.getTime().equals(time)) {
                 bedUtilization.setUtilizationIB(utilizationIB);
@@ -98,7 +98,7 @@ public class DownloadBedUtilizationData {
         list.add(bedUtilization);
     }
 
-    private List<BedUtilization> extractBedUtilizations(BufferedReader in) throws IOException {
+    public static List<BedUtilization> extractBedUtilizations(BufferedReader in) throws IOException {
         List<BedUtilization> bedUtilizationList = new ArrayList<>();
         String head = in.readLine();
         String[] attributes = head.split(";");
