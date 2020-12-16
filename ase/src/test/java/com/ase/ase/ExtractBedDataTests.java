@@ -36,7 +36,7 @@ public class ExtractBedDataTests {
     }
 
     private void assertBedUtilizationList(List<BedUtilization> expectedList, List<BedUtilization> actualList) {
-        assertEquals(expectedList.size(), actualList.size(), "BedUtilizationLists do not have the same size");
+        assertEquals(expectedList.size(), actualList.size(), "The actual List does not have the same number of elements than expected");
         for (BedUtilization element : expectedList) {
             assertTrue(containsElement(actualList, element));
         }

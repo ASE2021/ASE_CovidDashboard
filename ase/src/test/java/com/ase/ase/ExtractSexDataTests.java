@@ -34,7 +34,7 @@ public class ExtractSexDataTests {
     }
 
     private void assertSexDistributionList(List<SexDistribution> expectedList, List<SexDistribution> actualList) {
-        assertEquals(expectedList.size(), actualList.size(), "AgeDistributionLists do not have the same size");
+        assertEquals(expectedList.size(), actualList.size(), "The actual List does not have the same number of elements than expected");
         for (SexDistribution element : expectedList) {
             assertTrue(containsElement(actualList, element));
         }

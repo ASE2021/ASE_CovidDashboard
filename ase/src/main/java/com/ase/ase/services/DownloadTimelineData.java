@@ -58,7 +58,7 @@ public class DownloadTimelineData {
         }
     }
 
-    private List<Timeline> extractTimelineData(BufferedReader in) throws IOException {
+    public static List<Timeline> extractTimelineData(BufferedReader in) throws IOException {
         List<Timeline> times = new ArrayList<>();
         String head = in.readLine();
         String[] attributes = head.split(";");
