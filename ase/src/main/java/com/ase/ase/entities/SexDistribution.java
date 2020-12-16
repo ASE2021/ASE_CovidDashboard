@@ -15,11 +15,15 @@ public class SexDistribution {
 
     protected SexDistribution() { }
 
-    public SexDistribution(String sex, int casesPercent, int deadPercent, int populationPercent) {
+    public SexDistribution(String sex, int casesPercent, int deadPercent) {
         this.sex = sex;
         this.casesPercent = casesPercent;
         this.deadPercent = deadPercent;
-        this.populationPercent = populationPercent;
+        if(sex.equals("weiblich")) {
+            this.populationPercent = 51;
+        } else if(sex.equals("männlich")) {
+            this.populationPercent = 49;
+        }
     }
 
     public SexDistribution(String sex) {

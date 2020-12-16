@@ -55,7 +55,7 @@ public class DownloadSexDistributionData {
         }
     }
 
-    private List<SexDistribution> addSexDistributions(BufferedReader in, List<SexDistribution> list) throws IOException {
+    public static List<SexDistribution> addSexDistributions(BufferedReader in, List<SexDistribution> list) throws IOException {
         String head = in.readLine();
         String[] attributes = head.split(";");
 
@@ -79,7 +79,7 @@ public class DownloadSexDistributionData {
         return list;
     }
 
-    private void updateSexDistribution(List<SexDistribution> list, String sex, int deadPercent) {
+    private static void updateSexDistribution(List<SexDistribution> list, String sex, int deadPercent) {
         for (SexDistribution sexDistribution : list) {
             if(sexDistribution.getSex().equals(sex)) {
                 sexDistribution.setDeadPercent(deadPercent);
@@ -93,7 +93,7 @@ public class DownloadSexDistributionData {
         list.add(sexDistribution);
     }
 
-    private List<SexDistribution> extractSexDistributions(BufferedReader in) throws IOException {
+    public static List<SexDistribution> extractSexDistributions(BufferedReader in) throws IOException {
         List<SexDistribution> sexDistributionList = new ArrayList<>();
         String head = in.readLine();
         String[] attributes = head.split(";");
