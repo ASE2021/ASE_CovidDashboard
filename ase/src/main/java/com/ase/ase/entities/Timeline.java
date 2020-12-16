@@ -7,15 +7,15 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class Provinces {
+public class Timeline {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private Date time;
-    private int provinceId;
-
+    private String area;
+    private int areaId;
     private int newCases;
     private int sumCases;
     private int weeklyCases;
@@ -27,11 +27,12 @@ public class Provinces {
     private int newCured;
     private int sumCured;
 
-    protected Provinces() { }
+    protected Timeline() { }
 
-    public Provinces(Date time, int provinceId, int newCases, int sumCases, int weeklyCases, int inzidenzCases, int newDead, int sumDead, int newCured, int sumCured) {
+    public Timeline(Date time, String area, int areaId, int newCases, int sumCases, int weeklyCases, int inzidenzCases, int newDead, int sumDead, int newCured, int sumCured) {
         this.time = time;
-        this.provinceId = provinceId;
+        this.area = area;
+        this.areaId = areaId;
         this.newCases = newCases;
         this.sumCases = sumCases;
         this.weeklyCases = weeklyCases;
@@ -48,6 +49,22 @@ public class Provinces {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public int getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(int areaId) {
+        this.areaId = areaId;
     }
 
     public int getNewCases() {
@@ -116,10 +133,11 @@ public class Provinces {
 
     @Override
     public String toString() {
-        return "Provinces{" +
+        return "Timeline{" +
                 "id=" + id +
                 ", time=" + time +
-                ", provinceId=" + provinceId +
+                ", area='" + area + '\'' +
+                ", areaId=" + areaId +
                 ", newCases=" + newCases +
                 ", sumCases=" + sumCases +
                 ", weeklyCases=" + weeklyCases +
