@@ -14,7 +14,8 @@ public class Population {
 
     protected Population() { }
 
-    public Population(String name, int population) {
+    public Population(int id, String name, int population) {
+        this.id = id;
         this.name = name;
         this.population = population;
     }
