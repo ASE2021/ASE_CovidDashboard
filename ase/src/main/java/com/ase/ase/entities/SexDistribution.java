@@ -9,17 +9,30 @@ public class SexDistribution {
     @Id
     private String sex;
 
-    private float CasesPercent;
-    private float DeadPercent;
-    private float PopulationPercent; //M=49.2% W=50.8%
+    private int casesPercent;
+    private int deadPercent;
+    private int populationPercent; //M=49.2% W=50.8%
 
     protected SexDistribution() { }
 
-    public SexDistribution(String sex, float casesPercent, float deadPercent, float populationPercent) {
+    public SexDistribution(String sex, int casesPercent, int deadPercent) {
         this.sex = sex;
-        CasesPercent = casesPercent;
-        DeadPercent = deadPercent;
-        PopulationPercent = populationPercent;
+        this.casesPercent = casesPercent;
+        this.deadPercent = deadPercent;
+        if(sex.equals("weiblich")) {
+            this.populationPercent = 51;
+        } else if(sex.equals("männlich")) {
+            this.populationPercent = 49;
+        }
+    }
+
+    public SexDistribution(String sex) {
+        this.sex = sex;
+        if(sex.equals("weiblich")) {
+            this.populationPercent = 51;
+        } else if(sex.equals("männlich")) {
+            this.populationPercent = 49;
+        }
     }
 
     public String getSex() {
@@ -31,28 +44,36 @@ public class SexDistribution {
     }
 
     public float getCasesPercent() {
-        return CasesPercent;
+        return casesPercent;
     }
 
-    public void setCasesPercent(float casesPercent) {
-        CasesPercent = casesPercent;
+    public void setCasesPercent(int casesPercent) {
+        this.casesPercent = casesPercent;
+    }
+
+    public int getDeadPercent() {
+        return deadPercent;
+    }
+
+    public void setDeadPercent(int deadPercent) {
+        this.deadPercent = deadPercent;
     }
 
     public float getPopulationPercent() {
-        return PopulationPercent;
+        return populationPercent;
     }
 
-    public void setPopulationPercent(float populationPercent) {
-        PopulationPercent = populationPercent;
+    public void setPopulationPercent(int populationPercent) {
+        this.populationPercent = populationPercent;
     }
 
     @Override
     public String toString() {
         return "SexDistribution{" +
                 "sex='" + sex + '\'' +
-                ", CasesPercent=" + CasesPercent +
-                ", DeadPercent=" + DeadPercent +
-                ", PopulationPercent=" + PopulationPercent +
+                ", CasesPercent=" + casesPercent +
+                ", DeadPercent=" + deadPercent +
+                ", PopulationPercent=" + populationPercent +
                 '}';
     }
 }

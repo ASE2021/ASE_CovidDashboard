@@ -25,6 +25,10 @@ public class BedUtilization {
         this.utilizationNB = utilizationNB;
     }
 
+    public BedUtilization(Date time) {
+        this.time = time;
+    }
+
     public Date getTime() {
         return time;
     }

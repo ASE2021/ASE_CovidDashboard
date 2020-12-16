@@ -24,6 +24,10 @@ public class AgeDistribution {
         this.sumDead = sumDead;
     }
 
+    public AgeDistribution(String ageInterval) {
+        this.ageInterval = ageInterval;
+    }
+
     public String getAgeInterval() {
         return ageInterval;
     }
