@@ -26,15 +26,6 @@ addons:
     token:
       secure: $ASE_TOKEN
 
-script:
-  # JaCoCo is used to have code coverage, "-Pcoverage" activates the maven profile in the pom.xml
-  - mvn clean verify sonar:sonar -Pcoverage 
-
-cache:
-  directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
-
 notifications:
     email: false
 
