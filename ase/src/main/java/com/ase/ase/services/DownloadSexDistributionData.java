@@ -1,8 +1,6 @@
 package com.ase.ase.services;
 
-import com.ase.ase.dao.AgeDistributionRepository;
 import com.ase.ase.dao.SexDistributionRepository;
-import com.ase.ase.entities.AgeDistribution;
 import com.ase.ase.entities.SexDistribution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

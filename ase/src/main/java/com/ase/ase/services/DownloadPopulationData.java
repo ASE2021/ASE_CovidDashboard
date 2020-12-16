@@ -18,7 +18,7 @@ public class DownloadPopulationData {
     @Autowired
     PopulationRepository populationRepository;
 
-    public void downloadTimeline() {
+    public void downloadPopulation() {
         try {
             URL urlProvinces = new URL("https://covid19-dashboard.ages.at/data/CovidFaelle_Timeline.csv");
             HttpURLConnection conProvinces = (HttpURLConnection) urlProvinces.openConnection();
@@ -53,7 +53,7 @@ public class DownloadPopulationData {
         }
     }
 
-    private List<Population> extractPopulation(BufferedReader in) throws IOException {
+    public static List<Population> extractPopulation(BufferedReader in) throws IOException {
         List<Population> populationList = new ArrayList<>();
         String head = in.readLine();
         String[] attributes = head.split(";");
@@ -82,7 +82,7 @@ public class DownloadPopulationData {
             }
 
             if(id != -1) {
-                populationList.add(new Population(id, name, population));
+                populationList.add(new Population(name, id, population));
             }
             if(id == 900 || id == 10) break; //population of all districts or provinces is extracted
             line = in.readLine();

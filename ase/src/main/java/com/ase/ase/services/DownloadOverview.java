@@ -38,7 +38,7 @@ public class DownloadOverview {
         }
     }
 
-    private Overview extractOverviewData(BufferedReader in) throws IOException {
+    public static Overview extractOverviewData(BufferedReader in) throws IOException {
         String head = in.readLine();
         String[] attributes = head.split(";");
 
