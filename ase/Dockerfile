@@ -1,6 +1,7 @@
 FROM maven:3.6.3-jdk-11 AS MAVEN_TOOL_CHAIN
 COPY pom.xml /tmp/
 COPY src /tmp/src/
+
 WORKDIR /tmp/
 
 RUN mvn package

@@ -23,8 +23,7 @@ script:
 addons:
   sonarcloud:
     organization: "ase-project-group"
-    token:
-      secure: $ASE_TOKEN
+    token: ${ASE_TOKEN}
 
 script:
   # other script steps might be done before running the actual analysis
