@@ -26,6 +26,10 @@ addons:
     token:
       secure: $ASE_TOKEN
 
+script:
+  # other script steps might be done before running the actual analysis
+  - sonar-scanner
+
 notifications:
     email: false
 

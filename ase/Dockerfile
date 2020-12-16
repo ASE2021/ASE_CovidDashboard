@@ -3,11 +3,6 @@ COPY pom.xml /tmp/
 COPY src /tmp/src/
 WORKDIR /tmp/
 
-ARG SONAR_PROJECT_KEY=robinmanuelthiel_microcommunication
-ARG SONAR_OGRANIZAION_KEY="ase-project-group"
-ARG SONAR_HOST_URL=https://sonarcloud.io
-ARG SONAR_TOKEN
-
 RUN mvn package
 
 FROM openjdk:11-jdk
