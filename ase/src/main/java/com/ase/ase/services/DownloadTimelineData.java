@@ -105,7 +105,7 @@ public class DownloadTimelineData {
                         weeklyCases = Integer.parseInt(cells[i]);
                         break;
                     case "SiebenTageInzidenzFaelle":
-                        inzidenzCases = Integer.parseInt(cells[i]);
+                        inzidenzCases = (int) Float.parseFloat(cells[i].replace(",", "."));
                         break;
                     case "AnzahlTotTaeglich":
                         newDead = Integer.parseInt(cells[i]);

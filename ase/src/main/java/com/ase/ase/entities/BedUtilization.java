@@ -14,12 +14,12 @@ public class BedUtilization {
     private long id;
 
     private Date time;
-    private int utilizationIB;
-    private int utilizationNB;
+    private float utilizationIB;
+    private float utilizationNB;
 
     protected BedUtilization() { }
 
-    public BedUtilization(Date time, int utilizationIB, int utilizationNB) {
+    public BedUtilization(Date time, float utilizationIB, float utilizationNB) {
         this.time = time;
         this.utilizationIB = utilizationIB;
         this.utilizationNB = utilizationNB;
@@ -41,7 +41,7 @@ public class BedUtilization {
         return utilizationIB;
     }
 
-    public void setUtilizationIB(int utilizationIB) {
+    public void setUtilizationIB(float utilizationIB) {
         this.utilizationIB = utilizationIB;
     }
 
@@ -49,7 +49,7 @@ public class BedUtilization {
         return utilizationNB;
     }
 
-    public void setUtilizationNB(int utilizationNB) {
+    public void setUtilizationNB(float utilizationNB) {
         this.utilizationNB = utilizationNB;
     }
 

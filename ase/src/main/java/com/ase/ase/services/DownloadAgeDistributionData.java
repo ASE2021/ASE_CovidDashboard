@@ -54,7 +54,6 @@ public class DownloadAgeDistributionData {
     }
 
     private List<AgeDistribution> addAgeDistributions(BufferedReader in, List<AgeDistribution> list) throws IOException {
-        List<AgeDistribution> ageDistributionList = new ArrayList<>();
         String head = in.readLine();
         String[] attributes = head.split(";");
 
@@ -75,7 +74,7 @@ public class DownloadAgeDistributionData {
             updateAgeDistribution(list, ageInterval, sumDead);
             line = in.readLine();
         }
-        return ageDistributionList;
+        return list;
     }
 
     private void updateAgeDistribution(List<AgeDistribution> list, String ageInterval, int sumDead) {

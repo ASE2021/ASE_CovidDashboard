@@ -56,7 +56,6 @@ public class DownloadSexDistributionData {
     }
 
     private List<SexDistribution> addSexDistributions(BufferedReader in, List<SexDistribution> list) throws IOException {
-        List<SexDistribution> sexDistributionList = new ArrayList<>();
         String head = in.readLine();
         String[] attributes = head.split(";");
 
@@ -77,7 +76,7 @@ public class DownloadSexDistributionData {
             updateSexDistribution(list, sex, deadPercent);
             line = in.readLine();
         }
-        return sexDistributionList;
+        return list;
     }
 
     private void updateSexDistribution(List<SexDistribution> list, String sex, int deadPercent) {

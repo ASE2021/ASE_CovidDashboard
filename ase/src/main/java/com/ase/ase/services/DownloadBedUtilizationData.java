@@ -57,7 +57,6 @@ public class DownloadBedUtilizationData {
     }
 
     private List<BedUtilization> addBedUtilizations(BufferedReader in, List<BedUtilization> list) throws IOException {
-        List<BedUtilization> bedUtilizationList = new ArrayList<>();
         String head = in.readLine();
         String[] attributes = head.split(";");
 
@@ -65,7 +64,7 @@ public class DownloadBedUtilizationData {
         while (line != null) {
             String[] cells = line.split(";");
             Date time = null;
-            int utilizationIB = 0;
+            float utilizationIB = 0;
 
             for (int i = 0; i<attributes.length; i++) {
                 if(attributes[i].equals("time")) {
@@ -75,17 +74,17 @@ public class DownloadBedUtilizationData {
                         System.out.println("was not able to parse date: " + cells[i]);
                     }
                 } else if(attributes[i].equals("Belegung Intensivbetten in %")) {
-                    utilizationIB = Integer.parseInt(cells[i]);
+                    utilizationIB = Float.parseFloat(cells[i].replace(",", "."));
                 }
             }
 
             updateBedUtilization(list, time, utilizationIB);
             line = in.readLine();
         }
-        return bedUtilizationList;
+        return list;
     }
 
-    private void updateBedUtilization(List<BedUtilization> list, Date time, int utilizationIB) {
+    private void updateBedUtilization(List<BedUtilization> list, Date time, float utilizationIB) {
         for (BedUtilization bedUtilization : list) {
             if(bedUtilization.getTime().equals(time)) {
                 bedUtilization.setUtilizationIB(utilizationIB);
@@ -108,7 +107,7 @@ public class DownloadBedUtilizationData {
         while (line != null) {
             String[] cells = line.split(";");
             Date time = null;
-            int utilizationNB = 0;
+            float utilizationNB = 0;
 
             for (int i = 0; i<attributes.length; i++) {
                 if(attributes[i].equals("time")) {
@@ -118,7 +117,7 @@ public class DownloadBedUtilizationData {
                         System.out.println("was not able to parse date: " + cells[i]);
                     }
                 } else if(attributes[i].equals("Belegung Normalbetten in %")) {
-                    utilizationNB = Integer.parseInt(cells[i]);
+                    utilizationNB = Float.parseFloat(cells[i].replace(",", "."));
                 }
             }
 
