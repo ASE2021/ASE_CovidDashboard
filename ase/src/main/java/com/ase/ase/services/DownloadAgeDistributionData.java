@@ -53,7 +53,7 @@ public class DownloadAgeDistributionData {
         }
     }
 
-    private List<AgeDistribution> addAgeDistributions(BufferedReader in, List<AgeDistribution> list) throws IOException {
+    public static List<AgeDistribution> addAgeDistributions(BufferedReader in, List<AgeDistribution> list) throws IOException {
         String head = in.readLine();
         String[] attributes = head.split(";");
 
@@ -77,7 +77,7 @@ public class DownloadAgeDistributionData {
         return list;
     }
 
-    private void updateAgeDistribution(List<AgeDistribution> list, String ageInterval, int sumDead) {
+    private static void updateAgeDistribution(List<AgeDistribution> list, String ageInterval, int sumDead) {
         for (AgeDistribution agedistribution : list) {
             if(agedistribution.getAgeInterval().equals(ageInterval)) {
                 agedistribution.setSumDead(sumDead);
@@ -91,7 +91,7 @@ public class DownloadAgeDistributionData {
         list.add(ageDistribution);
     }
 
-    private List<AgeDistribution> extractAgeDistributions(BufferedReader in) throws IOException {
+    public static List<AgeDistribution> extractAgeDistributions(BufferedReader in) throws IOException {
         List<AgeDistribution> ageDistributionList = new ArrayList<>();
         String head = in.readLine();
         String[] attributes = head.split(";");
