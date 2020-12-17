@@ -30,9 +30,9 @@ public class ExtractBedDataTests {
     public void testIBedUtilizationAddition() throws IOException {
         File file = new File(getClass().getResource("/IBAuslastung.csv").getFile());
         List<BedUtilization> expectedList = getExpectedNAndIBedUtilizationList();
-        List<BedUtilization> startList = getExpectedNBedUtilizationList();
-        List<BedUtilization> actualList = DownloadBedUtilizationData.addBedUtilizations(new BufferedReader(new FileReader(file)), startList);
-        assertBedUtilizationList(expectedList, actualList);
+        List<BedUtilization> list = getExpectedNBedUtilizationList();
+        DownloadBedUtilizationData.addBedUtilizations(new BufferedReader(new FileReader(file)), list);
+        assertBedUtilizationList(expectedList, list);
     }
 
     private void assertBedUtilizationList(List<BedUtilization> expectedList, List<BedUtilization> actualList) {

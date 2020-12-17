@@ -7,9 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import static com.ase.ase.services.DownloadService.fetchResult;
 
 @Service
 public class DownloadOverview {
@@ -19,18 +18,7 @@ public class DownloadOverview {
 
     public void downloadOverview() {
         try {
-            URL urlOverview = new URL("https://info.gesundheitsministerium.at/data/AllgemeinDaten.csv");
-            HttpURLConnection conOverview = (HttpURLConnection) urlOverview.openConnection();
-            if (isFailing(conOverview.getResponseCode())) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    System.out.println("error (" + e.getMessage() + ") occurred trying to download timeline of Covid. RETRY");
-                }
-                conOverview = (HttpURLConnection) urlOverview.openConnection();
-            }
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(conOverview.getInputStream()));
+            BufferedReader in = fetchResult("https://info.gesundheitsministerium.at/data/AllgemeinDaten.csv");
             Overview overview = extractOverviewData(in);
             overviewRepository.save(overview);
         } catch (IOException e) {
@@ -72,13 +60,5 @@ public class DownloadOverview {
         }
 
         return overview;
-    }
-
-    private boolean isFailing(int status) {
-        return status == HttpURLConnection.HTTP_BAD_GATEWAY ||
-                status == HttpURLConnection.HTTP_INTERNAL_ERROR ||
-                status == HttpURLConnection.HTTP_BAD_METHOD ||
-                status == HttpURLConnection.HTTP_GATEWAY_TIMEOUT ||
-                status == HttpURLConnection.HTTP_UNAVAILABLE;
     }
 }
