@@ -22,16 +22,6 @@ public class BasicCovidController {
     @GetMapping(value = "/{province-id}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<DailyCasesPerProvinceDto> listNewCasesFor(@PathVariable("province-id") int provinceId) {
-        String s = "2020-02-01";
-        String e = "2020-12-14";
-        LocalDate start = LocalDate.parse(s);
-        LocalDate end = LocalDate.parse(e);
-        List<LocalDate> totalDates = new ArrayList<>();
-        while (!start.isAfter(end)) {
-            totalDates.add(start);
-            start = start.plusDays(1);
-        }
-
         return ResponseEntity.ok(
                 new DailyCasesPerProvinceDto(
                         provinceId,
