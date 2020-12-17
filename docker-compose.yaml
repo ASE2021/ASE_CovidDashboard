@@ -8,7 +8,7 @@ services:
           - POSTGRES_PASSWORD=asepassword
           - POSTGRES_DB=covidDatabase
     spring:
-        image: manuel57/ase
+        image: manuel57/covid-19-dashboard-backend
         build: ase
         ports:
         -   "8080:8080"
@@ -18,11 +18,11 @@ services:
             - database
         restart: on-failure
     frontend:
-        image: manuel57/frontend
+        image: manuel57/covid-19-dashboard-frontend
         build: frontend
         environment:
             - BACKEND_API_URL=http://host.docker.internal:8080
         ports:
-            - '4200:80'
+            - '80:80'
         depends_on:
             -   spring
