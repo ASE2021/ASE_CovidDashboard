@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Objects;
 
 @Entity
 public class Overview {
@@ -14,33 +13,47 @@ public class Overview {
     private Long id;
 
     private int sumTested;
-    private int sumCases;
+    private int sumCasesConfirmed;
+    private int sumTestedPositive;
     private int currentSick;
-    private int sumDead;
+    private int sumCurred;
+    private int sumDeadReported;
+    private int sumDeadConfirmed;
 
-    protected Overview() { }
+    public Overview() { }
 
-    public Overview(int numTested, int numPositive, int currentSick, int numDead) {
-        this.sumTested = numTested;
-        this.sumCases = numPositive;
+    public Overview(int sumTested, int sumCasesConfirmed, int sumTestedPositive, int currentSick, int sumCurred, int sumDeadReported, int sumDeadConfirmed) {
+        this.sumTested = sumTested;
+        this.sumCasesConfirmed = sumCasesConfirmed;
+        this.sumTestedPositive = sumTestedPositive;
         this.currentSick = currentSick;
-        this.sumDead = numDead;
+        this.sumCurred = sumCurred;
+        this.sumDeadReported = sumDeadReported;
+        this.sumDeadConfirmed = sumDeadConfirmed;
     }
 
     public int getSumTested() {
         return sumTested;
     }
 
-    public void setSumTested(int numTested) {
-        this.sumTested = numTested;
+    public void setSumTested(int sumTested) {
+        this.sumTested = sumTested;
     }
 
-    public int getSumCases() {
-        return sumCases;
+    public int getSumCasesConfirmed() {
+        return sumCasesConfirmed;
     }
 
-    public void setSumCases(int numPositive) {
-        this.sumCases = numPositive;
+    public void setSumCasesConfirmed(int sumCasesConfirmed) {
+        this.sumCasesConfirmed = sumCasesConfirmed;
+    }
+
+    public int getSumTestedPositive() {
+        return sumTestedPositive;
+    }
+
+    public void setSumTestedPositive(int sumTestedPositive) {
+        this.sumTestedPositive = sumTestedPositive;
     }
 
     public int getCurrentSick() {
@@ -51,12 +64,28 @@ public class Overview {
         this.currentSick = currentSick;
     }
 
-    public int getSumDead() {
-        return sumDead;
+    public int getSumCurred() {
+        return sumCurred;
     }
 
-    public void setSumDead(int numDead) {
-        this.sumDead = numDead;
+    public void setSumCurred(int sumCurred) {
+        this.sumCurred = sumCurred;
+    }
+
+    public int getSumDeadReported() {
+        return sumDeadReported;
+    }
+
+    public void setSumDeadReported(int sumDeadReported) {
+        this.sumDeadReported = sumDeadReported;
+    }
+
+    public int getSumDeadConfirmed() {
+        return sumDeadConfirmed;
+    }
+
+    public void setSumDeadConfirmed(int sumDeadConfirmed) {
+        this.sumDeadConfirmed = sumDeadConfirmed;
     }
 
     @Override
@@ -64,9 +93,12 @@ public class Overview {
         return "Overview{" +
                 "id=" + id +
                 ", sumTested=" + sumTested +
-                ", sumCases=" + sumCases +
+                ", sumCasesConfirmed=" + sumCasesConfirmed +
+                ", sumTestedPositive=" + sumTestedPositive +
                 ", currentSick=" + currentSick +
-                ", sumDead=" + sumDead +
+                ", sumCurred=" + sumCurred +
+                ", sumDeadReported=" + sumDeadReported +
+                ", sumDeadConfirmed=" + sumDeadConfirmed +
                 '}';
     }
 }

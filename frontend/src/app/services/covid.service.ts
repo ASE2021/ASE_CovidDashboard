@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {CovidCasesDaily} from '../model/covid-cases-daily';
 import {HttpClient} from '@angular/common/http';
 
@@ -7,12 +7,12 @@ import {HttpClient} from '@angular/common/http';
 })
 export class CovidService {
 
-  constructor(private http: HttpClient) {
+  constructor(@Inject('BACKEND_API_URL') private apiUrl: string, private http: HttpClient) {
   }
 
   public getNewCasesPerDate(): Promise<CovidCasesDaily[]> {
-    return this.http.get('/covid-cases-daily/10')
-      .toPromise().then(item => item as CovidCasesDaily[]);
+    return this.http.get(this.apiUrl + '/daily/10')
+      .toPromise().then(item => (item as {cases: CovidCasesDaily[]}).cases);
   }
 
 

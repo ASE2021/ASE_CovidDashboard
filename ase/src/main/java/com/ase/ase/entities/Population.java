@@ -14,9 +14,18 @@ public class Population {
 
     protected Population() { }
 
-    public Population(String name, int population) {
+    public Population(String name, int id, int population) {
+        this.id = id;
         this.name = name;
         this.population = population;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
