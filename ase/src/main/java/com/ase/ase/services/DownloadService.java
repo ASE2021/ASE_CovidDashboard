@@ -33,23 +33,15 @@ public class DownloadService {
     protected static BufferedReader fetchResult(String url) throws IOException {
         URL urlCases = new URL(url);
         HttpURLConnection conCases = (HttpURLConnection) urlCases.openConnection();
-        if (isFailing(conCases.getResponseCode())) {
+        if (conCases.getResponseCode() != 200) {
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
-                System.out.println("error (" + e.getMessage() + ") occured trying to download age distribution of Covid data. RETRY");
+                System.out.println("error (" + e.getMessage() + ") occured trying to download Covid data. RETRY");
             }
             conCases = (HttpURLConnection) urlCases.openConnection();
         }
 
         return new BufferedReader(new InputStreamReader(conCases.getInputStream()));
-    }
-
-    protected static boolean isFailing(int status) {
-        return  status== HttpURLConnection.HTTP_BAD_GATEWAY ||
-                status==HttpURLConnection.HTTP_INTERNAL_ERROR ||
-                status==HttpURLConnection.HTTP_BAD_METHOD ||
-                status==HttpURLConnection.HTTP_GATEWAY_TIMEOUT ||
-                status==HttpURLConnection.HTTP_UNAVAILABLE;
     }
 }
