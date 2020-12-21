@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  background-color: #f2f2f2;
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+p-header {
+  color: #85e085;
+}
+
+.display-1 {
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+  color: #85e085;
+  text-align: center;
+}
+
+.display-2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 1rem;
+  color: #85e085;
+
+}
+
+.display-3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: left;
+  margin: 1rem;
+  color: #85e085;
+
+}
+

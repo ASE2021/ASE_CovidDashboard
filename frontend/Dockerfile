@@ -8,6 +8,8 @@ FROM nginx:alpine
 ADD nginx-default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist/covid-19-dashboard/ /var/www/frontend/
 
-RUN echo "nginx -g 'daemon off;'" > run.sh
+RUN echo "mainFileName=\"\$(ls /var/www/frontend/main*.js)\" && \
+          envsubst '\$BACKEND_API_URL ' < \${mainFileName} > main.tmp && \
+          mv main.tmp  \${mainFileName} && nginx -g 'daemon off;'" > run.sh
 
 ENTRYPOINT ["sh", "run.sh"]

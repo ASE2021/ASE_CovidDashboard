@@ -10,6 +10,7 @@ import {AustriaMapModule} from './components/austria-map/austria-map.module';
 import {TabMenuModule} from 'primeng/tabmenu';
 import {OverviewModule} from './components/overview/overview.module';
 import {RoutingModule} from './routing.module';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -25,11 +26,13 @@ import {RoutingModule} from './routing.module';
     OverviewModule, RoutingModule,
   ],
   providers: [HttpClient,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: FakeBackendInterceptor,
-      multi: true,
-    }],
+    {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: FakeBackendInterceptor,
+    //   multi: true,
+    // }
+    ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

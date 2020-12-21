@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ASE_CovidDashboard.iml" filepath="$PROJECT_DIR$/.idea/ASE_CovidDashboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ase/ase.iml" filepath="$PROJECT_DIR$/ase/ase.iml" />
     </modules>
   </component>
 </project>
