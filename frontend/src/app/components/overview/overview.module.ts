@@ -8,6 +8,8 @@ import {TableModule} from 'primeng/table';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TabViewModule} from 'primeng/tabview';
+import {DropdownModule} from 'primeng/dropdown';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [OverviewComponent],
@@ -16,10 +18,12 @@ import {TabViewModule} from 'primeng/tabview';
     ChartModule,
     CardModule,
     PanelModule,
-    TableModule,
     SelectButtonModule,
     TabViewModule,
     NoopAnimationsModule,
+    TableModule,
+    DropdownModule,
+    BrowserAnimationsModule,
   ],
   exports: [OverviewComponent]
 })

@@ -1,7 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
+import {Provinces} from '../../model/Provinces';
+import {CovidCasesDaily} from '../../model/covid-cases-daily';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-overview',
@@ -14,8 +17,13 @@ export class OverviewComponent implements OnInit {
   activeCases: number;
   numberOfCases: number;
   deaths: number;
+  province: any;
 
-  constructor(private covidService: CovidService) {
+
+
+
+  constructor(private covidService: CovidService,
+              private table: TableModule) {
 
   }
 
@@ -23,12 +31,16 @@ export class OverviewComponent implements OnInit {
     this.initializePositiveCasesPerDateChart();
 
     this.initializeBasicInformation();
+
+    // this.covidService.getNewCasesPerDate().then(this.province)
   }
 
-  private async initializeBasicInformation(): Promise<void> { // TODO: get data from backend (receive object with these (or more) properties)
+  private async initializeBasicInformation(): Promise<void> {
+    // TODO: get data from backend (receive object with these (or more) properties)
     this.activeCases = 41000;
     this.numberOfCases = 200000;
     this.deaths = 2000;
+    this.province = 'Kärnten';
   }
 
   private async initializePositiveCasesPerDateChart(): Promise<void> {
@@ -39,3 +51,5 @@ export class OverviewComponent implements OnInit {
         data.map(item => item.cases));
   }
 }
+
+
