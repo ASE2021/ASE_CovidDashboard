@@ -4,7 +4,7 @@ import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {Provinces} from '../../model/Provinces';
 import {CovidCasesDaily} from '../../model/covid-cases-daily';
-import { TableModule } from 'primeng/table';
+
 
 @Component({
   selector: 'app-overview',
@@ -22,8 +22,7 @@ export class OverviewComponent implements OnInit {
 
 
 
-  constructor(private covidService: CovidService,
-              private table: TableModule) {
+  constructor(private covidService: CovidService) {
 
   }
 
