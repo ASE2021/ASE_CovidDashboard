@@ -4,6 +4,7 @@ import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {Provinces} from '../../model/Provinces';
 import {CovidCasesDaily} from '../../model/covid-cases-daily';
+import { TableModelBuilder } from "../../model/table-model-builder";
 
 
 @Component({
@@ -31,6 +32,8 @@ export class OverviewComponent implements OnInit {
 
     this.initializeBasicInformation();
 
+    this.initializePositiveCasesPerTableChart();
+
     // this.covidService.getNewCasesPerDate().then(this.province)
   }
 
@@ -39,13 +42,21 @@ export class OverviewComponent implements OnInit {
     this.activeCases = 41000;
     this.numberOfCases = 200000;
     this.deaths = 2000;
-    this.province = 'Kärnten';
   }
 
   private async initializePositiveCasesPerDateChart(): Promise<void> {
     const data = await this.covidService.getNewCasesPerDate();
     this.positiveCasesPerDateData = new ChartModelBuilder()
       .buildBarChartModel('Positive Covid-19 cases per date',
+        data.map(item => item.date.split('T')[0]),
+        data.map(item => item.cases));
+  }
+
+
+  private async initializePositiveCasesPerTableChart(): Promise<void> {
+    const data = await this.covidService.getNewCasesPerDate();
+    this.positiveCasesPerDateData = new TableModelBuilder()
+      .buildTableModel('Positive Covid-19 cases per date',
         data.map(item => item.date.split('T')[0]),
         data.map(item => item.cases));
   }
