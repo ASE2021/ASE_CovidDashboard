@@ -10,7 +10,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TabViewModule} from 'primeng/tabview';
 import {DropdownModule} from 'primeng/dropdown';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { TableComponent } from '../table/table.component';
+import { TableComponent } from '../tableWithFilter/table.component';
 
 @NgModule({
   declarations: [OverviewComponent, TableComponent],
