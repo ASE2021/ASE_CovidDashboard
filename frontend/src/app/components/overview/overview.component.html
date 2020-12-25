@@ -80,79 +80,8 @@
       <p-tabPanel header="Table Overview">
         <!-- TODO: fill table with data -->
 
-        <h5>Filter Row</h5>
-        <p>Filters are displayed inline within a separate row.</p>
-        <p-table #dt2 [value]="customers" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
-                 [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers"
-                 [paginator]="true"
-                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                 [globalFilterFields]="['name','country.name','representative.name','status']">
-          <ng-template pTemplate="caption">
-            <div class="p-d-flex">
-                <span class="p-input-icon-left p-ml-auto">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
-                           placeholder="Search keyword"/>
-                </span>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th>
-                <div>
-                  Province
-                  <p-columnFilter type="text" field="province"></p-columnFilter>
-                </div>
-              </th>
-              <th>
-                <div>
-                  Active Cases
-                  <p-columnFilter type="text" field="activecases"></p-columnFilter>
-                </div>
-              </th>
-              <th>
-                <div>
-                  Deaths
-                  <p-columnFilter field="deaths" type="text"></p-columnFilter>
-                </div>
-              </th>
-              <th>
-                <div>
-                  Hospitalizations
-                  <p-columnFilter field="hospitalizations" type="text"></p-columnFilter>
-                </div>
-              </th>
-            </tr>
-
-            <tr>
-              <th>
-                <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)"
-                                placeholder="Any" [showClear]="true">
-                      <ng-template let-option pTemplate="item">
-                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                      </ng-template>
-                    </p-dropdown>
-                  </ng-template>
-                </p-columnFilter>
-              </th>
-            </tr>
-          </ng-template>
-        </p-table>
-
-
-        <ng-template pTemplate="body" let-case>
-          <tr>
-            <td>{{province}}</td>
-            <td>{{activeCases}}</td>
-            <td>{{deaths}}</td>
-            <td>{{numberOfCases}}</td>
-          </tr>
-        </ng-template>
 
       </p-tabPanel>
-      1
     </p-tabView>
   </div>
 </div>

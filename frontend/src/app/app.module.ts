@@ -12,7 +12,6 @@ import {OverviewModule} from './components/overview/overview.module';
 import {RoutingModule} from './routing.module';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {TableModule} from 'primeng/table';
 import {InputTextModule} from 'primeng/inputtext';
 
 
@@ -28,8 +27,6 @@ import {InputTextModule} from 'primeng/inputtext';
     AustriaMapModule,
     TabMenuModule,
     OverviewModule, RoutingModule,
-    TableModule,
-    // tslint:disable-next-line:indent
     InputTextModule,
 
   ],

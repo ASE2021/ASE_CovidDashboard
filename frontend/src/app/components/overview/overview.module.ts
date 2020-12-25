@@ -10,21 +10,22 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TabViewModule} from 'primeng/tabview';
 import {DropdownModule} from 'primeng/dropdown';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { TableComponent } from '../table/table.component';
 
 @NgModule({
-  declarations: [OverviewComponent],
-  imports: [
-    CommonModule,
-    ChartModule,
-    CardModule,
-    PanelModule,
-    SelectButtonModule,
-    TabViewModule,
-    NoopAnimationsModule,
-    TableModule,
-    DropdownModule,
-    BrowserAnimationsModule,
-  ],
+  declarations: [OverviewComponent, TableComponent],
+    imports: [
+        CommonModule,
+        ChartModule,
+        CardModule,
+        PanelModule,
+        SelectButtonModule,
+        TabViewModule,
+        NoopAnimationsModule,
+        DropdownModule,
+        BrowserAnimationsModule,
+        TableModule,
+    ],
   exports: [OverviewComponent]
 })
 export class OverviewModule { }
