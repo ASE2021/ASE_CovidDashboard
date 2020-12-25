@@ -53,7 +53,7 @@ export class OverviewComponent implements OnInit {
   }
 
   private async initializeNormalHospitalBedsPerDateChart(): Promise<void> {
-    const data = await  this.covidService.getHospitalIntenseBedsPerDate();
+    const data = await  this.covidService.getHospitalNormalBedsPerDate();
     this.hospitalNormalBedsPerDate = new ChartModelBuilder()
       .buildHospitalLineChartModel('Normal beds used in hospital',
         data.map(item => item.date.split('T')[0]),
