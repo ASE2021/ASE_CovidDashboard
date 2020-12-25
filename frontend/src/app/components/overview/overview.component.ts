@@ -26,8 +26,7 @@ export class OverviewComponent implements OnInit {
 
     this.initializeBasicInformation();
 
-    this.initializeIntenseHospitalBedsPerDateChart()
-    this.initializeNormalHospitalBedsPerDateChart()
+    this.initializeHospitalBedsPerDateChart()
   }
 
   private async initializeBasicInformation(): Promise<void> { // TODO: get data from backend (receive object with these (or more) properties)
@@ -44,19 +43,13 @@ export class OverviewComponent implements OnInit {
         data.map(item => item.cases));
   }
 
-  private async initializeIntenseHospitalBedsPerDateChart(): Promise<void> {
-    const data = await  this.covidService.getHospitalIntenseBedsPerDate();
+  private async initializeHospitalBedsPerDateChart(): Promise<void> {
+    const data = await  this.covidService.getHospitalBedsPerDate();
     this.hospitalIntenseBedsPerDate = new ChartModelBuilder()
-      .buildHospitalLineChartModel('Intense beds used in hospital',
+      .buildHospitalLineChartModel(['Intense beds used', 'Normal beds used'],
         data.map(item => item.date.split('T')[0]),
-        data.map(item => item.inteseBeds));
-  }
-
-  private async initializeNormalHospitalBedsPerDateChart(): Promise<void> {
-    const data = await  this.covidService.getHospitalNormalBedsPerDate();
-    this.hospitalNormalBedsPerDate = new ChartModelBuilder()
-      .buildHospitalLineChartModel('Normal beds used in hospital',
-        data.map(item => item.date.split('T')[0]),
+        data.map(item => item.intenseBeds),
         data.map(item => item.normalBeds));
   }
+
 }

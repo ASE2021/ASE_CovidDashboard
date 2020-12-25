@@ -16,14 +16,9 @@ export class CovidService {
       .toPromise().then(item => (item as {cases: CovidCasesDaily[]}).cases);
   }
 
-  public getHospitalIntenseBedsPerDate(): Promise<HospitalBedsDaily[]> {
-    return this.http.get(this.apiUrl + '/hospital/intense/10')
+  public getHospitalBedsPerDate(): Promise<HospitalBedsDaily[]> {
+    return this.http.get(this.apiUrl + '/hospital/10')
       .toPromise().then(item => (item as {intenseBeds: HospitalBedsDaily[]}).intenseBeds)
-  }
-
-  public getHospitalNormalBedsPerDate(): Promise<HospitalBedsDaily[]> {
-    return this.http.get(this.apiUrl + '/hospital/normal/10')
-      .toPromise().then(item => (item as {normalBeds: HospitalBedsDaily[]}).normalBeds)
   }
 
 }

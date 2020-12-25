@@ -1,5 +1,5 @@
 export class HospitalBedsDaily{
   date: string;
-  inteseBeds: number;
+  intenseBeds: number;
   normalBeds: number;
 }
