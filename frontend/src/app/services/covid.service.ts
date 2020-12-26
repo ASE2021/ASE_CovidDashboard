@@ -17,8 +17,8 @@ export class CovidService {
   }
 
   public getHospitalBedsPerDate(): Promise<HospitalBedsDaily[]> {
-    return this.http.get(this.apiUrl + '/hospital/10')
-      .toPromise().then(item => (item as {intenseBeds: HospitalBedsDaily[]}).intenseBeds)
+    return this.http.get(this.apiUrl + '/daily/hospital/10')
+      .toPromise().then(item => (item as {situations: HospitalBedsDaily[]}).situations);
   }
 
 }

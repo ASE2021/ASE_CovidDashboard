@@ -11,8 +11,7 @@ import {ChartModelBuilder} from '../../model/chart-model-builder';
 export class OverviewComponent implements OnInit {
 
   positiveCasesPerDateData: any;
-  hospitalIntenseBedsPerDate: any;
-  hospitalNormalBedsPerDate: any
+  hospitalBedsPerDate: any;
   activeCases: number;
   numberOfCases: number;
   deaths: number;
@@ -45,7 +44,7 @@ export class OverviewComponent implements OnInit {
 
   private async initializeHospitalBedsPerDateChart(): Promise<void> {
     const data = await  this.covidService.getHospitalBedsPerDate();
-    this.hospitalIntenseBedsPerDate = new ChartModelBuilder()
+    this.hospitalBedsPerDate = new ChartModelBuilder()
       .buildHospitalLineChartModel(['Intense beds used', 'Normal beds used'],
         data.map(item => item.date.split('T')[0]),
         data.map(item => item.intenseBeds),
