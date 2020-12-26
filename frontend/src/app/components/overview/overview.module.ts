@@ -11,21 +11,31 @@ import {TabViewModule} from 'primeng/tabview';
 import {DropdownModule} from 'primeng/dropdown';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { TableComponent } from '../tableWithFilter/table.component';
+import {TabMenuModule} from "primeng/tabmenu";
+import {RoutingModule} from "../../routing.module";
+import {InputTextModule} from "primeng/inputtext";
+import {MultiSelectModule} from "primeng/multiselect";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [OverviewComponent, TableComponent],
-    imports: [
-        CommonModule,
-        ChartModule,
-        CardModule,
-        PanelModule,
-        SelectButtonModule,
-        TabViewModule,
-        NoopAnimationsModule,
-        DropdownModule,
-        BrowserAnimationsModule,
-        TableModule,
-    ],
+  imports: [
+    CommonModule,
+    ChartModule,
+    CardModule,
+    PanelModule,
+    SelectButtonModule,
+    TabViewModule,
+    NoopAnimationsModule,
+    DropdownModule,
+    BrowserAnimationsModule,
+    TableModule,
+    TabMenuModule,
+    RoutingModule,
+    InputTextModule,
+    MultiSelectModule,
+    FormsModule,
+  ],
   exports: [OverviewComponent]
 })
 export class OverviewModule { }

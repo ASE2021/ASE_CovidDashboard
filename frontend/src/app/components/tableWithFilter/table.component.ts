@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {CovidService} from '../../services/covid.service';
-import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {Provinces} from '../../model/Provinces';
 import {CovidCasesDaily} from '../../model/covid-cases-daily';
+import {TableData} from "../../model/tableData";
 
 @Component({
   selector: 'app-table',
@@ -12,22 +12,35 @@ import {CovidCasesDaily} from '../../model/covid-cases-daily';
 })
 export class TableComponent implements OnInit {
 
-  positiveCasesPerDateData: any;
-  activeCases: number;
-  numberOfCases: number;
-  deaths: number;
-  province: any;
+  data: Array<any>;
+  //data: TableData[];
+  provinces: Provinces[]; //saving the enum Provinces
 
   constructor(private covidService: CovidService) { }
 
   ngOnInit(): void {
     this.loadTableData();
+
+    this.covidService.getNewCasesPerDate()
   }
 
-  // tslint:disable-next-line:typedef
-  private loadTableData() {
-    return null;
+/*
+  private async loadTableData(): Promise<void> {
+    await this.covidService.getDeathsPerDate();
+    await this.covidService.getHospitalizationsPerDate();
+    await this.covidService.getNewCasesPerDate();
+
   }
+
+ */
+
+
+  private loadTableData() {
+    this.data = [{provinces: '1', activeCases: '12', deaths:'12', hospitalizations: '14'},
+      {provinces: '1', activeCases: '12', deaths:'12', hospitalizations: '14'}];
+  }
+
+
 
 
 

@@ -1,57 +1,72 @@
 
-        <p-table #dt2 [value]="activeCases" dataKey="id" [rows]="9" [showCurrentPageReport]="true"
-                 [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers"
+        <p-table [value]="data" dataKey="id" [rows]="9" [showCurrentPageReport]="true"
+                 [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"
                  [paginator]="true"
                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                 [globalFilterFields]="['province','cases','deaths','hospitalizations']">
+                 [globalFilterFields]="['province','activeCases','deaths','hospitalizations']">
           <ng-template pTemplate="caption">
             <div class="p-d-flex">
-                <span class="p-input-icon-left p-ml-auto">
+              <span class="p-input-icon-left p-ml-auto">
                     <i class="pi pi-search"></i>
-
+                    <input pInputText type="text" placeholder="Search keyword" />
                 </span>
             </div>
           </ng-template>
           <ng-template pTemplate="header">
             <tr>
               <th>
-                <div>
-                  Province
-                  <p-columnfilter type="text" field="province"></p-columnfilter>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Provinces
+                  <p-columnFilter field="provinces" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="header">
+                      <div class="p-px-3 p-pt-3 p-pb-0">
+                        <span class="p-text-bold">Agent Picker</span>
+                      </div>
+                    </ng-template>
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [ngModel]="value" [options]="provinces" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                        <ng-template let-option pTemplate="item">
+                          <div class="p-multiselect-representative-option">
+                            <span class="p-ml-1">{{option.name}}</span>
+                          </div>
+                        </ng-template>
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
                 </div>
               </th>
 
               <th>
-                <div>
+                <div class="p-d-flex p-jc-between p-ai-center">
                   Active Cases
-                  <p-columnfilter type="text" field="activecases"></p-columnfilter>
+                  <p-columnFilter type="text" field="activeCases" display="menu"></p-columnFilter>
                 </div>
               </th>
               <th>
-                <div>
+                <div class="p-d-flex p-jc-between p-ai-center">
                   Deaths
-                  <p-columnfilter field="deaths" type="text"></p-columnfilter>
+                  <p-columnFilter field="deaths" type="text" display="menu"></p-columnFilter>
                 </div>
               </th>
               <th>
-                <div>
+                <div class="p-d-flex p-jc-between p-ai-center">
                   Hospitalizations
-                  <p-columnfilter field="hospitalizations" type="text"></p-columnfilter>
+                  <p-columnFilter field="hospitalizations" type="text" display="menu"></p-columnFilter>
                 </div>
               </th>
             </tr>
 
           </ng-template>
-        </p-table>
 
 
-        <ng-template pTemplate="body" let-case>
+        <ng-template pTemplate="body" let-data>
           <tr>
-            <td>{{province}}</td>
-            <td>{{activeCases}}</td>
-            <td>{{deaths}}</td>
-            <td>{{numberOfCases}}</td>
+            <td>{{data.provinces}}</td>
+            <td>{{data.activeCases}}</td>
+            <td>{{data.deaths}}</td>
+            <td>{{data.hospitalizations}}</td>
           </tr>
         </ng-template>
+        </p-table>
 
 

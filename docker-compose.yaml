@@ -11,7 +11,7 @@ services:
         image: manuel57/covid-19-dashboard-backend
         build: ase
         ports:
-        -   "8080:8080"
+        -   "5000:5000"
         environment:
             - DB_HOST=database
         depends_on:
