@@ -17,7 +17,7 @@ export class CovidService {
   }
 
   public getSexDistribution(): Promise<SexDistribution[]> {
-    return this.http.get(this.apiUrl + '/sex/10')
+    return this.http.get(this.apiUrl + '/distribution/sex/10')
       .toPromise().then(item => (item as {cases: SexDistribution[]}).cases);
   }
 
