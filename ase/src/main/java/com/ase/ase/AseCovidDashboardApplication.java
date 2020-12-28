@@ -66,7 +66,6 @@ public class AseCovidDashboardApplication {
     timer.schedule(new TimerTask() {
       @Override
       public void run() {
-        downloadService.downloadAllCovidData();
         repeatPushingDataForDemo(messagingService, downloadService);
       }
     }, date.getTime());
