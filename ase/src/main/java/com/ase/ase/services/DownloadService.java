@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -51,6 +53,28 @@ public class DownloadService {
     }
 
     public static boolean isNewVersion(BufferedReader in) throws IOException {
+        String head = in.readLine();
+        String[] attributes = head.split(";");
+        String line = in.readLine();
+        String[] cells = line.split(";");
+
+        for (int i = 0; i<attributes.length; i++) {
+            if(attributes[i].equals("CreationDate")) {
+                Date date = null;
+
+                try {
+                    date = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(cells[i]);
+                } catch (ParseException e) {
+                    System.out.println("was not able to parse date: " + cells[i]);
+                }
+
+                if(version == null || date == null || version.before(date)) {
+                    version = new Date();
+                    return true;
+                }
+                return false;
+            }
+        }
         return true;
     }
 
