@@ -1,7 +1,7 @@
 package com.ase.ase;
 
 import com.ase.ase.entities.Timeline;
-import com.ase.ase.services.DownloadTimelineData;
+import com.ase.ase.downloadServices.DownloadTimelineData;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;

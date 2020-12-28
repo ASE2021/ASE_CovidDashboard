@@ -1,4 +1,4 @@
-package com.ase.ase.services;
+package com.ase.ase.downloadServices;
 
 import com.ase.ase.dao.BedUtilizationRepository;
 import com.ase.ase.entities.BedUtilization;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.ase.ase.services.DownloadService.fetchResult;
+import static com.ase.ase.downloadServices.DownloadService.fetchResult;
 
 @Service
 public class DownloadBedUtilizationData {

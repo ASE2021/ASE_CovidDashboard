@@ -1,10 +1,7 @@
 package com.ase.ase;
 
-import com.ase.ase.entities.AgeDistribution;
-import com.ase.ase.services.DownloadAgeDistributionData;
-import com.ase.ase.services.DownloadService;
+import com.ase.ase.downloadServices.DownloadService;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -13,8 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

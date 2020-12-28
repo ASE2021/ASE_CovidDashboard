@@ -1,7 +1,7 @@
 package com.ase.ase;
 
 import com.ase.ase.entities.AgeDistribution;
-import com.ase.ase.services.DownloadAgeDistributionData;
+import com.ase.ase.downloadServices.DownloadAgeDistributionData;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;

@@ -1,8 +1,7 @@
 package com.ase.ase;
 
-import com.ase.ase.entities.AgeDistribution;
 import com.ase.ase.entities.SexDistribution;
-import com.ase.ase.services.DownloadSexDistributionData;
+import com.ase.ase.downloadServices.DownloadSexDistributionData;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;

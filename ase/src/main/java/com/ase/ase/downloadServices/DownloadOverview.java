@@ -1,4 +1,4 @@
-package com.ase.ase.services;
+package com.ase.ase.downloadServices;
 
 import com.ase.ase.dao.OverviewRepository;
 import com.ase.ase.entities.Overview;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import static com.ase.ase.services.DownloadService.fetchResult;
+import static com.ase.ase.downloadServices.DownloadService.fetchResult;
 
 @Service
 public class DownloadOverview {

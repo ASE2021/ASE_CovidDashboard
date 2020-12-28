@@ -1,14 +1,13 @@
 package com.ase.ase;
 
 import com.ase.ase.entities.BedUtilization;
-import com.ase.ase.services.DownloadBedUtilizationData;
+import com.ase.ase.downloadServices.DownloadBedUtilizationData;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
