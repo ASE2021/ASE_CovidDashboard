@@ -33,7 +33,7 @@ public class BasicCovidController {
     @CrossOrigin
     @GetMapping(value = "/hospital/{province-id}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<HospitalSituationPerDateDto> listHospitalCasesFor(@PathVariable("province-id") int provinceId) {
+    public static ResponseEntity<HospitalSituationPerDateDto> listHospitalCasesFor(@PathVariable("province-id") int provinceId) {
         return ResponseEntity.ok(
                 new HospitalSituationPerDateDto(provinceId,Arrays.asList(
                 new HospitalSituationPerDate[]{new HospitalSituationPerDate("10.10.2020", 12, 10),
