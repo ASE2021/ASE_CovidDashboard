@@ -1,5 +1,5 @@
 export class ChartModelBuilder {
-  private defaultBackgroundColors = ['#1B2771', '#A93226', '#5B2C6F', '#0E6655', '#1D8348', '#9C640C', '#5F6A6A'];
+  private defaultBackgroundColors = ['#1B2771', '#A93226', '#5B2C6F', '#0e6655', '#1D8348', '#9C640C', '#5F6A6A'];
   private colors = this.defaultBackgroundColors;
   private options = {};
 
@@ -18,6 +18,19 @@ export class ChartModelBuilder {
           data: item,
         })),
     };
+  }
+
+  public buildPieChartModel(chartName: string, labels: string[], ...data: any[][]): any {
+    return {
+      labels,
+      datasets: data.map((item, index) => (
+        {
+          label: chartName,
+          backgroundColor: this.colors[index],
+          data: item,
+      })),
+
+  };
   }
 
   public withCustomColors(colors: string[]): ChartModelBuilder {

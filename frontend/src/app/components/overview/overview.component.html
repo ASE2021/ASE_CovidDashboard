@@ -72,8 +72,14 @@
           </div>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="Another Chart">
-        Space for another content
+      <p-tabPanel header="Sex Distribution">
+        <div class="p-col-12">
+          <div class="p-grid">
+            <div class="p-col-6 p-offset-3">
+              <p-chart type="pie" [data]="sexDistributionData"></p-chart>
+            </div>
+          </div>
+        </div>
       </p-tabPanel>
       <p-tabPanel header="Table Overview">
         <!-- TODO: fill table with data -->

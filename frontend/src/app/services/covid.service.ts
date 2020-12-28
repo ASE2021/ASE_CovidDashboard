@@ -1,6 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {CovidCasesDaily} from '../model/covid-cases-daily';
 import {HttpClient} from '@angular/common/http';
+import {SexDistribution} from "../model/sex-distribution";
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,10 @@ export class CovidService {
       .toPromise().then(item => (item as {cases: CovidCasesDaily[]}).cases);
   }
 
+  public getSexDistribution(): Promise<SexDistribution[]> {
+    return this.http.get(this.apiUrl + '/sex/10')
+      .toPromise().then(item => (item as {cases: SexDistribution[]}).cases);
+  }
 
 
 }
