@@ -16,11 +16,12 @@ public class DownloadService {
     @Autowired
     DownloadTimelineData downloadTimelineData;
 
-    public void downloadAllCovidData() {
+    public boolean downloadAllCovidData() {
         downloadAgeDistributionData.downloadAgeDistributionCases();
         downloadBedUtilizationData.downloadBedUtilizationCases();
         downloadOverview.downloadOverview();
         downloadSexDistributionData.downloadSexDistributionCases();
         downloadTimelineData.downloadTimeline();
+        return true;
     }
 }
