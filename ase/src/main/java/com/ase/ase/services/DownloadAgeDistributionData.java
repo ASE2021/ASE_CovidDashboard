@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ase.ase.services.DownloadService.fetchResult;
 
 @Service
 public class DownloadAgeDistributionData {
@@ -20,40 +19,18 @@ public class DownloadAgeDistributionData {
 
     public void downloadAgeDistributionCases() {
         try {
-            URL urlCases = new URL("https://info.gesundheitsministerium.at/data/Altersverteilung.csv");
-            HttpURLConnection conCases = (HttpURLConnection) urlCases.openConnection();
-            if (isFailing(conCases.getResponseCode())) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    System.out.println("error (" + e.getMessage() + ") occured trying to download age distribution of Covid data. RETRY");
-                }
-                conCases = (HttpURLConnection) urlCases.openConnection();
-            }
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(conCases.getInputStream()));
+            BufferedReader in = fetchResult("https://info.gesundheitsministerium.at/data/Altersverteilung.csv");
             List<AgeDistribution> list = extractAgeDistributions(in);
 
-            URL urlDead = new URL("https://info.gesundheitsministerium.at/data/AltersverteilungTodesfaelle.csv");
-            HttpURLConnection conDead = (HttpURLConnection) urlDead.openConnection();
-            if (isFailing(conDead.getResponseCode())) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    System.out.println("error (" + e.getMessage() + ") occured trying to download age distribution of Covid data. RETRY");
-                }
-                conDead = (HttpURLConnection) urlDead.openConnection();
-            }
-
-            in = new BufferedReader(new InputStreamReader(conDead.getInputStream()));
-            list = addAgeDistributions(in, list);
+            in = new BufferedReader(fetchResult("https://info.gesundheitsministerium.at/data/AltersverteilungTodesfaelle.csv"));
+            addAgeDistributions(in, list);
             ageDistributionRepository.saveAll(list);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static List<AgeDistribution> addAgeDistributions(BufferedReader in, List<AgeDistribution> list) throws IOException {
+    public static void addAgeDistributions(BufferedReader in, List<AgeDistribution> list) throws IOException {
         String head = in.readLine();
         String[] attributes = head.split(";");
 
@@ -74,7 +51,6 @@ public class DownloadAgeDistributionData {
             updateAgeDistribution(list, ageInterval, sumDead);
             line = in.readLine();
         }
-        return list;
     }
 
     private static void updateAgeDistribution(List<AgeDistribution> list, String ageInterval, int sumDead) {
@@ -116,13 +92,5 @@ public class DownloadAgeDistributionData {
             line = in.readLine();
         }
         return ageDistributionList;
-    }
-
-    private boolean isFailing(int status) {
-        return  status==HttpURLConnection.HTTP_BAD_GATEWAY ||
-                status==HttpURLConnection.HTTP_INTERNAL_ERROR ||
-                status==HttpURLConnection.HTTP_BAD_METHOD ||
-                status==HttpURLConnection.HTTP_GATEWAY_TIMEOUT ||
-                status==HttpURLConnection.HTTP_UNAVAILABLE;
     }
 }
