@@ -23,7 +23,7 @@ public class DownloadService {
     @Autowired
     DownloadSexDistributionData downloadSexDistributionData;
     @Autowired
-    DownloadTimelineData downloadTimelineData;
+    DownloadCasesTimelineData downloadCasesTimelineData;
 
     private static Date version;
 
@@ -33,7 +33,7 @@ public class DownloadService {
             downloadBedUtilizationData.downloadBedUtilizationCases();
             downloadOverview.downloadOverview();
             downloadSexDistributionData.downloadSexDistributionCases();
-            downloadTimelineData.downloadTimeline();
+            downloadCasesTimelineData.downloadTimeline();
         }
     }
 
