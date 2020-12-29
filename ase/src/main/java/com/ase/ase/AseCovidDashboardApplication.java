@@ -1,8 +1,7 @@
 package com.ase.ase;
 
 import com.ase.ase.dao.*;
-import com.ase.ase.services.DownloadPopulationData;
-import com.ase.ase.services.DownloadService;
+import com.ase.ase.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

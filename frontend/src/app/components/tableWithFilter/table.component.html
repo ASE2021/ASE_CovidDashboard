@@ -17,17 +17,17 @@
               <th>
                 <div class="p-d-flex p-jc-between p-ai-center">
                   Provinces
-                  <p-columnFilter field="provinces" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <p-columnFilter field="province" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                     <ng-template pTemplate="header">
                       <div class="p-px-3 p-pt-3 p-pb-0">
                         <span class="p-text-bold">Provinces Picker</span>
                       </div>
                     </ng-template>
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                      <p-multiSelect [ngModel]="value" [options]="provinces" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                      <p-multiSelect [ngModel]="value" [options]="provinces" placeholder="Any" (onChange)="filter($event)" optionLabel="provinces">
                         <ng-template let-option pTemplate="item">
-                          <div class="p-multiselect-provinces-option">
-                            <span class="p-ml-1">{{option.name}}</span>
+                          <div class="p-multiselect-province-option">
+                            <span class="p-ml-1">{{option}}</span>
                           </div>
                         </ng-template>
                       </p-multiSelect>
@@ -38,7 +38,7 @@
 
               <th>
                 <div class="p-d-flex p-jc-between p-ai-center">
-                  Active Cases
+                  Active Cases Today
                   <p-columnFilter type="text" field="activeCases" display="menu"></p-columnFilter>
                 </div>
               </th>
@@ -67,6 +67,16 @@
             <td>{{data.hospitalizations}}</td>
           </tr>
         </ng-template>
+
+          <ng-template pTemplate="footer">
+            <tr>
+              <td colspan="1" class="p-text-right">Totals</td>
+              <td>{{totalCases}}</td>
+              <td>{{totalDeaths}}</td>
+              <td>{{totalHospitalizations}}</td>
+
+            </tr>
+          </ng-template>
         </p-table>
 
 
