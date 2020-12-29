@@ -15,13 +15,11 @@ import java.util.Date;
 @Service
 public class DownloadService {
     @Autowired
-    DownloadAgeDistributionData downloadAgeDistributionData;
-    @Autowired
     DownloadBedAndTestTimelineData downloadBedAndTestTimelineData;
     @Autowired
     DownloadOverview downloadOverview;
     @Autowired
-    DownloadSexDistributionData downloadSexDistributionData;
+    DownloadSexAndAgeDistributionData downloadSexAndAgeDistributionData;
     @Autowired
     DownloadCasesTimelineData downloadCasesTimelineData;
 
@@ -29,10 +27,9 @@ public class DownloadService {
 
     public void downloadAllCovidData() {
         if(downloadAndCheckVersion()) {
-            downloadAgeDistributionData.downloadAgeDistributionCases();
             downloadBedAndTestTimelineData.downloadTimeline();
             downloadOverview.downloadOverview();
-            downloadSexDistributionData.downloadSexDistributionCases();
+            downloadSexAndAgeDistributionData.downloadSexAndAgeDistribution();
             downloadCasesTimelineData.downloadTimeline();
         }
     }
