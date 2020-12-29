@@ -21,13 +21,11 @@ public class AseCovidDashboardApplication {
 	@Bean
 	public CommandLineRunner demo(
 			DownloadService service,
-			DownloadPopulationData downloadPopulationData,
-			OverviewRepository repository
+			DownloadPopulationData downloadPopulationData
 	) {
 		return (args) -> {
 			downloadPopulationData.downloadPopulation();
 			service.downloadAllCovidData();
-			log.info(repository.findById(1l).toString());
 		};
 	}
 
