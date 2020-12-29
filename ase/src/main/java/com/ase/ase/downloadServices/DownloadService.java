@@ -17,8 +17,6 @@ public class DownloadService {
     @Autowired
     DownloadBedAndTestTimelineData downloadBedAndTestTimelineData;
     @Autowired
-    DownloadOverview downloadOverview;
-    @Autowired
     DownloadSexAndAgeDistributionData downloadSexAndAgeDistributionData;
     @Autowired
     DownloadCasesTimelineData downloadCasesTimelineData;
@@ -28,7 +26,6 @@ public class DownloadService {
     public void downloadAllCovidData() {
         if(downloadAndCheckVersion()) {
             downloadBedAndTestTimelineData.downloadTimeline();
-            downloadOverview.downloadOverview();
             downloadSexAndAgeDistributionData.downloadSexAndAgeDistribution();
             downloadCasesTimelineData.downloadTimeline();
         }
