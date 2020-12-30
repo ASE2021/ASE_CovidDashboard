@@ -74,26 +74,14 @@
       <p-tabPanel header="Another Chart">
         Space for another content
       </p-tabPanel>
+
+      <!-- TABLE OVERVIEW -------------------------------->
       <p-tabPanel header="Table Overview">
-        <!-- TODO: fill table with data -->
-        <p-table>
-          <ng-template pTemplate="header">
-            <tr>
-              <th id="province">Province</th>
-              <th id="activeCases">Active Cases</th>
-              <th id="deaths">Deaths</th>
-              <th id="bedUtilization">Hospitalizations</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-case>
-            <tr>
-              <td>Test1</td>
-              <td>Test2</td>
-              <td>Test3</td>
-              <td>Test4</td>
-            </tr>
-          </ng-template>
-        </p-table>
+        <!-- TODO: fill tableWithFilter with data -->
+
+        <app-table></app-table>
+
+
       </p-tabPanel>
     </p-tabView>
   </div>
