@@ -31,7 +31,7 @@ export class OverviewComponent implements OnInit {
     this.initializeBasicInformation();
 
 
-    this.initializeHospitalBedsPerDateChart()
+    this.initializeHospitalBedsPerDateChart();
 
 
   }

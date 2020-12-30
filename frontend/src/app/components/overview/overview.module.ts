@@ -10,11 +10,11 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TabViewModule} from 'primeng/tabview';
 import {DropdownModule} from 'primeng/dropdown';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {TabMenuModule} from "primeng/tabmenu";
-import {RoutingModule} from "../../routing.module";
-import {InputTextModule} from "primeng/inputtext";
-import {MultiSelectModule} from "primeng/multiselect";
-import {FormsModule} from "@angular/forms";
+import {TabMenuModule} from 'primeng/tabmenu';
+import {RoutingModule} from '../../routing.module';
+import {InputTextModule} from 'primeng/inputtext';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [OverviewComponent],
