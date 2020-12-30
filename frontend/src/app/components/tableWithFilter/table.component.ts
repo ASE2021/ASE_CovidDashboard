@@ -33,21 +33,23 @@ export class TableComponent implements OnInit {
     this.calculateTotalHospitalizations()
   }
 
-/*
+
   private async loadTableData(): Promise<void> {
-    await this.covidService.getDeathsPerDate();
-    await this.covidService.getHospitalizationsPerDate();
-    await this.covidService.getNewCasesPerDate();
+    const deaths = await this.covidService.getDeathsPerDate();
+    const hospitalizations = await this.covidService.getHospitalizationsPerDate();
+    const newCases = await this.covidService.getNewCasesPerDate();
 
   }
 
- */
 
-
+/*
   private loadTableData() {
     this.data = [{provinces: 'Kärnten', activeCases: 1200 , deaths: 2, hospitalizations: 50},
       {provinces: 'Steiermark', activeCases: 970, deaths: 5, hospitalizations: 35}];
   }
+
+
+ */
 
 
   calculateTotalCases() {
