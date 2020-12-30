@@ -3,7 +3,7 @@ import {MenuItem} from 'primeng/api';
 import {CovidService} from '../../services/covid.service';
 import {Provinces} from '../../model/Provinces';
 import {CovidCasesDaily} from '../../model/covid-cases-daily';
-import {TableData} from "../../model/tableData";
+import {TableData} from "../../model/tableDataDaily";
 
 @Component({
   selector: 'app-table',
@@ -35,8 +35,8 @@ export class TableComponent implements OnInit {
 
 
   private async loadTableData(): Promise<void> {
-    const deaths = await this.covidService.getDeathsPerDate();
-    const hospitalizations = await this.covidService.getHospitalizationsPerDate();
+    const data = await this.covidService.getTableDataPerDate();
+
     const newCases = await this.covidService.getNewCasesPerDate();
 
   }

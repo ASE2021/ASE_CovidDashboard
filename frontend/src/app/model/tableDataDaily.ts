@@ -3,9 +3,9 @@ import {CovidCasesDaily} from "./covid-cases-daily";
 import {CovidDeathsDaily} from "./covid-deaths-daily";
 import {CovidHospitalizationsDaily} from "./covid-hospitalizations-daily";
 
-export interface TableData {
+export class TableDataDaily {
 
-  provinces: Provinces;
+  date: String;
   activeCases: CovidCasesDaily;
   deaths: CovidDeathsDaily;
   hospitalizations: CovidHospitalizationsDaily;
