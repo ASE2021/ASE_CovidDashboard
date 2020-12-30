@@ -39,14 +39,24 @@ public final class MessagingService {
     }
   }
 
-  public void init(String queueName) throws JMSException {
-    connectionFactory = new ActiveMQConnectionFactory("tcp://" + Host + ":61616");
-    connectionFactory.setTrustAllPackages(true);
-    connection = createConnection(connectionFactory);
-    session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-    destination = session.createTopic(queueName);
-    producer = session.createProducer(destination);
-    producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+  public void init(String queueName) {
+    try {
+      connectionFactory = new ActiveMQConnectionFactory("tcp://" + Host + ":61616");
+      connectionFactory.setTrustAllPackages(true);
+      connection = createConnection(connectionFactory);
+      if (connection != null) {
+        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        destination = session.createTopic(queueName);
+        producer = session.createProducer(destination);
+        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+      } else {
+        System.out.println("Connection could not be established");
+      }
+    } catch (Exception exception) {
+      System.out.println(
+          "Error while creating connection to activemq broker. Message: " + exception.getMessage());
+      exception.printStackTrace();
+    }
   }
 
   private static Connection createConnection(ActiveMQConnectionFactory connectionFactory) {

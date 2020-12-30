@@ -31,7 +31,7 @@ public class AseCovidDashboardApplication {
       DownloadPopulationData downloadPopulationData,
       OverviewRepository repository,
       MessagingService messagingService
-  ) throws JMSException {
+  ) {
     messagingService.init("new-data");
     repeatPushingDataForDemo(messagingService);
     return (args) -> {
