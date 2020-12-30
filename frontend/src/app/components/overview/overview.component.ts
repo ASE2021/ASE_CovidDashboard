@@ -1,7 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuItem} from 'primeng/api';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
+import {SocketService} from '../../services/socket/socket.service';
+import {MessageResponse} from '../../model/MessageResponse';
+import {map} from 'rxjs/operators';
+import {IMqttMessage} from 'ngx-mqtt';
 
 @Component({
   selector: 'app-overview',
@@ -15,7 +18,7 @@ export class OverviewComponent implements OnInit {
   numberOfCases: number;
   deaths: number;
 
-  constructor(private covidService: CovidService) {
+  constructor(private covidService: CovidService, private socketService: SocketService) {
 
   }
 
@@ -23,6 +26,22 @@ export class OverviewComponent implements OnInit {
     this.initializePositiveCasesPerDateChart();
 
     this.initializeBasicInformation();
+
+    this.socketService.connectToMqtt(
+      () => {
+        this.socketService.observe('new-data')
+          .subscribe((message: IMqttMessage) => {
+            console.log(message.payload.toString());
+            try {
+              if ((JSON.parse(message.payload.toString()) as MessageResponse).update) {
+                this.initializePositiveCasesPerDateChart();
+              }
+            } catch (e) {
+            }
+          });
+      },
+    );
+
   }
 
   private async initializeBasicInformation(): Promise<void> { // TODO: get data from backend (receive object with these (or more) properties)
