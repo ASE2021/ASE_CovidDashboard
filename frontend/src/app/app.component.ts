@@ -1,8 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {latLng, polygon, tileLayer} from 'leaflet';
-import {Observable} from 'rxjs';
-import {ChartModelBuilder} from './model/chart-model-builder';
-import {CovidService} from './services/covid.service';
 import {MenuItem} from 'primeng/api';
 
 
@@ -14,6 +10,7 @@ import {MenuItem} from 'primeng/api';
 export class AppComponent implements OnInit {
 
   menuItems: MenuItem[];
+
   constructor() {
 
   }

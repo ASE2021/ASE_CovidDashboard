@@ -12,9 +12,8 @@ export class CovidService {
 
   public getNewCasesPerDate(): Promise<CovidCasesDaily[]> {
     return this.http.get(this.apiUrl + '/daily/10')
-      .toPromise().then(item => (item as {cases: CovidCasesDaily[]}).cases);
+      .toPromise().then(item => (item as { cases: CovidCasesDaily[] }).cases);
   }
-
 
 
 }

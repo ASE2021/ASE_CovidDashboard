@@ -1,6 +1,22 @@
-version: "3.9"
+version: "3.3"
 
 services:
+    activemqMessaging:
+        container_name: activemqMessaging
+        image: rmohr/activemq
+        expose:
+          - "61616"
+          - "61614"
+          - "61613"
+          - "1883"
+          - "8161"
+        ports:
+          - "8161:8161"
+          - "61616:61616"
+          - "61614:61614"
+          - "61613:61613"
+          - "1883:1883"
+        restart: always
     database:
         image: postgres
         environment:
@@ -14,14 +30,18 @@ services:
         -   "8080:8080"
         environment:
             - DB_HOST=database
+            - ACTIVEMQ_HOST=host.docker.internal
         depends_on:
             - database
+            - activemqMessaging
         restart: on-failure
     frontend:
         image: manuel57/covid-19-dashboard-frontend
         build: frontend
         environment:
             - BACKEND_API_URL=http://host.docker.internal:8080
+            - BACKEND_NOTIFICATION_URL=localhost
+            - BACKEND_NOTIFICATION_PORT=61614
         ports:
             - '80:80'
         depends_on:
