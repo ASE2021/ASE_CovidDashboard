@@ -14,6 +14,7 @@ import {CovidCasesDaily} from '../../model/covid-cases-daily';
 export class OverviewComponent implements OnInit {
 
   positiveCasesPerDateData: any;
+  hospitalBedsPerDate: any;
   activeCases: number;
   numberOfCases: number;
   deaths: number;
@@ -29,9 +30,13 @@ export class OverviewComponent implements OnInit {
 
     this.initializeBasicInformation();
 
+
+    this.initializeHospitalBedsPerDateChart()
+    
     this.initializePositiveCasesTableChart();
     this.initializeDeathsTableChart();
     this.initializeHospitalizationsTableChart();
+
 
   }
 
@@ -50,6 +55,15 @@ export class OverviewComponent implements OnInit {
         data.map(item => item.cases));
   }
 
+
+  private async initializeHospitalBedsPerDateChart(): Promise<void> {
+    const data = await  this.covidService.getHospitalBedsPerDate();
+    this.hospitalBedsPerDate = new ChartModelBuilder()
+      .buildHospitalLineChartModel(['Intense beds used', 'Normal beds used'],
+        data.map(item => item.date.split('T')[0]),
+        data.map(item => item.intenseBeds),
+        data.map(item => item.normalBeds));
+
   private async initializePositiveCasesTableChart(): Promise<void> {
     const data = await this.covidService.getNewCasesPerDate();
         data.map(item => item.date.split('T')[0]),
@@ -62,10 +76,7 @@ export class OverviewComponent implements OnInit {
       data.map(item => item.deaths);
   }
 
-  private async initializeHospitalizationsTableChart(): Promise<void> {
-    const data = await this.covidService.getHospitalizationsPerDate();
-    data.map(item => item.date.split('T')[0]),
-      data.map(item => item.hospitalizations);
+
   }
 
 }

@@ -20,6 +20,21 @@ export class ChartModelBuilder {
     };
   }
 
+  public buildHospitalLineChartModel(chartNames: string[], labels: string[], ...data: any[][]): any {
+    return {
+      labels,
+      datasets: data.map((item, index) => (
+        {
+          label: chartNames[index],
+          backgroundColor: this.colors[index],
+          borderColor: '#FFFFFF',
+          data: item,
+        }
+      )),
+    };
+  }
+
+
   public withCustomColors(colors: string[]): ChartModelBuilder {
     this.colors = colors;
     return this;

@@ -1,10 +1,14 @@
 import {Inject, Injectable} from '@angular/core';
 import {CovidCasesDaily} from '../model/covid-cases-daily';
 import {HttpClient} from '@angular/common/http';
+
+import {HospitalBedsDaily} from "../model/hospital-beds-daily";
+
 import { CovidDeathsDaily} from "../model/covid-deaths-daily";
 import {CovidHospitalizationsDaily} from "../model/covid-hospitalizations-daily";
 import {Provinces} from "../model/Provinces";
 import {TableDataDaily} from "../model/tableDataDaily";
+
 
 @Injectable({
   providedIn: 'root',
@@ -19,14 +23,10 @@ export class CovidService {
       .toPromise().then(item => (item as {cases: CovidCasesDaily[]}).cases);
   }
 
-  public getDeathsPerDate(): Promise<CovidDeathsDaily[]> {
-    return this.http.get(this.apiUrl + '/daily/deaths/5')
-      .toPromise().then(item => (item as {deaths: CovidDeathsDaily[]}).deaths);
-  }
 
-  public getHospitalizationsPerDate(): Promise<CovidHospitalizationsDaily[]> {
-    return this.http.get(this.apiUrl + '/daily/hospitalizations/100')
-      .toPromise().then(item => (item as {hospitalizations: CovidHospitalizationsDaily[]}).hospitalizations);
+  public getHospitalBedsPerDate(): Promise<HospitalBedsDaily[]> {
+    return this.http.get(this.apiUrl + '/daily/hospital/10')
+      .toPromise().then(item => (item as {situations: HospitalBedsDaily[]}).situations);
   }
 
   public getTableDataPerDate(): Promise<TableDataDaily[]> {
@@ -40,8 +40,5 @@ export class CovidService {
       .then(res => <Provinces[]>res.data)
       .then(data => { return data; });
   }
-
-
-
 
 }
