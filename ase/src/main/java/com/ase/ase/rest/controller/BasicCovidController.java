@@ -38,19 +38,25 @@ public class BasicCovidController {
     @ResponseBody
     public static ResponseEntity<HospitalSituationPerDateDto> listHospitalCasesFor(@PathVariable("province-id") int provinceId) {
         return ResponseEntity.ok(
-                new HospitalSituationPerDateDto(provinceId,Arrays.asList(
-                new HospitalSituationPerDate[]{new HospitalSituationPerDate("10.10.2020", 12, 10),
-                new HospitalSituationPerDate("12.10.2020", 12, 12)})));
+                new HospitalSituationPerDateDto(provinceId, Arrays.asList(
+                        new HospitalSituationPerDate[]{new HospitalSituationPerDate("10.10.2020", 12, 10),
+                                new HospitalSituationPerDate("12.10.2020", 12, 12)})));
+    }
 
-    @CrossOrigin  
+    @CrossOrigin
     @GetMapping(value = "/tableData/{province-id}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<TableDataPerProvinceDto> listNewTableDataFor(@PathVariable("province-id") int provinceId) {
         return ResponseEntity.ok(
-                new TableDataPerProvinceDto(provinceId,Arrays.asList(
-                        new TableDataPerDate[]{new TableDataPerDate("10.10.2020", 12, 10, getExpectedSituations()),
-                new TableDataPerDate("12.10.2020", 12, 12, getExpectedSituations())})));
-      
+                new TableDataPerProvinceDto(provinceId, Arrays.asList(
+                        new TableDataPerDate[]{new TableDataPerDate("10.10.2020", 12, 10, Arrays.asList(
+                                new HospitalSituationPerDate[]{new HospitalSituationPerDate("10.10.2020", 12, 10),
+                                        new HospitalSituationPerDate("12.10.2020", 12, 12)})),
+                                new TableDataPerDate("12.10.2020", 12, 12, Arrays.asList(
+                                        new HospitalSituationPerDate[]{new HospitalSituationPerDate("10.10.2020", 12, 10),
+                                                new HospitalSituationPerDate("12.10.2020", 12, 12)}))}
+                )));
+
     }
 
 }
