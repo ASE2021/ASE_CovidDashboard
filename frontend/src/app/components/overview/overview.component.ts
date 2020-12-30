@@ -27,15 +27,8 @@ export class OverviewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initializePositiveCasesPerDateChart();
-
     this.initializeBasicInformation();
-
-
     this.initializeHospitalBedsPerDateChart()
-    
-    this.initializePositiveCasesTableChart();
-    this.initializeDeathsTableChart();
-    this.initializeHospitalizationsTableChart();
 
 
   }
@@ -64,17 +57,7 @@ export class OverviewComponent implements OnInit {
         data.map(item => item.intenseBeds),
         data.map(item => item.normalBeds));
 
-  private async initializePositiveCasesTableChart(): Promise<void> {
-    const data = await this.covidService.getNewCasesPerDate();
-        data.map(item => item.date.split('T')[0]),
-        data.map(item => item.cases);
-  }
 
-  private async initializeDeathsTableChart(): Promise<void> {
-    const data = await this.covidService.getDeathsPerDate();
-    data.map(item => item.date.split('T')[0]),
-      data.map(item => item.deaths);
-  }
 
 
   }

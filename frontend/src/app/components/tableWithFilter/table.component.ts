@@ -36,7 +36,6 @@ export class TableComponent implements OnInit {
 
   private async loadTableData(): Promise<void> {
     const data = await this.covidService.getTableDataPerDate();
-
     const newCases = await this.covidService.getNewCasesPerDate();
 
   }
