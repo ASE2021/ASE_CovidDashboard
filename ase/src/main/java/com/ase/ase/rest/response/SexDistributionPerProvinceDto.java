@@ -18,7 +18,7 @@ public class SexDistributionPerProvinceDto {
     public int getProvinceId() {
         return provinceId;
     }
-    @JsonProperty("maleCases")
+    @JsonProperty("cases")
     public List<SexDistribution> getDistribution() {
         return distribution;
     }
