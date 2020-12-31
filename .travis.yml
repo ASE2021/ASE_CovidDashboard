@@ -7,8 +7,8 @@ before_install:
   - docker build --no-cache -t covid-19-dashboard-frontend:latest frontend
   - docker build --no-cache -t covid-19-dashboard-backend:latest ase
   - docker run -d -p 127.0.0.1:80:80 covid-19-dashboard-frontend:latest
-  - export FRONTEND_VERSION=$(sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./frontend/package.json)
-  - export BACKEND_VERSION=$(cat ./ase/pom.xml | grep "<version>.*</version>" | head -2 | tail -1 |awk -F'[><]' '{print $3}')
+  - export FRONTEND_VERSION=$(cat ./frontend/package.json | grep "\"version\":\ " | head -1 | awk -F'[\"]' '{print $4}')
+  - export BACKEND_VERSION=$(cat ./ase/pom.xml | grep "<version>.*</version>" | head -2 | tail -1 | awk -F'[><]' '{print $3}')
 
 script:
   - curl 127.0.0.1:80
