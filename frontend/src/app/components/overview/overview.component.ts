@@ -4,7 +4,10 @@ import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {Provinces} from '../../model/Provinces';
 import {CovidCasesDaily} from '../../model/covid-cases-daily';
-
+import {SocketService} from '../../services/socket/socket.service';
+import {MessageResponse} from '../../model/MessageResponse';
+import {map} from 'rxjs/operators';
+import {IMqttMessage} from 'ngx-mqtt';
 
 @Component({
   selector: 'app-overview',
@@ -21,19 +24,31 @@ export class OverviewComponent implements OnInit {
   province: any;
 
 
-  constructor(private covidService: CovidService) {
+  constructor(private covidService: CovidService, private socketService: SocketService) {
 
   }
 
   public ngOnInit(): void {
     this.initializePositiveCasesPerDateChart();
-
     this.initializeBasicInformation();
-
-
     this.initializeHospitalBedsPerDateChart();
 
-
+    this.socketService.connectToMqtt(
+      () => {
+        this.socketService.observe('new-data')
+          .subscribe((message: IMqttMessage) => {
+            console.log(message.payload.toString());
+            try {
+              if ((JSON.parse(message.payload.toString()) as MessageResponse).update) {
+                this.initializePositiveCasesPerDateChart();
+                this.initializeBasicInformation();
+                this.initializeHospitalBedsPerDateChart();
+              }
+            } catch (e) {
+            }
+          });
+      },
+    );
   }
 
   private async initializeBasicInformation(): Promise<void> {

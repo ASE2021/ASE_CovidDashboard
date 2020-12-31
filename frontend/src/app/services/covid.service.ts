@@ -18,7 +18,6 @@ export class CovidService {
       .toPromise().then(item => (item as { cases: CovidCasesDaily[] }).cases);
   }
 
-
   public getHospitalBedsPerDate(): Promise<HospitalBedsDaily[]> {
     return this.http.get(this.apiUrl + '/daily/hospital/10')
       .toPromise().then(item => (item as { situations: HospitalBedsDaily[] }).situations);

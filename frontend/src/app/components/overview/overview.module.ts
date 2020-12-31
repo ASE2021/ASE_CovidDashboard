@@ -15,6 +15,7 @@ import {RoutingModule} from '../../routing.module';
 import {InputTextModule} from 'primeng/inputtext';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {FormsModule} from '@angular/forms';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [OverviewComponent],
@@ -34,7 +35,9 @@ import {FormsModule} from '@angular/forms';
     InputTextModule,
     MultiSelectModule,
     FormsModule,
+    ProgressSpinnerModule
   ],
+
   exports: [OverviewComponent]
 })
 export class OverviewModule { }

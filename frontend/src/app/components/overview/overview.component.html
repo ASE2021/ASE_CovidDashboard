@@ -41,7 +41,8 @@
       <div class="p-col-12">
         <div class="p-grid">
           <div class="p-col-8 p-offset-2">
-            <p-chart type="bar" [data]="positiveCasesPerDateData"></p-chart>
+            <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar" [data]="positiveCasesPerDateData"></p-chart>
+            <p-progressSpinner *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
           </div>
         </div>
       </div>
@@ -57,7 +58,8 @@
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
               Show Pie chart here
-              <p-chart type="bar" [data]="positiveCasesPerDateData"></p-chart>
+              <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar" [data]="positiveCasesPerDateData"></p-chart>
+              <p-progressSpinner *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
             </div>
           </div>
         </div>
@@ -66,7 +68,13 @@
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
+<<<<<<< HEAD
               <p-chart type="line" [data]="hospitalBedsPerDate"></p-chart>
+=======
+              show line chart here
+              <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar" [data]="positiveCasesPerDateData"></p-chart>
+              <p-progressSpinner *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
+>>>>>>> 2d9ed4480a4419973949c8b9a665e528719d3123
             </div>
           </div>
         </div>

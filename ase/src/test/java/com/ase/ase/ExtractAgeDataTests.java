@@ -27,9 +27,9 @@ public class ExtractAgeDataTests {
     public void testAgeDeadCasesAddition() throws IOException {
         File file = new File(getClass().getResource("/AltersverteilungTodesfaelle.csv").getFile());
         List<AgeDistribution> expectedList = getExpectedAgeCasesAndDeadList();
-        List<AgeDistribution> startList = getExpectedAgeCasesList();
-        List<AgeDistribution> actualList = DownloadAgeDistributionData.addAgeDistributions(new BufferedReader(new FileReader(file)), startList);
-        assertAgeDistributionList(expectedList, actualList);
+        List<AgeDistribution> list = getExpectedAgeCasesList();
+        DownloadAgeDistributionData.addAgeDistributions(new BufferedReader(new FileReader(file)), list);
+        assertAgeDistributionList(expectedList, list);
     }
 
     private void assertAgeDistributionList(List<AgeDistribution> expectedList, List<AgeDistribution> actualList) {

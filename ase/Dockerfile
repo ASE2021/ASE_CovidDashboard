@@ -9,7 +9,7 @@ FROM openjdk:11-jdk
 
 
 
-COPY --from=MAVEN_TOOL_CHAIN /tmp/target/ase-0.0.1-SNAPSHOT.jar /spring-boot.jar
+COPY --from=MAVEN_TOOL_CHAIN /tmp/target/ase-*.jar /spring-boot.jar
 
 EXPOSE 8081
 
