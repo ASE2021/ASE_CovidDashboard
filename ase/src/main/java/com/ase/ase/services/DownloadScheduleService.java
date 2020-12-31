@@ -2,6 +2,7 @@ package com.ase.ase.services;
 
 import com.ase.ase.activemq.MessagingService;
 import com.ase.ase.activemq.UpdateDataMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -10,8 +11,12 @@ import java.util.TimerTask;
 
 @Service
 public class DownloadScheduleService {
+    @Autowired
+    private MessagingService messagingService;
+    @Autowired
+    private DownloadService downloadService;
 
-    private void repeatPushingDataForDemo(MessagingService messagingService, DownloadService downloadService) {
+    private void downloadDataPeriodically() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -22,7 +27,7 @@ public class DownloadScheduleService {
         }, 0, 86400000); //24h = 86 400 000ms
     }
 
-    public void setTimerForDownloadingNewData(MessagingService messagingService, DownloadService downloadService) {
+    public void setTimerForDownloadingNewData() {
         Timer timer = new Timer();
         Calendar date = Calendar.getInstance();
 
@@ -37,7 +42,7 @@ public class DownloadScheduleService {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                repeatPushingDataForDemo(messagingService, downloadService);
+                downloadDataPeriodically();
             }
         }, date.getTime());
     }

@@ -12,8 +12,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import javax.jms.JMSException;
-
 @SpringBootApplication
 public class AseCovidDashboardApplication {
 
@@ -30,12 +28,12 @@ public class AseCovidDashboardApplication {
       DownloadPopulationData downloadPopulationService,
       MessagingService messagingService
   ) {
-    messagingService.init("new-data");
-    scheduleService.setTimerForDownloadingNewData(messagingService, downloadService);
     return (args) -> {
+      messagingService.init("new-data");
       downloadPopulationService.downloadPopulation();
       boolean downloaded = downloadService.downloadAllCovidData();
       messagingService.send(new UpdateDataMessage(downloaded));
+      scheduleService.setTimerForDownloadingNewData();
     };
   }
 }
