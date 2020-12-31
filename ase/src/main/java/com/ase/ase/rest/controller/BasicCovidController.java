@@ -36,10 +36,9 @@ public class BasicCovidController {
     public static ResponseEntity<HospitalSituationPerDateDto> listHospitalCasesFor(@PathVariable("province-id") int provinceId) {
         return ResponseEntity.ok(
                 new HospitalSituationPerDateDto(provinceId, Arrays.asList(
-                        new HospitalSituationPerDate[]{new HospitalSituationPerDate("10.10.2020", 12, 10),
-                                new HospitalSituationPerDate("12.10.2020", 12, 12)})));
+                        new HospitalSituationPerDate("10.10.2020", 12, 10),
+                        new HospitalSituationPerDate("12.10.2020", 12, 12))));
     }
-
 
 
 }

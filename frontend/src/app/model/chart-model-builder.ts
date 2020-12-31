@@ -6,7 +6,7 @@ export class ChartModelBuilder {
   constructor() {
   }
 
-
+/**
   public buildBarChartModel(chartName: string, labels: string[], ...data: any[][]): any {
     return {
       labels,
@@ -19,8 +19,8 @@ export class ChartModelBuilder {
         })),
     };
   }
-
-  public buildHospitalLineChartModel(chartNames: string[], labels: string[], ...data: any[][]): any {
+**/
+  public buildBasicChartModel(chartNames: string[], labels: string[], data: any[][]): any {
     return {
       labels,
       datasets: data.map((item, index) => (

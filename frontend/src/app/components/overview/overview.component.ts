@@ -61,19 +61,22 @@ export class OverviewComponent implements OnInit {
   private async initializePositiveCasesPerDateChart(): Promise<void> {
     const data = await this.covidService.getNewCasesPerDate();
     this.positiveCasesPerDateData = new ChartModelBuilder()
-      .buildBarChartModel('Positive Covid-19 cases per date',
+      .buildBasicChartModel(['Positive Covid-19 cases per date'],
         data.map(item => item.date.split('T')[0]),
-        data.map(item => item.cases));
+        [data.map(item => item.cases)]);
   }
 
 
   private async initializeHospitalBedsPerDateChart(): Promise<void> {
     const data = await  this.covidService.getHospitalBedsPerDate();
     this.hospitalBedsPerDate = new ChartModelBuilder()
-      .buildHospitalLineChartModel(['Intense beds used', 'Normal beds used'],
+      .buildBasicChartModel(['Intense beds used', 'Normal beds used'],
         data.map(item => item.date.split('T')[0]),
-        data.map(item => item.intenseBeds),
-        data.map(item => item.normalBeds));
+        data.reduce((dataArray, current) =>
+        [
+          [...dataArray[0], current.intenseBeds],
+          [...dataArray[1], current.normalBeds],
+        ], [[], []]));
 
 
 
