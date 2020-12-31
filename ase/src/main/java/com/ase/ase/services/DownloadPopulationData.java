@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ase.ase.services.DownloadService.fetchResult;
 
 @Service
 public class DownloadPopulationData {
@@ -20,32 +19,10 @@ public class DownloadPopulationData {
 
     public void downloadPopulation() {
         try {
-            URL urlProvinces = new URL("https://covid19-dashboard.ages.at/data/CovidFaelle_Timeline.csv");
-            HttpURLConnection conProvinces = (HttpURLConnection) urlProvinces.openConnection();
-            if (isFailing(conProvinces.getResponseCode())) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    System.out.println("error (" + e.getMessage() + ") occurred trying to download timeline of Covid. RETRY");
-                }
-                conProvinces = (HttpURLConnection) urlProvinces.openConnection();
-            }
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(conProvinces.getInputStream()));
+            BufferedReader in = fetchResult("https://covid19-dashboard.ages.at/data/CovidFaelle_Timeline.csv");
             List<Population> list = extractPopulation(in);
 
-            URL urlDistricts = new URL("https://covid19-dashboard.ages.at/data/CovidFaelle_Timeline_GKZ.csv");
-            HttpURLConnection conDistricts = (HttpURLConnection) urlDistricts.openConnection();
-            if (isFailing(conDistricts.getResponseCode())) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    System.out.println("error (" + e.getMessage() + ") occurred trying to download timeline of Covid. RETRY");
-                }
-                conDistricts = (HttpURLConnection) urlDistricts.openConnection();
-            }
-
-            in = new BufferedReader(new InputStreamReader(conDistricts.getInputStream()));
+            in = fetchResult("https://covid19-dashboard.ages.at/data/CovidFaelle_Timeline_GKZ.csv");
             list.addAll(extractPopulation(in));
             populationRepository.saveAll(list);
         } catch (IOException e) {
@@ -88,13 +65,5 @@ public class DownloadPopulationData {
             line = in.readLine();
         }
         return populationList;
-    }
-
-    private boolean isFailing(int status) {
-        return  status==HttpURLConnection.HTTP_BAD_GATEWAY ||
-                status==HttpURLConnection.HTTP_INTERNAL_ERROR ||
-                status==HttpURLConnection.HTTP_BAD_METHOD ||
-                status==HttpURLConnection.HTTP_GATEWAY_TIMEOUT ||
-                status==HttpURLConnection.HTTP_UNAVAILABLE;
     }
 }

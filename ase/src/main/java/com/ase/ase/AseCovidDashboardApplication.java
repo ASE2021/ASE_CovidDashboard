@@ -29,7 +29,7 @@ public class AseCovidDashboardApplication {
       DownloadScheduleService scheduleService,
       DownloadPopulationData downloadPopulationService,
       MessagingService messagingService
-  ) throws JMSException {
+  ) {
     messagingService.init("new-data");
     scheduleService.setTimerForDownloadingNewData(messagingService, downloadService);
     return (args) -> {

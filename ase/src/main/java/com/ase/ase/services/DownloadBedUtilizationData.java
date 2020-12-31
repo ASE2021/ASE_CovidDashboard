@@ -7,14 +7,13 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.ase.ase.services.DownloadService.fetchResult;
 
 @Service
 public class DownloadBedUtilizationData {
@@ -23,40 +22,18 @@ public class DownloadBedUtilizationData {
 
     public void downloadBedUtilizationCases() {
         try {
-            URL urlNB = new URL("https://info.gesundheitsministerium.at/data/NBAuslastung.csv");
-            HttpURLConnection conNB = (HttpURLConnection) urlNB.openConnection();
-            if (isFailing(conNB.getResponseCode())) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    System.out.println("error (" + e.getMessage() + ") occured trying to download bed utilization of Covid data. RETRY");
-                }
-                conNB = (HttpURLConnection) urlNB.openConnection();
-            }
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(conNB.getInputStream()));
+            BufferedReader in = fetchResult("https://info.gesundheitsministerium.at/data/NBAuslastung.csv");
             List<BedUtilization> list = extractBedUtilizations(in);
 
-            URL urlIB = new URL("https://info.gesundheitsministerium.at/data/IBAuslastung.csv");
-            HttpURLConnection conIB = (HttpURLConnection) urlIB.openConnection();
-            if (isFailing(conIB.getResponseCode())) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    System.out.println("error (" + e.getMessage() + ") occured trying to download bed utilization of Covid data. RETRY");
-                }
-                conIB = (HttpURLConnection) urlIB.openConnection();
-            }
-
-            in = new BufferedReader(new InputStreamReader(conIB.getInputStream()));
-            list = addBedUtilizations(in, list);
+            in = fetchResult("https://info.gesundheitsministerium.at/data/IBAuslastung.csv");
+            addBedUtilizations(in, list);
             bedUtilizationRepository.saveAll(list);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static List<BedUtilization> addBedUtilizations(BufferedReader in, List<BedUtilization> list) throws IOException {
+    public static void addBedUtilizations(BufferedReader in, List<BedUtilization> list) throws IOException {
         String head = in.readLine();
         String[] attributes = head.split(";");
 
@@ -81,7 +58,6 @@ public class DownloadBedUtilizationData {
             updateBedUtilization(list, time, utilizationIB);
             line = in.readLine();
         }
-        return list;
     }
 
     private static void updateBedUtilization(List<BedUtilization> list, Date time, float utilizationIB) {
@@ -127,13 +103,5 @@ public class DownloadBedUtilizationData {
             line = in.readLine();
         }
         return bedUtilizationList;
-    }
-
-    private boolean isFailing(int status) {
-        return  status==HttpURLConnection.HTTP_BAD_GATEWAY ||
-                status==HttpURLConnection.HTTP_INTERNAL_ERROR ||
-                status==HttpURLConnection.HTTP_BAD_METHOD ||
-                status==HttpURLConnection.HTTP_GATEWAY_TIMEOUT ||
-                status==HttpURLConnection.HTTP_UNAVAILABLE;
     }
 }

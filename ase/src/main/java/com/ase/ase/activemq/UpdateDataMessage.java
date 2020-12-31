@@ -21,13 +21,18 @@ public class UpdateDataMessage implements Serializable {
     return update;
   }
 
-  @Override
-  public String toString() {
+  private String toJson() {
     try {
       return new ObjectMapper().writeValueAsString(this);
     } catch (JsonProcessingException e) {
+      System.out.println("Caught: " + e);
       e.printStackTrace();
     }
-    return null;
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    return toJson();
   }
 }
