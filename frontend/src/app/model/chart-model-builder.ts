@@ -6,20 +6,6 @@ export class ChartModelBuilder {
   constructor() {
   }
 
-/**
-  public buildBarChartModel(chartName: string, labels: string[], ...data: any[][]): any {
-    return {
-      labels,
-      datasets: data.map((item, index) => (
-        {
-          label: chartName,
-          backgroundColor: this.colors[index],
-          borderColor: '#FFFFFF',
-          data: item,
-        })),
-    };
-  }
-**/
   public buildBasicChartModel(chartNames: string[], labels: string[], data: any[][]): any {
     return {
       labels,
