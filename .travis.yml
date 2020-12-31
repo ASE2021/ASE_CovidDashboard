@@ -16,11 +16,11 @@ script:
   - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend
   - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend:$FRONTEND_VERSION
   - docker push manuel57/covid-19-dashboard-frontend
-  - docker push manuel57/covid-19-dashboard-frontend:${TRAVIS_COMMIT}
+  - docker push manuel57/covid-19-dashboard-frontend:$FRONTEND_VERSION
   - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend
   - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend:$BACKEND_VERSION
   - docker push manuel57/covid-19-dashboard-backend
-  - docker push manuel57/covid-19-dashboard-backend:${TRAVIS_COMMIT}
+  - docker push manuel57/covid-19-dashboard-backend:$BACKEND_VERSION
 
 addons:
   sonarcloud:
