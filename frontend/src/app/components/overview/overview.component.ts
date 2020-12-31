@@ -1,12 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MenuItem} from 'primeng/api';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
-import {Provinces} from '../../model/Provinces';
-import {CovidCasesDaily} from '../../model/covid-cases-daily';
 import {SocketService} from '../../services/socket/socket.service';
 import {MessageResponse} from '../../model/MessageResponse';
-import {map} from 'rxjs/operators';
 import {IMqttMessage} from 'ngx-mqtt';
 
 @Component({
