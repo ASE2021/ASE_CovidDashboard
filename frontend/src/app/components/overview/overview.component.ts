@@ -47,8 +47,8 @@ export class OverviewComponent implements OnInit {
     );
   }
 
+  // TODO: get data from backend (receive object with these (or more) properties)
   private async initializeBasicInformation(): Promise<void> {
-    // TODO: get data from backend (receive object with these (or more) properties)
     this.activeCases = 41000;
     this.numberOfCases = 200000;
     this.deaths = 2000;
