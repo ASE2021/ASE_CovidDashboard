@@ -11,8 +11,8 @@ before_install:
   - export BACKEND_VERSION=$(cat ./ase/pom.xml | grep "<version>.*</version>" | head -2 | tail -1 | awk -F'[><]' '{print $3}')
   - echo $TRAVIS_BRANCH
   - echo "$TRAVIS_BRANCH"
-  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then export POSTFIX="-SNAPSHOT"; fi
-  - if [[ "$TRAVIS_BRANCH" != "master" ]]; then export POSTFIX=""; fi
+  - if [[ "$TRAVIS_BRANCH" != "master" ]]; then export POSTFIX="-SNAPSHOT"; fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then export POSTFIX="-RELEASE"; fi
   - echo $POSTFIX
 script:
   - curl 127.0.0.1:80
