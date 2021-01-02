@@ -22,12 +22,13 @@ public class DownloadService {
     @Autowired
     DownloadTimelineData downloadTimelineData;
 
-    public void downloadAllCovidData() {
+    public boolean downloadAllCovidData() {
         downloadAgeDistributionData.downloadAgeDistributionCases();
         downloadBedUtilizationData.downloadBedUtilizationCases();
         downloadOverview.downloadOverview();
         downloadSexDistributionData.downloadSexDistributionCases();
         downloadTimelineData.downloadTimeline();
+        return true;
     }
 
     protected static BufferedReader fetchResult(String url) throws IOException {
