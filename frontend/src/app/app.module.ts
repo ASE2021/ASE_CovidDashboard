@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppComponent} from './app.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
@@ -23,6 +22,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
 import {MqttModule} from 'ngx-mqtt';
+import {TableWithFilterModule} from "./components/tableWithFilter/table.module";
 
 
 @NgModule({
@@ -48,6 +48,7 @@ import {MqttModule} from 'ngx-mqtt';
     DropdownModule,
     ButtonModule,
     ToastModule,
+    TableWithFilterModule,
     ProgressBarModule,
     MqttModule.forRoot({
       connectOnCreate: false,

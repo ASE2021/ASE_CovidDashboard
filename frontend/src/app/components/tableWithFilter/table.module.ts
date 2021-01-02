@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OverviewComponent } from './overview.component';
 import {ChartModule} from 'primeng/chart';
 import {CardModule} from 'primeng/card';
 import {PanelModule} from 'primeng/panel';
@@ -16,10 +15,10 @@ import {InputTextModule} from 'primeng/inputtext';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {FormsModule} from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import {TableWithFilterModule} from "../tableWithFilter/table.module";
+import {TableComponent} from "./table.component";
 
 @NgModule({
-  declarations: [OverviewComponent],
+  declarations: [TableComponent],
   imports: [
     CommonModule,
     ChartModule,
@@ -36,10 +35,9 @@ import {TableWithFilterModule} from "../tableWithFilter/table.module";
     InputTextModule,
     MultiSelectModule,
     FormsModule,
-    ProgressSpinnerModule,
-    TableWithFilterModule
+    ProgressSpinnerModule
   ],
 
-  exports: [OverviewComponent]
+  exports: [TableComponent]
 })
-export class OverviewModule { }
+export class TableWithFilterModule { }

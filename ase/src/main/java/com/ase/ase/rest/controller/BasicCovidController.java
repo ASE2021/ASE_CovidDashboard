@@ -27,6 +27,7 @@ public class BasicCovidController {
                         timelineRepository.findAllBy(provinceId)));
     }
 
+
     @CrossOrigin
     @GetMapping(value = "/hospital/{province-id}", produces = "application/json")
     @ResponseBody
