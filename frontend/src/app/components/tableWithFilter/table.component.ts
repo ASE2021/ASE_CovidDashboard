@@ -3,7 +3,7 @@ import {MenuItem} from 'primeng/api';
 import {CovidService} from '../../services/covid.service';
 import {Provinces} from '../../model/Provinces';
 import {CovidCasesDaily} from '../../model/covid-cases-daily';
-import {TableData} from "../../model/tableDataDaily";
+import {TableDataDaily} from "../../model/tableDataDaily";
 
 @Component({
   selector: 'app-table',
