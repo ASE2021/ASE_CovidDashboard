@@ -10,24 +10,50 @@ import {TabMenuModule} from 'primeng/tabmenu';
 import {OverviewModule} from './components/overview/overview.module';
 import {RoutingModule} from './routing.module';
 import {environment} from '../environments/environment';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TableModule} from 'primeng/table';
+import {ToastModule} from 'primeng/toast';
+import {CalendarModule} from 'primeng/calendar';
+import {SliderModule} from 'primeng/slider';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {ContextMenuModule} from 'primeng/contextmenu';
+import {DialogModule} from 'primeng/dialog';
+import {ButtonModule} from 'primeng/button';
+import {DropdownModule} from 'primeng/dropdown';
+import {ProgressBarModule} from 'primeng/progressbar';
+import {InputTextModule} from 'primeng/inputtext';
 import {MqttModule} from 'ngx-mqtt';
+
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule, BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     ChartModule,
     AustriaMapModule,
     TabMenuModule,
-    OverviewModule, RoutingModule,
+    OverviewModule,
+    RoutingModule,
+    InputTextModule,
+    TableModule,
+    CalendarModule,
+    SliderModule,
+    DialogModule,
+    MultiSelectModule,
+    ContextMenuModule,
+    DropdownModule,
+    ButtonModule,
+    ToastModule,
+    ProgressBarModule,
     MqttModule.forRoot({
       connectOnCreate: false,
 
     }),
+
   ],
   providers: [HttpClient,
     {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
@@ -42,4 +68,6 @@ import {MqttModule} from 'ngx-mqtt';
   bootstrap: [AppComponent],
 })
 export class AppModule {
+
+
 }
