@@ -1,13 +1,7 @@
 package com.ase.ase.rest.controller;
 
 import com.ase.ase.dao.TimelineRepository;
-import com.ase.ase.rest.response.DailyCasesPerProvinceDto;
-
-import com.ase.ase.rest.response.HospitalSituationPerDate;
-import com.ase.ase.rest.response.HospitalSituationPerDateDto;
-
-import com.ase.ase.rest.response.TableDataPerDate;
-import com.ase.ase.rest.response.TableDataPerProvinceDto;
+import com.ase.ase.rest.response.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +33,8 @@ public class BasicCovidController {
     public static ResponseEntity<HospitalSituationPerDateDto> listHospitalCasesFor(@PathVariable("province-id") int provinceId) {
         return ResponseEntity.ok(
                 new HospitalSituationPerDateDto(provinceId, Arrays.asList(
-                        new HospitalSituationPerDate[]{new HospitalSituationPerDate("10.10.2020", 12, 10),
-                                new HospitalSituationPerDate("12.10.2020", 12, 12)})));
+                        new HospitalSituationPerDate("10.10.2020", 12, 10),
+                        new HospitalSituationPerDate("12.10.2020", 12, 12))));
 
     }
 
@@ -50,15 +44,14 @@ public class BasicCovidController {
     public ResponseEntity<TableDataPerProvinceDto> listNewTableDataFor(@PathVariable("province-id") int provinceId) {
         return ResponseEntity.ok(
                 new TableDataPerProvinceDto(provinceId, Arrays.asList(
-                        new TableDataPerDate[]{new TableDataPerDate("10.10.2020", 12, 10, Arrays.asList(
-                                new HospitalSituationPerDate[]{new HospitalSituationPerDate("10.10.2020", 12, 10),
-                                        new HospitalSituationPerDate("12.10.2020", 12, 12)})),
-                                new TableDataPerDate("12.10.2020", 12, 12, Arrays.asList(
-                                        new HospitalSituationPerDate[]{new HospitalSituationPerDate("10.10.2020", 12, 10),
-                                                new HospitalSituationPerDate("12.10.2020", 12, 12)}))}
-                )));
+                        new TableDataPerDate("10.10.2020", 12, 10, Arrays.asList(
+                                new HospitalSituationPerDate("10.10.2020", 12, 10),
+                                new HospitalSituationPerDate("12.10.2020", 12, 12))),
+                        new TableDataPerDate("12.10.2020", 12, 12, Arrays.asList(
+                                new HospitalSituationPerDate("10.10.2020", 12, 10),
+                                new HospitalSituationPerDate("12.10.2020", 12, 12))))));
+
 
     }
-
 
 }

@@ -28,9 +28,9 @@ public class ExtractSexDataTests {
     public void testAgeDeadCasesAddition() throws IOException {
         File file = new File(getClass().getResource("/VerstorbenGeschlechtsverteilung.csv").getFile());
         List<SexDistribution> expectedList = getExpectedAgeCasesAndDeadList();
-        List<SexDistribution> startList = getExpectedSexCasesList();
-        List<SexDistribution> actualList = DownloadSexDistributionData.addSexDistributions(new BufferedReader(new FileReader(file)), startList);
-        assertSexDistributionList(expectedList, actualList);
+        List<SexDistribution> list = getExpectedSexCasesList();
+        DownloadSexDistributionData.addSexDistributions(new BufferedReader(new FileReader(file)), list);
+        assertSexDistributionList(expectedList, list);
     }
 
     private void assertSexDistributionList(List<SexDistribution> expectedList, List<SexDistribution> actualList) {

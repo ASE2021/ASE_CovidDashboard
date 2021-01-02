@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 
 import { CovidService } from './covid.service';
-import {HospitalBedsDaily} from "../model/hospital-beds-daily";
+import {HospitalBedsDaily} from '../model/hospital-beds-daily';
 
 describe('CovidService', () => {
   let service: CovidService;
@@ -18,8 +18,8 @@ describe('CovidService', () => {
   });
 
   it('#getHospitalBedsPerDate should return expected hospital situations', () => {
-    const expectedSituations: HospitalBedsDaily[] = [{date: "10.10.2020", intenseBeds: 12, normalBeds: 10},
-      {date: "12.10.2020", intenseBeds: 12, normalBeds: 12}]
+    const expectedSituations: HospitalBedsDaily[] = [{date: '10.10.2020', intenseBeds: 12, normalBeds: 10},
+      {date: '12.10.2020', intenseBeds: 12, normalBeds: 12}];
 
     httpClientSpy.get.and.returnValue(expectedSituations);
 
