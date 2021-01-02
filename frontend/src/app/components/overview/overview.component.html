@@ -41,8 +41,10 @@
       <div class="p-col-12">
         <div class="p-grid">
           <div class="p-col-8 p-offset-2">
-            <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar" [data]="positiveCasesPerDateData"></p-chart>
-            <p-progressSpinner *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
+            <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
+                     [data]="positiveCasesPerDateData"></p-chart>
+            <p-progressSpinner
+              *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
           </div>
         </div>
       </div>
@@ -58,8 +60,10 @@
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
               Show Pie chart here
-              <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar" [data]="positiveCasesPerDateData"></p-chart>
-              <p-progressSpinner *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
+              <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
+                       [data]="positiveCasesPerDateData"></p-chart>
+              <p-progressSpinner
+                *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
             </div>
           </div>
         </div>
@@ -68,9 +72,8 @@
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
+              <p-chart type="line" [data]="hospitalBedsPerDate"></p-chart>
               show line chart here
-              <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar" [data]="positiveCasesPerDateData"></p-chart>
-              <p-progressSpinner *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
             </div>
           </div>
         </div>
@@ -78,26 +81,12 @@
       <p-tabPanel header="Another Chart">
         Space for another content
       </p-tabPanel>
+
+      <!-- TABLE OVERVIEW -------------------------------->
       <p-tabPanel header="Table Overview">
-        <!-- TODO: fill table with data -->
-        <p-table>
-          <ng-template pTemplate="header">
-            <tr>
-              <th id="province">Province</th>
-              <th id="activeCases">Active Cases</th>
-              <th id="deaths">Deaths</th>
-              <th id="bedUtilization">Hospitalizations</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-case>
-            <tr>
-              <td>Test1</td>
-              <td>Test2</td>
-              <td>Test3</td>
-              <td>Test4</td>
-            </tr>
-          </ng-template>
-        </p-table>
+        <!-- TODO: fill tableWithFilter with data -->
+
+
       </p-tabPanel>
     </p-tabView>
   </div>

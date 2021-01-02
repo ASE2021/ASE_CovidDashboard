@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
 import {MessageResponse} from '../../model/MessageResponse';
-import {map} from 'rxjs/operators';
 import {IMqttMessage} from 'ngx-mqtt';
 
 @Component({
@@ -14,9 +13,12 @@ import {IMqttMessage} from 'ngx-mqtt';
 export class OverviewComponent implements OnInit {
 
   positiveCasesPerDateData: any;
+  hospitalBedsPerDate: any;
   activeCases: number;
   numberOfCases: number;
   deaths: number;
+  province: any;
+
 
   constructor(private covidService: CovidService, private socketService: SocketService) {
 
@@ -24,8 +26,8 @@ export class OverviewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initializePositiveCasesPerDateChart();
-
     this.initializeBasicInformation();
+    this.initializeHospitalBedsPerDateChart();
 
     this.socketService.connectToMqtt(
       () => {
@@ -35,13 +37,14 @@ export class OverviewComponent implements OnInit {
             try {
               if ((JSON.parse(message.payload.toString()) as MessageResponse).update) {
                 this.initializePositiveCasesPerDateChart();
+                this.initializeBasicInformation();
+                this.initializeHospitalBedsPerDateChart();
               }
             } catch (e) {
             }
           });
       },
     );
-
   }
 
   // TODO: get data from backend (receive object with these (or more) properties)
@@ -54,8 +57,27 @@ export class OverviewComponent implements OnInit {
   private async initializePositiveCasesPerDateChart(): Promise<void> {
     const data = await this.covidService.getNewCasesPerDate();
     this.positiveCasesPerDateData = new ChartModelBuilder()
-      .buildBarChartModel('Positive Covid-19 cases per date',
+      .buildBasicChartModel(['Positive Covid-19 cases per date'],
         data.map(item => item.date.split('T')[0]),
-        data.map(item => item.cases));
+        [data.map(item => item.cases)]);
   }
+
+
+  private async initializeHospitalBedsPerDateChart(): Promise<void> {
+    const data = await  this.covidService.getHospitalBedsPerDate();
+    this.hospitalBedsPerDate = new ChartModelBuilder()
+      .buildBasicChartModel(['Intense beds used', 'Normal beds used'],
+        data.map(item => item.date.split('T')[0]),
+        data.reduce((dataArray, current) =>
+        [
+          [...dataArray[0], current.intenseBeds],
+          [...dataArray[1], current.normalBeds],
+        ], [[], []]));
+
+
+
+  }
+
 }
+
+
