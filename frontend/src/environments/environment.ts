@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  backendApiUrl: 'http://host.docker.internal:8080/',
+  backendApiUrl: 'http://localhost:8080',
+  backendNotificationUrl: 'localhost',
+  backendNotificationPort: 61614,
 };
 
 /*

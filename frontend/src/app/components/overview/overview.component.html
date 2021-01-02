@@ -41,7 +41,10 @@
       <div class="p-col-12">
         <div class="p-grid">
           <div class="p-col-8 p-offset-2">
-            <p-chart type="bar" [data]="positiveCasesPerDateData"></p-chart>
+            <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
+                     [data]="positiveCasesPerDateData"></p-chart>
+            <p-progressSpinner
+              *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
           </div>
         </div>
       </div>
@@ -57,7 +60,10 @@
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
               Show Pie chart here
-              <p-chart type="bar" [data]="positiveCasesPerDateData"></p-chart>
+              <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
+                       [data]="positiveCasesPerDateData"></p-chart>
+              <p-progressSpinner
+                *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
             </div>
           </div>
         </div>
@@ -67,6 +73,7 @@
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
               <p-chart type="line" [data]="hospitalBedsPerDate"></p-chart>
+              show line chart here
             </div>
           </div>
         </div>
@@ -78,8 +85,6 @@
       <!-- TABLE OVERVIEW -------------------------------->
       <p-tabPanel header="Table Overview">
         <!-- TODO: fill tableWithFilter with data -->
-
-        <app-table></app-table>
 
 
       </p-tabPanel>

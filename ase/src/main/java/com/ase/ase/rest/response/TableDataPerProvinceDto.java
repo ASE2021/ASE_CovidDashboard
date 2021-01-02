@@ -13,11 +13,12 @@ public class TableDataPerProvinceDto {
         this.provinceId = provinceId;
         this.tableData = tableData;
     }
+
     @JsonProperty("provinceId")
     public int getProvinceId() {
         return provinceId;
     }
-    @JsonProperty("tableData")
+    @JsonProperty("situations")
     public List<TableDataPerDate> getTableData() {
         return tableData;
     }

@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ase.ase.services.DownloadService.fetchResult;
 
 @Service
 public class DownloadSexDistributionData {
@@ -20,40 +19,18 @@ public class DownloadSexDistributionData {
 
     public void downloadSexDistributionCases() {
         try {
-            URL urlCases = new URL("https://info.gesundheitsministerium.at/data/Geschlechtsverteilung.csv");
-            HttpURLConnection conCases = (HttpURLConnection) urlCases.openConnection();
-            if (isFailing(conCases.getResponseCode())) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    System.out.println("error (" + e.getMessage() + ") occured trying to download sex distribution of Covid data. RETRY");
-                }
-                conCases = (HttpURLConnection) urlCases.openConnection();
-            }
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(conCases.getInputStream()));
+            BufferedReader in = fetchResult("https://info.gesundheitsministerium.at/data/Geschlechtsverteilung.csv");
             List<SexDistribution> list = extractSexDistributions(in);
 
-            URL urlDead = new URL("https://info.gesundheitsministerium.at/data/VerstorbenGeschlechtsverteilung.csv");
-            HttpURLConnection conDead = (HttpURLConnection) urlDead.openConnection();
-            if (isFailing(conDead.getResponseCode())) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    System.out.println("error (" + e.getMessage() + ") occured trying to download sex distribution of Covid data. RETRY");
-                }
-                conDead = (HttpURLConnection) urlDead.openConnection();
-            }
-
-            in = new BufferedReader(new InputStreamReader(conDead.getInputStream()));
-            list = addSexDistributions(in, list);
+            in = fetchResult("https://info.gesundheitsministerium.at/data/VerstorbenGeschlechtsverteilung.csv");
+            addSexDistributions(in, list);
             sexDistributionRepository.saveAll(list);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static List<SexDistribution> addSexDistributions(BufferedReader in, List<SexDistribution> list) throws IOException {
+    public static void addSexDistributions(BufferedReader in, List<SexDistribution> list) throws IOException {
         String head = in.readLine();
         String[] attributes = head.split(";");
 
@@ -74,7 +51,6 @@ public class DownloadSexDistributionData {
             updateSexDistribution(list, sex, deadPercent);
             line = in.readLine();
         }
-        return list;
     }
 
     private static void updateSexDistribution(List<SexDistribution> list, String sex, int deadPercent) {
@@ -116,13 +92,5 @@ public class DownloadSexDistributionData {
             line = in.readLine();
         }
         return sexDistributionList;
-    }
-
-    private boolean isFailing(int status) {
-        return  status==HttpURLConnection.HTTP_BAD_GATEWAY ||
-                status==HttpURLConnection.HTTP_INTERNAL_ERROR ||
-                status==HttpURLConnection.HTTP_BAD_METHOD ||
-                status==HttpURLConnection.HTTP_GATEWAY_TIMEOUT ||
-                status==HttpURLConnection.HTTP_UNAVAILABLE;
     }
 }
