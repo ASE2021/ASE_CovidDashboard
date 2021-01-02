@@ -3,6 +3,9 @@ language: bash
 services:
   - docker
 
+if: branch = master
+env: POSTFIX=-SNAPSHOT
+
 before_install:
   - docker build --no-cache -t covid-19-dashboard-frontend:latest frontend
   - docker build --no-cache -t covid-19-dashboard-backend:latest ase
@@ -14,13 +17,13 @@ script:
   - curl 127.0.0.1:80
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend
-  - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend:$FRONTEND_VERSION
+  - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend:$FRONTEND_VERSION$POSTFIX
   - docker push manuel57/covid-19-dashboard-frontend
-  - docker push manuel57/covid-19-dashboard-frontend:$FRONTEND_VERSION
+  - docker push manuel57/covid-19-dashboard-frontend:$FRONTEND_VERSION$POSTFIX
   - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend
-  - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend:$BACKEND_VERSION
+  - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend:$BACKEND_VERSION$POSTFIX
   - docker push manuel57/covid-19-dashboard-backend
-  - docker push manuel57/covid-19-dashboard-backend:$BACKEND_VERSION
+  - docker push manuel57/covid-19-dashboard-backend:$BACKEND_VERSION$POSTFIX
 
 addons:
   sonarcloud:
