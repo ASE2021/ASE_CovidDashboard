@@ -20,6 +20,7 @@ export class ChartModelBuilder {
     };
   }
 
+
   public withCustomColors(colors: string[]): ChartModelBuilder {
     this.colors = colors;
     return this;

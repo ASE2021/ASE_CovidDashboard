@@ -18,7 +18,7 @@ public class CovidDistributionController {
     public ResponseEntity<SexDistributionPerProvinceDto> listSexDistributionFor(@PathVariable("province-id") int provinceId) {
         return ResponseEntity.ok(
                 new SexDistributionPerProvinceDto(provinceId, Arrays.asList(
-                        new SexDistribution[]{new SexDistribution(100, 150)}
+                        new SexDistribution(100, 150)
                 ))
         );
     }
