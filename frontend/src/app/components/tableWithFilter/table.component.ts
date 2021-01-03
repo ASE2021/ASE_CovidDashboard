@@ -10,9 +10,9 @@ import {Provinces} from '../../model/Provinces';
 export class TableComponent implements OnInit {
 
   data: Array<any>;
-  provinces: Provinces[]; //saving the enum Provinces
+  provinces: Provinces[]; // saving the enum Provinces
 
-  //calculation of numbers in whole Austria
+  // calculation of numbers in whole Austria
   totalCases: number;
   totalHospitalizations: number;
   totalDeaths: number;
@@ -22,7 +22,7 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     this.loadTableData();
 
-    this.covidService.getNewCasesPerDate()
+    this.covidService.getNewCasesPerDate();
 /*
     this.calculateTotalCases()
     this.calculateTotalDeaths()

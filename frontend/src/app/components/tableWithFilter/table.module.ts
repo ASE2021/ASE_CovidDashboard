@@ -15,7 +15,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {FormsModule} from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import {TableComponent} from "./table.component";
+import {TableComponent} from './table.component';
 
 @NgModule({
   declarations: [TableComponent],

@@ -27,7 +27,7 @@ export class OverviewComponent implements OnInit {
   public ngOnInit(): void {
     this.initializePositiveCasesPerDateChart();
     this.initializeBasicInformation();
-    this.initializeHospitalBedsPerDateChart()
+    this.initializeHospitalBedsPerDateChart();
 
 
     this.socketService.connectToMqtt(

@@ -22,7 +22,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
 import {MqttModule} from 'ngx-mqtt';
-import {TableWithFilterModule} from "./components/tableWithFilter/table.module";
+import {TableWithFilterModule} from './components/tableWithFilter/table.module';
 
 
 @NgModule({

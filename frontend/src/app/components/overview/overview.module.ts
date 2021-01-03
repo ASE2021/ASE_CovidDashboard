@@ -16,7 +16,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {FormsModule} from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import {TableWithFilterModule} from "../tableWithFilter/table.module";
+import {TableWithFilterModule} from '../tableWithFilter/table.module';
 
 @NgModule({
   declarations: [OverviewComponent],

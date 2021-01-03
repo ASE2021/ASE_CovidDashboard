@@ -3,7 +3,7 @@ import {CovidCasesDaily} from '../model/covid-cases-daily';
 import {HttpClient} from '@angular/common/http';
 import {HospitalBedsDaily} from '../model/hospital-beds-daily';
 import {Provinces} from '../model/Provinces';
-import {TableDataDaily} from "../model/table-data-daily";
+import {TableDataDaily} from '../model/table-data-daily';
 
 
 @Injectable({
