@@ -4,30 +4,33 @@ services:
   - docker
 
 before_install:
-- docker build --no-cache -t covid-19-dashboard-frontend:latest frontend
-- docker build --no-cache -t covid-19-dashboard-backend:latest ase
-- docker run -d -p 127.0.0.1:80:80 covid-19-dashboard-frontend:latest
-
+  - docker build --no-cache -t covid-19-dashboard-frontend:latest frontend
+  - docker build --no-cache -t covid-19-dashboard-backend:latest ase
+  - docker run -d -p 127.0.0.1:80:80 covid-19-dashboard-frontend:latest
+  - export FRONTEND_VERSION=$(cat ./frontend/package.json | grep "\"version\":\ " | head -1 | awk -F'[\"]' '{print $4}')
+  - export BACKEND_VERSION=$(cat ./ase/pom.xml | grep "<version>.*</version>" | head -2 | tail -1 | awk -F'[><]' '{print $3}')
+  - if [[ "$TRAVIS_BRANCH" != "master" ]]; then export POSTFIX="-SNAPSHOT"; fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then export POSTFIX=""; fi
 script:
   - curl 127.0.0.1:80
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend
-  - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend:${TRAVIS_COMMIT}
+  - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend:$FRONTEND_VERSION$POSTFIX
   - docker push manuel57/covid-19-dashboard-frontend
-  - docker push manuel57/covid-19-dashboard-frontend:${TRAVIS_COMMIT}
+  - docker push manuel57/covid-19-dashboard-frontend:$FRONTEND_VERSION$POSTFIX
   - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend
-  - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend:${TRAVIS_COMMIT}
+  - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend:$BACKEND_VERSION$POSTFIX
   - docker push manuel57/covid-19-dashboard-backend
-  - docker push manuel57/covid-19-dashboard-backend:${TRAVIS_COMMIT}
+  - docker push manuel57/covid-19-dashboard-backend:$BACKEND_VERSION$POSTFIX
 
 addons:
   sonarcloud:
     organization: "ase-project-group"
-    token: 
+    token:
       secure: $TOKEN
 
 
 notifications:
-    email: false
+  email: false
 
 
