@@ -25,7 +25,7 @@ export class CovidService {
   }
 
   public getTableDataPerDate(): Promise<TableDataDaily[]> {
-    return this.http.get(this.apiUrl + '/daily/tableData/100')
+    return this.http.get(this.apiUrl + '/daily/tableData/10')
       .toPromise().then(item => (item as {data: TableDataDaily[]}).data);
   }
 
