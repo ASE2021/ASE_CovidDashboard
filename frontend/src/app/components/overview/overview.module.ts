@@ -8,21 +8,36 @@ import {TableModule} from 'primeng/table';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TabViewModule} from 'primeng/tabview';
+import {DropdownModule} from 'primeng/dropdown';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TabMenuModule} from 'primeng/tabmenu';
+import {RoutingModule} from '../../routing.module';
+import {InputTextModule} from 'primeng/inputtext';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {FormsModule} from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [OverviewComponent],
-    imports: [
-        CommonModule,
-        ChartModule,
-        CardModule,
-        PanelModule,
-        TableModule,
-        SelectButtonModule,
-        TabViewModule,
-        NoopAnimationsModule,
-        ProgressSpinnerModule,
-    ],
+  imports: [
+    CommonModule,
+    ChartModule,
+    CardModule,
+    PanelModule,
+    SelectButtonModule,
+    TabViewModule,
+    NoopAnimationsModule,
+    DropdownModule,
+    BrowserAnimationsModule,
+    TableModule,
+    TabMenuModule,
+    RoutingModule,
+    InputTextModule,
+    MultiSelectModule,
+    FormsModule,
+    ProgressSpinnerModule
+  ],
+
   exports: [OverviewComponent]
 })
 export class OverviewModule { }
