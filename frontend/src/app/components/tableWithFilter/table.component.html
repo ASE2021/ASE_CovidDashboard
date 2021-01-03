@@ -7,7 +7,7 @@
     <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="datatable.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                    <input pInputText type="text" (input)="datatable.filterGlobal($event.target, 'contains')" placeholder="Search keyword" />
                 </span>
     </div>
   </ng-template>

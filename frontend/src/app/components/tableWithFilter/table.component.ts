@@ -24,15 +24,16 @@ export class TableComponent implements OnInit {
     this.loadTableData();
 
     this.covidService.getNewCasesPerDate()
-
+/*
     this.calculateTotalCases()
     this.calculateTotalDeaths()
     this.calculateTotalHospitalizations()
+    */
   }
 
 
   private async loadTableData(): Promise<void> {
-    const data = await this.covidService.getTableDataPerDate();
+    this.data = await this.covidService.getTableDataPerDate();
     const newCases = await this.covidService.getNewCasesPerDate();
 
   }
@@ -47,6 +48,8 @@ export class TableComponent implements OnInit {
 
  */
 
+
+  /*
 
   calculateTotalCases() {
     let total = 0;
@@ -77,7 +80,7 @@ export class TableComponent implements OnInit {
 
 
 
-
+*/
 
 
 }

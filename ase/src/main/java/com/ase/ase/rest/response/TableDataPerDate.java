@@ -33,15 +33,4 @@ public class TableDataPerDate {
         return cases;
     }
 
-    @JsonProperty("situations")
-    public List<HospitalSituationPerDate> getHospitalSituations() {
-        return situation;
-    }
-
-
-    @JsonProperty("date")
-    public List<HospitalSituationPerDate> getHospitalSituation() {
-        return situation;
-
-    }
 }
