@@ -28,7 +28,7 @@ export class OverviewComponent implements OnInit {
   public ngOnInit(): void {
     this.initializePositiveCasesPerDateChart();
     this.initializeBasicInformation();
-    this.initializeSexDistributionChart()
+    this.initializeSexDistributionChart();
     this.initializeHospitalBedsPerDateChart();
 
     this.socketService.connectToMqtt(
@@ -41,7 +41,7 @@ export class OverviewComponent implements OnInit {
                 this.initializePositiveCasesPerDateChart();
                 this.initializeBasicInformation();
                 this.initializeHospitalBedsPerDateChart();
-                this.initializeSexDistributionChart()
+                this.initializeSexDistributionChart();
               }
             } catch (e) {
             }
@@ -67,12 +67,12 @@ export class OverviewComponent implements OnInit {
 
   private async initializeSexDistributionChart(): Promise<void>{
     const data = await this.covidService.getSexDistribution();
-    this.sexDistributionData = new ChartModelBuilder().buildBasicChartModel(['Covid Cases Distributed per sex'],
+    this.sexDistributionData =
+      new ChartModelBuilder().buildPieChartModel(['Covid Cases Distributed per sex'],
       ['female', 'male'],
       data.reduce((dataArray, current) =>
         [
-          [...dataArray[0], current.femaleCases],
-          [...dataArray[1], current.maleCases],
+          [...dataArray[0], current.femaleCases, current.maleCases]
         ], [[], []]));
   }
 

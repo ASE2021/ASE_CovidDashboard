@@ -20,6 +20,19 @@ export class ChartModelBuilder {
     };
   }
 
+  public buildPieChartModel(chartNames: string[], labels: string[], data: any[][]): any {
+    return {
+      labels,
+      datasets: data.map((item, index) => (
+        {
+          backgroundColor: this.colors,
+          borderColor: '#FFFFFF',
+          data: item,
+        }
+      )),
+    };
+  }
+
 
   public withCustomColors(colors: string[]): ChartModelBuilder {
     this.colors = colors;

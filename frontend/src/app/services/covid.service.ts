@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {CovidCasesDaily} from '../model/covid-cases-daily';
 import {HttpClient} from '@angular/common/http';
-import {SexDistribution} from "../model/sex-distribution";
+import {SexDistribution} from '../model/sex-distribution';
 import {HospitalBedsDaily} from '../model/hospital-beds-daily';
 import {Provinces} from '../model/Provinces';
 
