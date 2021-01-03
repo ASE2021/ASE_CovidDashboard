@@ -15,7 +15,7 @@
     <tr>
       <th>
         <div class="p-d-flex p-jc-between p-ai-center">
-          Provinces
+          Date
           <p-columnFilter field="province" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
             <ng-template pTemplate="header">
               <div class="p-px-3 p-pt-3 p-pb-0">
@@ -60,10 +60,10 @@
 
   <ng-template pTemplate="body" let-data>
     <tr>
-      <td>{{data.provinces}}</td>
-      <td>{{data.activeCases}}</td>
+      <td>{{data.date}}</td>
+      <td>{{data.cases}}</td>
       <td>{{data.deaths}}</td>
-      <td>{{data.hospitalizations}}</td>
+      <td>{{data.hospitalSituatuins}}</td>
     </tr>
   </ng-template>
 

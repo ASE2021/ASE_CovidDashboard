@@ -10,7 +10,6 @@ import {Provinces} from '../../model/Provinces';
 export class TableComponent implements OnInit {
 
   data: Array<any>;
-  //data: TableData[];
   provinces: Provinces[]; //saving the enum Provinces
 
   //calculation of numbers in whole Austria
@@ -34,8 +33,6 @@ export class TableComponent implements OnInit {
 
   private async loadTableData(): Promise<void> {
     this.data = await this.covidService.getTableDataPerDate();
-    const newCases = await this.covidService.getNewCasesPerDate();
-
   }
 
 

@@ -33,4 +33,7 @@ public class TableDataPerDate {
         return cases;
     }
 
+    @JsonProperty("hospitalSituation")
+    public List<HospitalSituationPerDate> getHospitalSituations(){ return situation; }
+
 }
