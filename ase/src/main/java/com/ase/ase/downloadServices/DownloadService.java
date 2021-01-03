@@ -23,12 +23,14 @@ public class DownloadService {
 
     private static Date version;
 
-    public void downloadAllCovidData() {
+    public boolean downloadAllCovidData() {
         if(downloadAndCheckVersion()) {
             downloadBedAndTestTimelineData.downloadTimeline();
             downloadSexAndAgeDistributionData.downloadSexAndAgeDistribution();
             downloadCasesTimelineData.downloadTimeline();
+            return true;
         }
+        return false;
     }
 
     /**

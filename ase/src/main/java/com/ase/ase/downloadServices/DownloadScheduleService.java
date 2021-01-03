@@ -1,4 +1,4 @@
-package com.ase.ase.services;
+package com.ase.ase.downloadServices;
 
 import com.ase.ase.activemq.MessagingService;
 import com.ase.ase.activemq.UpdateDataMessage;

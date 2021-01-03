@@ -1,6 +1,5 @@
 package com.ase.ase;
 
-import com.ase.ase.entities.AgeDistribution;
 import com.ase.ase.rest.controller.BasicCovidController;
 import com.ase.ase.rest.response.HospitalSituationPerDate;
 import com.ase.ase.rest.response.HospitalSituationPerDateDto;
@@ -10,9 +9,6 @@ import org.springframework.http.ResponseEntity;
 import java.io.IOException;
 
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BasicCovicControllerTest {
     @Test
