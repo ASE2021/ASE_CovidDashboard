@@ -1,13 +1,12 @@
-<p-table #datatable [value]="data" dataKey="id" [rows]="9" [showCurrentPageReport]="true"
+<p-table #generalSituation [value]="data" dataKey="id" [rows]="9" [showCurrentPageReport]="true"
          [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"
          [paginator]="true"
-         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-         [globalFilterFields]="['provinces','activeCases','deaths','hospitalizations']">
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
   <ng-template pTemplate="caption">
     <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="datatable.filterGlobal($event.target, 'contains')" placeholder="Search keyword" />
+                    <em class="pi pi-search"></em>
+                    <input pInputText type="text" (input)="generalSituation.filterGlobal($event.target, 'contains')" placeholder="Search keyword" />
                 </span>
     </div>
   </ng-template>
@@ -16,16 +15,16 @@
       <th>
         <div class="p-d-flex p-jc-between p-ai-center">
           Date
-          <p-columnFilter field="province" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+          <p-columnFilter field="date" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
             <ng-template pTemplate="header">
               <div class="p-px-3 p-pt-3 p-pb-0">
-                <span class="p-text-bold">Provinces Picker</span>
+                <span class="p-text-bold">Date Picker</span>
               </div>
             </ng-template>
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-              <p-multiSelect [ngModel]="value" [options]="provinces" placeholder="Any" (onChange)="filter($event)" optionLabel="provinces">
+              <p-multiSelect [ngModel]="value" [options]="provinces" placeholder="Any" (onChange)="filter($event)" optionLabel="date">
                 <ng-template let-option pTemplate="item">
-                  <div class="p-multiselect-province-option">
+                  <div class="p-multiselect-date-option">
                     <span class="p-ml-1">{{option}}</span>
                   </div>
                 </ng-template>
@@ -63,7 +62,7 @@
       <td>{{data.date}}</td>
       <td>{{data.cases}}</td>
       <td>{{data.deaths}}</td>
-      <td>{{data.hospitalSituatuins}}</td>
+      <td>{{data.hospitalBedsSum}}</td>
     </tr>
   </ng-template>
 

@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class TableDataPerProvinceDto {
+public class GeneralSituationPerProvinceDto {
 
     private final int provinceId;
-    private final List<TableDataPerDate> tableData;
+    private final List<GeneralSituationPerDate> tableData;
 
-    public TableDataPerProvinceDto(int provinceId, List<TableDataPerDate> tableData) {
+    public GeneralSituationPerProvinceDto(int provinceId, List<GeneralSituationPerDate> tableData) {
         this.provinceId = provinceId;
         this.tableData = tableData;
     }
@@ -19,7 +19,7 @@ public class TableDataPerProvinceDto {
         return provinceId;
     }
     @JsonProperty("situations")
-    public List<TableDataPerDate> getTableData() {
+    public List<GeneralSituationPerDate> getTableData() {
         return tableData;
     }
 }

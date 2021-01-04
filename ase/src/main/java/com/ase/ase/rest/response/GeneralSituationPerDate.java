@@ -4,16 +4,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class TableDataPerDate {
+public class GeneralSituationPerDate {
 
     private final String date;
-    private final List<HospitalSituationPerDate> situation;
+    private final int hospitalBedsSum;
     private final int cases;
     private final int deaths;
 
-    public TableDataPerDate(String date, int cases, int deaths, List<HospitalSituationPerDate> situation) {
+    public GeneralSituationPerDate(String date, int cases, int deaths, int hospitalBedsSum) {
         this.date = date;
-        this.situation = situation;
+        this.hospitalBedsSum = hospitalBedsSum;
         this.cases = cases;
         this.deaths = deaths;
     }
@@ -34,6 +34,6 @@ public class TableDataPerDate {
     }
 
     @JsonProperty("hospitalSituation")
-    public List<HospitalSituationPerDate> getHospitalSituations(){ return situation; }
+    public int getHospitalSituations(){ return hospitalBedsSum; }
 
 }

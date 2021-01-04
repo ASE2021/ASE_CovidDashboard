@@ -40,17 +40,13 @@ public class BasicCovidController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/tableData/{province-id}", produces = "application/json")
+    @GetMapping(value = "/general-situation/{province-id}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<TableDataPerProvinceDto> listNewTableDataFor(@PathVariable("province-id") int provinceId) {
+    public ResponseEntity<GeneralSituationPerProvinceDto> listNewTableDataFor(@PathVariable("province-id") int provinceId) {
         return ResponseEntity.ok(
-                new TableDataPerProvinceDto(provinceId, Arrays.asList(
-                        new TableDataPerDate("10.10.2020", 12, 10, Arrays.asList(
-                                new HospitalSituationPerDate("10.10.2020", 12, 10),
-                                new HospitalSituationPerDate("12.10.2020", 12, 12))),
-                        new TableDataPerDate("12.10.2020", 12, 12, Arrays.asList(
-                                new HospitalSituationPerDate("10.10.2020", 12, 10),
-                                new HospitalSituationPerDate("12.10.2020", 12, 12))))));
+                new GeneralSituationPerProvinceDto(provinceId, Arrays.asList(
+                        new GeneralSituationPerDate("10.10.2020", 12, 10, 24),
+                        new GeneralSituationPerDate("10.10.2020", 12, 12, 24))));
 
 
     }

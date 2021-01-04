@@ -22,7 +22,6 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     this.loadTableData();
 
-    this.covidService.getNewCasesPerDate();
 /*
     this.calculateTotalCases()
     this.calculateTotalDeaths()
@@ -32,7 +31,7 @@ export class TableComponent implements OnInit {
 
 
   private async loadTableData(): Promise<void> {
-    this.data = await this.covidService.getTableDataPerDate();
+    this.data = await this.covidService.getGeneralSituationPerDate();
   }
 
 
