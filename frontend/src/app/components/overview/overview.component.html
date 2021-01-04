@@ -79,10 +79,19 @@
         </div>
       </p-tabPanel>
       <p-tabPanel header="Sex Distribution">
+        <div class="p-grid">
+          <div class="p-col-12">
+            <div class="p-grid">
+              <div class="p-col-6 p-offset-3">
+                <p-chart type="pie" [data]="sexDistributionCasesData"></p-chart>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
-              <p-chart type="pie" [data]="sexDistributionData"></p-chart>
+              <p-chart type="pie" [data]="sexDistributionDeathsData"></p-chart>
             </div>
           </div>
         </div>

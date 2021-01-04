@@ -13,7 +13,8 @@ import {IMqttMessage} from 'ngx-mqtt';
 export class OverviewComponent implements OnInit {
 
   positiveCasesPerDateData: any;
-  sexDistributionData: any;
+  sexDistributionCasesData: any;
+  sexDistributionDeathsData: any;
   hospitalBedsPerDate: any;
   activeCases: number;
   numberOfCases: number;
@@ -28,7 +29,7 @@ export class OverviewComponent implements OnInit {
   public ngOnInit(): void {
     this.initializePositiveCasesPerDateChart();
     this.initializeBasicInformation();
-    this.initializeSexDistributionChart();
+    this.initializeSexDistributionCharts();
     this.initializeHospitalBedsPerDateChart();
 
     this.socketService.connectToMqtt(
@@ -41,7 +42,7 @@ export class OverviewComponent implements OnInit {
                 this.initializePositiveCasesPerDateChart();
                 this.initializeBasicInformation();
                 this.initializeHospitalBedsPerDateChart();
-                this.initializeSexDistributionChart();
+                this.initializeSexDistributionCharts();
               }
             } catch (e) {
             }
@@ -65,15 +66,23 @@ export class OverviewComponent implements OnInit {
         [data.map(item => item.cases)]);
   }
 
-  private async initializeSexDistributionChart(): Promise<void>{
+  private async initializeSexDistributionCharts(): Promise<void>{
     const data = await this.covidService.getSexDistribution();
-    this.sexDistributionData =
+    this.sexDistributionCasesData =
       new ChartModelBuilder().withCustomColors([['#1B2771', '#A93226']]).buildBasicChartModel(['Covid Cases Distributed per sex'],
       ['female', 'male'],
       data.reduce((dataArray, current) =>
         [
           [...dataArray[0], current.femaleCases, current.maleCases]
         ], [[], []]));
+
+    this.sexDistributionDeathsData = new ChartModelBuilder().withCustomColors([['#1B2771', '#A93226']]).buildBasicChartModel(['Deaths Distributed per sex'],
+      ['female', 'male'],
+      data.reduce((dataArray, current) =>
+        [
+          [...dataArray[0], current.femaleDeaths, current.maleDeaths]
+        ], [[], []])
+      )
   }
 
   private async initializeHospitalBedsPerDateChart(): Promise<void> {
