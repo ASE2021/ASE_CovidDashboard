@@ -68,7 +68,7 @@ export class OverviewComponent implements OnInit {
   private async initializeSexDistributionChart(): Promise<void>{
     const data = await this.covidService.getSexDistribution();
     this.sexDistributionData =
-      new ChartModelBuilder().buildPieChartModel(['Covid Cases Distributed per sex'],
+      new ChartModelBuilder().withCustomColors([['#1B2771', '#A93226']]).buildBasicChartModel(['Covid Cases Distributed per sex'],
       ['female', 'male'],
       data.reduce((dataArray, current) =>
         [
