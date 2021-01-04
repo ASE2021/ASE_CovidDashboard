@@ -16,14 +16,15 @@
   <div class="p-field">
     <label>Number of Covid cases:</label>
 
-    <p-inputNumber [(ngModel)]="cases" (onInput)="updateCovid($event)" [step]="100"
-                   (ngModelChange)="updateCovid($event)" [showButtons]="true" inputId="minmax-buttons" [min]="0">
-    </p-inputNumber>
   </div>
 </div>
 <div class="austriaMap p-shadow-15"
      leaflet
+     (leafletDoubleClick)="doubleClick($event)"
      [leafletOptions]="options"
+     [leafletFitBounds]="fitBounds"
+     [leafletZoom]="zoom"
+     (leafletMapReady)="onMapReady($event)"
      [leafletLayers]="layers">
 </div>
 

@@ -14,6 +14,7 @@ export class MapService {
   async loadCoordinateData(): Promise<AustrianProvinceData> {
 
     const jsonData = await this.http.get('/assets/convert.json').toPromise() as any;
+    const borders = await this.http.get('/assets/regions.json').toPromise() as any;
     console.log(jsonData);
     const groupedData = jsonData.features.reduce((obj, curr) => {
       if (!obj[curr.properties.NAME_1]) {
@@ -29,7 +30,8 @@ export class MapService {
         provinceKey,
         groupedData[provinceKey][0].properties.GID_1,
         groupedData[provinceKey].map(item =>
-          item.geometry.coordinates.map(c => c.map(i => [i[1], i[0]]))))));
+          item.geometry.coordinates.map(c => c.map(i => [i[1], i[0]]))),
+        borders[groupedData[provinceKey][0].properties.GID_1])));
     // jsonData.features.filter(item => item.properties.NAME_1 === 'Kärnten')
     //   .forEach(item => this.colors.push(
     //     polygon(item.geometry.coordinates.map(c => c.map(i => [i[1], i[0]])),

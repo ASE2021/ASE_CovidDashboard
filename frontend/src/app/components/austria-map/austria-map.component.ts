@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {latLng, polygon, tileLayer} from 'leaflet';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {Browser, Control, control, DomUtil, latLng, LeafletMouseEvent, polygon, tileLayer} from 'leaflet';
 import {CovidService} from '../../services/covid.service';
 import {MapService} from '../../services/map.service';
 import {AustrianProvinceData} from '../../model/austrian-province-data';
 import {Provinces} from '../../model/Provinces';
+import {LayerEventControlOptions} from '../../model/layer-event-control-options';
 
 @Component({
   selector: 'app-austria-map',
@@ -13,10 +14,14 @@ import {Provinces} from '../../model/Provinces';
 export class AustriaMapComponent implements OnInit {
   options = {
     layers: [
-      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
+      tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'),
     ],
-    zoom: 7.3,
-    center: latLng(47.5997094, 14.129943),
+    zoom: 7.05,
+    minZoom: 7.05,
+    doubleClickZoom: false,
+    interactive: false,
+    zoomControl: false,
+    center: latLng(47.6997094, 13.329943),
   };
   layers = [
     polygon([[46.8, -121.55], [46.9, -121.55], [46.9, -121.7], [46.8, -121.7]]),
@@ -25,13 +30,15 @@ export class AustriaMapComponent implements OnInit {
   l = [];
 
   colors = [];
-  cases: number;
+  cases: any[];
+  fitBounds: any;
 
   private mapData: AustrianProvinceData;
 
 
-  constructor(private covidService: CovidService, private mapService: MapService) {
+  constructor(private covidService: CovidService, private mapService: MapService, private cd: ChangeDetectorRef) {
     this.loadMapData();
+    this.loadCovidData();
     // this.getJSON().subscribe(data => {
     //   this.data = data;
     //   console.log(data);
@@ -46,12 +53,73 @@ export class AustriaMapComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  private async loadMapData() {
+  lcc: any;
+  control: Control;
+  zoom = 7.4;
+
+  private async loadMapData(): Promise<any> {
     this.mapData = await this.mapService.loadCoordinateData();
-    this.l = this.mapData.getAllLayers();
+    console.log(this.mapData);
+    this.l = this.mapData.getBorderLayers({
+      onClick: ev => {
+        console.log(ev);
+        this.fitBounds = ev.target.getBounds();
+        this.cd.detectChanges();
+        setTimeout(() => {
+          this.zoom = 9;
+          this.cd.detectChanges();
+        }, 100);
+
+        this.layers = [...this.l, ...this.colors, ...this.mapData.getBezirkLayersFor(ev.target.options.attribution)];
+      },
+      onMouseEnter: ev => {
+        this.highlightFeature(ev);
+        console.log(ev);
+        const covidDateForProvince = this.cases.find(item => item.geoId === ev.target.options.attribution);
+        this.control.getContainer().innerHTML = `<div class="map-info-box">
+        <ul>
+            <li>Province: ${covidDateForProvince.name}</li>
+            <li>Active cases: ${covidDateForProvince.active}</li>
+            <li>Deaths: ${covidDateForProvince.deaths}</li>
+        </ul></div>`;
+        this.cd.detectChanges();
+      },
+      onMouseOut: ev => this.resetHighlight(ev),
+    });
+
     this.layers = [...this.l, ...this.colors];
   }
 
+  highlightFeature(event: any): any {
+    const layer = event.target;
+
+    layer.setStyle({
+      weight: 4,
+      opacity: 1,
+      color: 'red',
+      fillColor: 'red',
+      fillOpacity: 0.2,
+    });
+
+    if (!Browser.ie && !Browser.opera && !Browser.edge) {
+      layer.bringToFront();
+    }
+  }
+
+  resetHighlight(event: any): any {
+    const layer = event.target;
+
+    layer.setStyle(this.defaultStyle());
+  }
+
+  defaultStyle(): any {
+    return {
+      weight: 4,
+      opacity: 1,
+      color: 'red',
+      fillColor: 'transparent',
+    };
+  }
 
   public fill(color: string): void {
     this.colors = [];
@@ -60,8 +128,8 @@ export class AustriaMapComponent implements OnInit {
     this.layers = [...this.l, ...this.colors];
   }
 
-  // tslint:disable-next-line:typedef
-  public updateCovid(event: any) {
+
+  public updateCovid(event: any): any {
     console.log(event.value);
 
     if (event.value < 300) {
@@ -77,4 +145,24 @@ export class AustriaMapComponent implements OnInit {
   }
 
 
+  doubleClick(event: LeafletMouseEvent) {
+    event.originalEvent.stopPropagation();
+  }
+
+  onMapReady(map: any) {
+    this.control = new Control({position: 'topleft'});
+
+    this.control.onAdd = (map: any) => {
+      const div = DomUtil.create('div', 'legend');
+
+      div.innerHTML = '<div class="map-info-box">Hover over the regions to see detailed information</div>';
+      return div;
+    };
+    this.control.addTo(map);
+  }
+
+  private async loadCovidData(): Promise<any> {
+    this.cases = await this.covidService.getDataForMap();
+    console.log(this.cases);
+  }
 }

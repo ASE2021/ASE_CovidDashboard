@@ -18,6 +18,19 @@ p-header {
   color: #85e085;
 }
 
+.map-info-box {
+  color: white;
+  font-width: bold;
+  font-size: larger;
+  background-color: red;
+  border-radius: 10px;
+  ul {
+    list-style: none;
+    margin-left: -18px;
+    margin-right: 18px;
+  }
+}
+
 .display-1 {
   font-size: 3.5rem;
   font-weight: 300;
