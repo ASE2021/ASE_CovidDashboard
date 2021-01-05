@@ -25,7 +25,7 @@ export class CovidService {
   }
 
   public getGeneralSituationPerDate(): Promise<GeneralSituationDaily[]> {
-    return this.http.get(this.apiUrl + '/daily/tableData/10')
+    return this.http.get(this.apiUrl + '/daily/generalsituation/10')
       .toPromise().then(item => (item as {situations: GeneralSituationDaily[]}).situations);
   }
 
