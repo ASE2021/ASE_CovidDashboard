@@ -23,9 +23,9 @@ export class TableComponent implements OnInit {
     this.loadTableData();
 
 
-    this.calculateTotalCases()
-    this.calculateTotalDeaths()
-    this.calculateTotalHospitalizations()
+    this.calculateTotalCases();
+    this.calculateTotalDeaths();
+    this.calculateTotalHospitalizations();
 
   }
 
@@ -46,27 +46,26 @@ export class TableComponent implements OnInit {
 
 
 
-  calculateTotalCases() {
+  calculateTotalCases(): void {
     let total = 0;
-    for(let i of this.data) {
+    for (const i of this.data) {
       total += i.cases;
     }
-
-      this.totalCases = total;
+    this.totalCases = total;
     }
 
-  calculateTotalDeaths() {
+  calculateTotalDeaths(): void {
     let total = 0;
-    for(let i of this.data) {
+    for (const i of this.data) {
       total += i.deaths;
     }
 
     this.totalDeaths = total;
   }
 
-  calculateTotalHospitalizations() {
+  calculateTotalHospitalizations(): void {
     let total = 0;
-    for(let i of this.data) {
+    for (const i of this.data) {
       total += i.hospitalBedsSum;
     }
 

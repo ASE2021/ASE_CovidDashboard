@@ -33,7 +33,7 @@ public class GeneralSituationPerDate {
         return cases;
     }
 
-    @JsonProperty("hospitalSituation")
+    @JsonProperty("hospitalBedsSum")
     public int getHospitalSituations(){ return hospitalBedsSum; }
 
 }
