@@ -40,7 +40,7 @@ public class BasicCovidController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/general-situation/{province-id}", produces = "application/json")
+    @GetMapping(value = "/generalsituation/{province-id}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<GeneralSituationPerProvinceDto> listNewTableDataFor(@PathVariable("province-id") int provinceId) {
         return ResponseEntity.ok(

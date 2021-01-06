@@ -22,11 +22,11 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     this.loadTableData();
 
-/*
+
     this.calculateTotalCases()
     this.calculateTotalDeaths()
     this.calculateTotalHospitalizations()
-    */
+
   }
 
 
@@ -45,12 +45,11 @@ export class TableComponent implements OnInit {
  */
 
 
-  /*
 
   calculateTotalCases() {
     let total = 0;
     for(let i of this.data) {
-      total += i.activeCases;
+      total += i.cases;
     }
 
       this.totalCases = total;
@@ -68,15 +67,13 @@ export class TableComponent implements OnInit {
   calculateTotalHospitalizations() {
     let total = 0;
     for(let i of this.data) {
-      total += i.hospitalizations;
+      total += i.hospitalBedsSum;
     }
 
     this.totalHospitalizations = total;
   }
 
 
-
-*/
 
 
 }
