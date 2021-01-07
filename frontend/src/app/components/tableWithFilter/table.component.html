@@ -1,7 +1,8 @@
 <p-table #generalSituation [value]="data" dataKey="id" [rows]="9" [showCurrentPageReport]="true"
          [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"
          [paginator]="true"
-         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         [globalFilterFields]="['date','cases','deaths','hospitalBedsSum']">
   <ng-template pTemplate="caption">
     <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
