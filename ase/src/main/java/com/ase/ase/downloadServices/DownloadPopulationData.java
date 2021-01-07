@@ -1,4 +1,4 @@
-package com.ase.ase.services;
+package com.ase.ase.downloadServices;
 
 import com.ase.ase.dao.PopulationRepository;
 import com.ase.ase.entities.Population;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ase.ase.services.DownloadService.fetchResult;
+import static com.ase.ase.downloadServices.DownloadService.fetchResult;
 
 @Service
 public class DownloadPopulationData {

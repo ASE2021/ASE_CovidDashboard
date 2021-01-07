@@ -9,13 +9,14 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TabViewModule} from 'primeng/tabview';
 import {DropdownModule} from 'primeng/dropdown';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TabMenuModule} from 'primeng/tabmenu';
 import {RoutingModule} from '../../routing.module';
 import {InputTextModule} from 'primeng/inputtext';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {FormsModule} from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {TableWithFilterModule} from '../tableWithFilter/table.module';
 
 @NgModule({
   declarations: [OverviewComponent],
@@ -35,7 +36,8 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     InputTextModule,
     MultiSelectModule,
     FormsModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    TableWithFilterModule
   ],
 
   exports: [OverviewComponent]

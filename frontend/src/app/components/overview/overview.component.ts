@@ -32,6 +32,7 @@ export class OverviewComponent implements OnInit {
     this.initializeSexDistributionCharts();
     this.initializeHospitalBedsPerDateChart();
 
+
     this.socketService.connectToMqtt(
       () => {
         this.socketService.observe('new-data')
@@ -95,8 +96,6 @@ export class OverviewComponent implements OnInit {
           [...dataArray[0], current.intenseBeds],
           [...dataArray[1], current.normalBeds],
         ], [[], []]));
-
-
 
   }
 

@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {SexDistribution} from '../model/sex-distribution';
 import {HospitalBedsDaily} from '../model/hospital-beds-daily';
 import {Provinces} from '../model/Provinces';
+import {GeneralSituationDaily} from '../model/general-situation-daily';
 
 
 
@@ -25,9 +26,15 @@ export class CovidService {
       .toPromise().then(item => (item as { situations: HospitalBedsDaily[] }).situations);
   }
 
+
   public getSexDistribution(): Promise<SexDistribution[]> {
     return this.http.get(this.apiUrl + '/distribution/sex/10')
-      .toPromise().then(item => (item as {cases: SexDistribution[]}).cases);
+      .toPromise().then(item => (item as { cases: SexDistribution[] }).cases);
+  }
+
+  public getGeneralSituationPerDate(): Promise<GeneralSituationDaily[]> {
+    return this.http.get(this.apiUrl + '/daily/generalsituation/10')
+      .toPromise().then(item => (item as {situations: GeneralSituationDaily[]}).situations);
   }
 
   public getProvinces(): Promise<Provinces> {

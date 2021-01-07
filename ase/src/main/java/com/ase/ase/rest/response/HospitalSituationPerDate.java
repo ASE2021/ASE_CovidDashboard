@@ -2,7 +2,6 @@ package com.ase.ase.rest.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
 
 public final class HospitalSituationPerDate {
     private final String date;

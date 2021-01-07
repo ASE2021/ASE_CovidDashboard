@@ -4,6 +4,7 @@ services:
   - docker
 
 before_install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build --no-cache -t covid-19-dashboard-frontend:latest frontend
   - docker build --no-cache -t covid-19-dashboard-backend:latest ase
   - docker run -d -p 127.0.0.1:80:80 covid-19-dashboard-frontend:latest

@@ -1,7 +1,7 @@
-package com.ase.ase.services;
+package com.ase.ase.downloadServices;
 
 import com.ase.ase.dao.*;
-import com.ase.ase.entities.Timeline;
+import com.ase.ase.entities.CasesTimeline;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,28 +13,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.ase.ase.services.DownloadService.fetchResult;
+import static com.ase.ase.downloadServices.DownloadService.fetchResult;
 
 @Service
-public class DownloadTimelineData {
+public class DownloadCasesTimelineData {
     @Autowired
-    TimelineRepository timelineRepository;
+    CasesTimelineRepository casesTimelineRepository;
 
     public void downloadTimeline() {
         try {
             BufferedReader in = fetchResult("https://covid19-dashboard.ages.at/data/CovidFaelle_Timeline.csv");
-            List<Timeline> list = extractTimelineData(in);
+            List<CasesTimeline> list = extractTimelineData(in);
 
             in = fetchResult("https://covid19-dashboard.ages.at/data/CovidFaelle_Timeline_GKZ.csv");
             list.addAll(extractTimelineData(in));
-            timelineRepository.saveAll(list);
+            casesTimelineRepository.saveAll(list);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static List<Timeline> extractTimelineData(BufferedReader in) throws IOException {
-        List<Timeline> times = new ArrayList<>();
+    public static List<CasesTimeline> extractTimelineData(BufferedReader in) throws IOException {
+        List<CasesTimeline> times = new ArrayList<>();
         String head = in.readLine();
         String[] attributes = head.split(";");
 
@@ -97,7 +97,7 @@ public class DownloadTimelineData {
                 }
             }
 
-            times.add(new Timeline(time, area, areaId, newCases, sumCases, weeklyCases, inzidenzCases, newDead, sumDead, newCured, sumCured));
+            times.add(new CasesTimeline(time, area, areaId, newCases, sumCases, weeklyCases, inzidenzCases, newDead, sumDead, newCured, sumCured));
             line = in.readLine();
         }
         return times;
