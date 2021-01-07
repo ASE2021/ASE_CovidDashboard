@@ -1,0 +1,78 @@
+<p-table #generalSituation [value]="data" dataKey="id" [rows]="9" [showCurrentPageReport]="true"
+         [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"
+         [paginator]="true"
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+  <ng-template pTemplate="caption">
+    <div class="p-d-flex">
+                <span class="p-input-icon-left p-ml-auto">
+                    <em class="pi pi-search"></em>
+                    <input pInputText type="text" (input)="generalSituation.filterGlobal($event.target, 'contains')" placeholder="Search keyword" />
+                </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Date
+          <p-columnFilter field="date" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+            <ng-template pTemplate="header">
+              <div class="p-px-3 p-pt-3 p-pb-0">
+                <span class="p-text-bold">Date Picker</span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect [ngModel]="value" [options]="provinces" placeholder="Any" (onChange)="filter($event)" optionLabel="date">
+                <ng-template let-option pTemplate="item">
+                  <div class="p-multiselect-date-option">
+                    <span class="p-ml-1">{{option}}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </div>
+      </th>
+
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Active Cases Today
+          <p-columnFilter type="text" field="cases" display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Deaths
+          <p-columnFilter field="deaths" type="text" display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Hospitalizations
+          <p-columnFilter field="hospitalBedsSum" type="text" display="menu"></p-columnFilter>
+        </div>
+      </th>
+    </tr>
+
+  </ng-template>
+
+
+  <ng-template pTemplate="body" let-data>
+    <tr>
+      <td>{{data.date}}</td>
+      <td>{{data.cases}}</td>
+      <td>{{data.deaths}}</td>
+      <td>{{data.hospitalBedsSum}}</td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <tr>
+      <td colspan="1" class="p-text-right">Totals</td>
+      <td>{{totalCases}}</td>
+      <td>{{totalDeaths}}</td>
+      <td>{{totalHospitalizations}}</td>
+
+    </tr>
+  </ng-template>
+</p-table>

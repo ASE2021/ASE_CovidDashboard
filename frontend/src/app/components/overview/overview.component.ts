@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
@@ -28,6 +28,7 @@ export class OverviewComponent implements OnInit {
     this.initializePositiveCasesPerDateChart();
     this.initializeBasicInformation();
     this.initializeHospitalBedsPerDateChart();
+
 
     this.socketService.connectToMqtt(
       () => {
@@ -73,8 +74,6 @@ export class OverviewComponent implements OnInit {
           [...dataArray[0], current.intenseBeds],
           [...dataArray[1], current.normalBeds],
         ], [[], []]));
-
-
 
   }
 
