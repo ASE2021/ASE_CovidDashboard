@@ -1,10 +1,7 @@
 package com.ase.ase.rest.controller;
 
 import com.ase.ase.dao.TimelineRepository;
-import com.ase.ase.rest.response.DailyCasesPerProvinceDto;
-
-import com.ase.ase.rest.response.HospitalSituationPerDate;
-import com.ase.ase.rest.response.HospitalSituationPerDateDto;
+import com.ase.ase.rest.response.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +27,7 @@ public class BasicCovidController {
                         timelineRepository.findAllBy(provinceId)));
     }
 
+
     @CrossOrigin
     @GetMapping(value = "/hospital/{province-id}", produces = "application/json")
     @ResponseBody
@@ -38,7 +36,19 @@ public class BasicCovidController {
                 new HospitalSituationPerDateDto(provinceId, Arrays.asList(
                         new HospitalSituationPerDate("10.10.2020", 12, 10),
                         new HospitalSituationPerDate("12.10.2020", 12, 12))));
+
     }
 
+    @CrossOrigin
+    @GetMapping(value = "/generalsituation/{province-id}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<GeneralSituationPerProvinceDto> listNewTableDataFor(@PathVariable("province-id") int provinceId) {
+        return ResponseEntity.ok(
+                new GeneralSituationPerProvinceDto(provinceId, Arrays.asList(
+                        new GeneralSituationPerDate("10.10.2020", 12, 10, 24),
+                        new GeneralSituationPerDate("10.10.2020", 12, 12, 24))));
+
+
+    }
 
 }
