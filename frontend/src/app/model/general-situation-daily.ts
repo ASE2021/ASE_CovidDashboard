@@ -5,9 +5,9 @@ import {HospitalBedsDaily} from './hospital-beds-daily';
 export class GeneralSituationDaily {
 
   date: string;
-  cases: CovidCasesDaily;
-  deaths: CovidDeathsDaily;
-  hospitalBedsSum: HospitalBedsDaily;
+  cases: number;
+  deaths: number;
+  hospitalBedsSum: number;
 
 
 }
