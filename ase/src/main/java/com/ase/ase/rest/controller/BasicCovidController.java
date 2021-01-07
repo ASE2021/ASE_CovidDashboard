@@ -1,6 +1,6 @@
 package com.ase.ase.rest.controller;
 
-import com.ase.ase.dao.TimelineRepository;
+import com.ase.ase.dao.CasesTimelineRepository;
 import com.ase.ase.rest.response.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.*;
 public class BasicCovidController {
 
     @Autowired
-    private TimelineRepository timelineRepository;
+    private CasesTimelineRepository casesTimelineRepository;
 
     @CrossOrigin
     @GetMapping(value = "/{province-id}", produces = "application/json")
@@ -24,7 +24,7 @@ public class BasicCovidController {
         return ResponseEntity.ok(
                 new DailyCasesPerProvinceDto(
                         provinceId,
-                        timelineRepository.findAllBy(provinceId)));
+                        casesTimelineRepository.findAllBy(provinceId)));
     }
 
 

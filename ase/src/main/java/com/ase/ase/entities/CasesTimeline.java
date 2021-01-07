@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class Timeline {
+public class CasesTimeline {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,9 +27,9 @@ public class Timeline {
     private int newCured;
     private int sumCured;
 
-    protected Timeline() { }
+    protected CasesTimeline() { }
 
-    public Timeline(Date time, String area, int areaId, int newCases, int sumCases, int weeklyCases, int inzidenzCases, int newDead, int sumDead, int newCured, int sumCured) {
+    public CasesTimeline(Date time, String area, int areaId, int newCases, int sumCases, int weeklyCases, int inzidenzCases, int newDead, int sumDead, int newCured, int sumCured) {
         this.time = time;
         this.area = area;
         this.areaId = areaId;
