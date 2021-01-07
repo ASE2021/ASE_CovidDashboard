@@ -20,7 +20,7 @@ public class BasicInformationController {
     private OverviewRepository overviewRepository;
 
     public ResponseEntity getBasicInformation(){
-        BasicInformation b = overviewRepository.get();
+        BasicInformation b = overviewRepository.getBasic();
       return ResponseEntity.ok(b);
   }
 
