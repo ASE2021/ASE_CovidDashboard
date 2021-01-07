@@ -82,7 +82,7 @@ export class OverviewComponent implements OnInit {
         [
           [...dataArray[0], current.femaleDeaths, current.maleDeaths]
         ], [[], []])
-      )
+      );
   }
 
   private async initializeHospitalBedsPerDateChart(): Promise<void> {
