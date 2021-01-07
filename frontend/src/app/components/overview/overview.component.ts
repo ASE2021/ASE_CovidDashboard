@@ -4,6 +4,8 @@ import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
 import {MessageResponse} from '../../model/MessageResponse';
 import {IMqttMessage} from 'ngx-mqtt';
+import {SexDistribution} from "../../model/sex-distribution";
+import {HospitalBedsDaily} from "../../model/hospital-beds-daily";
 
 @Component({
   selector: 'app-overview',
@@ -13,9 +15,9 @@ import {IMqttMessage} from 'ngx-mqtt';
 export class OverviewComponent implements OnInit {
 
   positiveCasesPerDateData: any;
-  sexDistributionCasesData: any;
-  sexDistributionDeathsData: any;
-  hospitalBedsPerDate: any;
+  sexDistributionCasesData: SexDistribution;
+  sexDistributionDeathsData: SexDistribution;
+  hospitalBedsPerDate: HospitalBedsDaily;
   activeCases: number;
   numberOfCases: number;
   deaths: number;
