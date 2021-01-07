@@ -1,7 +1,9 @@
 package com.ase.ase;
 
-import com.ase.ase.dao.*;
+import com.ase.ase.activemq.MessagingService;
+import com.ase.ase.activemq.UpdateDataMessage;
 import com.ase.ase.services.DownloadPopulationData;
+import com.ase.ase.services.DownloadScheduleService;
 import com.ase.ase.services.DownloadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,23 +14,26 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class AseCovidDashboardApplication {
-	private static final Logger log = LoggerFactory.getLogger(AseCovidDashboardApplication.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(AseCovidDashboardApplication.class, args);
-	}
+  private static final Logger log = LoggerFactory.getLogger(AseCovidDashboardApplication.class);
 
-	@Bean
-	public CommandLineRunner demo(
-			DownloadService service,
-			DownloadPopulationData downloadPopulationData,
-			OverviewRepository repository
-	) {
-		return (args) -> {
-			downloadPopulationData.downloadPopulation();
-			service.downloadAllCovidData();
-			log.info(repository.findById(1l).toString());
-		};
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(AseCovidDashboardApplication.class, args);
+  }
 
+  @Bean
+  public CommandLineRunner start(
+      DownloadService downloadService,
+      DownloadScheduleService scheduleService,
+      DownloadPopulationData downloadPopulationService,
+      MessagingService messagingService
+  ) {
+    return (args) -> {
+      messagingService.init("new-data");
+      downloadPopulationService.downloadPopulation();
+      boolean downloaded = downloadService.downloadAllCovidData();
+      messagingService.send(new UpdateDataMessage(downloaded));
+      scheduleService.setTimerForDownloadingNewData();
+    };
+  }
 }
