@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -45,12 +46,12 @@ public class BasicCovidController {
         return ResponseEntity.ok(
                 new HospitalSituationPerDateDto(
                         provinceId,
-                        (List<HospitalSituationPerDate>) totalDates
+                        totalDates
                                 .stream()
                                 .map(item -> new HospitalSituationPerDate(
                                         item.toString(),
                                         (int) (Math.random() * 100),
-                                        (int) (Math.random() * 100)))));
+                                        (int) (Math.random() * 100))).collect(Collectors.toList())));
 
     }
 
