@@ -38,4 +38,8 @@ export class CovidService {
       });
   }
 
+  public getProvinceSituationPerDate(): Promise<GeneralSituationDaily[]> {
+    return this.http.get(this.apiUrl + '/daily/provincesituation/10')
+      .toPromise().then(item => (item as {situations: GeneralSituationDaily[]}).situations);
+  }
 }

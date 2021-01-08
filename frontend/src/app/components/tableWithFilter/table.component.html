@@ -1,4 +1,4 @@
-<p-table #generalSituation [value]="data" dataKey="id" [rows]="9" [showCurrentPageReport]="true"
+<p-table #generalSituation [value]="data" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
          [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"
          [paginator]="true"
          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -13,31 +13,17 @@
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
+      <th style="width: 3rem"></th>
       <th>
         <div class="p-d-flex p-jc-between p-ai-center">
           Date
-          <p-columnFilter field="date" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-            <ng-template pTemplate="header">
-              <div class="p-px-3 p-pt-3 p-pb-0">
-                <span class="p-text-bold">Date Picker</span>
-              </div>
-            </ng-template>
-            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-              <p-multiSelect [ngModel]="value" [options]="provinces" placeholder="Any" (onChange)="filter($event)" optionLabel="date">
-                <ng-template let-option pTemplate="item">
-                  <div class="p-multiselect-date-option">
-                    <span class="p-ml-1">{{option}}</span>
-                  </div>
-                </ng-template>
-              </p-multiSelect>
-            </ng-template>
-          </p-columnFilter>
+          <p-columnFilter type="date" field="date" display="menu"></p-columnFilter>
         </div>
       </th>
 
       <th>
         <div class="p-d-flex p-jc-between p-ai-center">
-          Active Cases Today
+          Active Cases
           <p-columnFilter type="text" field="cases" display="menu"></p-columnFilter>
         </div>
       </th>
@@ -58,14 +44,44 @@
   </ng-template>
 
 
-  <ng-template pTemplate="body" let-data>
+  <ng-template pTemplate="body" let-data let-expanded="expanded">
     <tr>
-      <td>{{data.date}}</td>
+      <td>
+        <button type="button" pButton pRipple [pRowToggler]="data" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+      </td>
+      <td>{{data.date| date: 'dd/MM/yyyy'}}</td>
       <td>{{data.cases}}</td>
       <td>{{data.deaths}}</td>
       <td>{{data.hospitalBedsSum}}</td>
     </tr>
   </ng-template>
+
+  <ng-template pTemplate="rowexpansion" let-dataProvince>
+    <tr>
+      <td colspan="7">
+        <div class="p-p-3">
+          <p-table [value]="dataProvince" dataKey="date">
+            <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="province">Province <p-sortIcon field="province"></p-sortIcon></th>
+      <th pSortableColumn="cases">Cases<p-sortIcon field="cases"></p-sortIcon></th>
+      <th pSortableColumn="deaths">Deaths<p-sortIcon field="deaths"></p-sortIcon></th>
+      <th pSortableColumn="hospitalizations">Hospitalizations<p-sortIcon field="hospitalizations"></p-sortIcon></th>
+      <th pSortableColumn="stats">Status<p-sortIcon field="status"></p-sortIcon></th>
+      <th style="width: 4rem"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-dataProvince>
+    <tr>
+      <td>{{dataProvince.province}}</td>
+      <td>{{dataProvince.cases}}</td>
+      <td>{{dataProvince.deaths}}</td>
+      <td>{{dataProvince.hospitalizations}}</td>
+      <td><span [class]="'order-badge order-' + dataProvince.status.toLowerCase()">{{data.status}}</span></td>
+    </tr>
+
+
+
 
   <ng-template pTemplate="footer">
     <tr>
@@ -75,5 +91,6 @@
       <td>{{totalHospitalizations}}</td>
 
     </tr>
+  </ng-template>
   </ng-template>
 </p-table>

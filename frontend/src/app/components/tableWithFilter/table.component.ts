@@ -10,6 +10,7 @@ import {Provinces} from '../../model/Provinces';
 export class TableComponent implements OnInit {
 
   data: Array<any>;
+  dataProvince: Array<any>;
   provinces: Provinces[]; // saving the enum Provinces
 
   // calculation of numbers in whole Austria
@@ -21,12 +22,14 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTableData();
+    this.loadProvinceData();
 
   }
 
 
   private async loadTableData(): Promise<void> {
     this.data = await this.covidService.getGeneralSituationPerDate();
+    this.dataProvince = await this.covidService.getProvinceSituationPerDate();
 
     this.calculateTotalCases();
     this.calculateTotalDeaths();
@@ -44,10 +47,16 @@ export class TableComponent implements OnInit {
  */
 
 
+  private loadProvinceData() {
+    this.dataProvince = [{province: 'Kärnten', cases: 1200 , deaths: 2, hospitalizations: 50},
+      {province: 'Steiermark', cases: 970, deaths: 5, hospitalizations: 35}];
+  }
+
+
 
   calculateTotalCases(): void {
     let total = 0;
-    for (const i of this.data) {
+    for (const i of this.dataProvince) {
       total += i.cases;
     }
     this.totalCases = total;
@@ -55,7 +64,7 @@ export class TableComponent implements OnInit {
 
   calculateTotalDeaths(): void {
     let total = 0;
-    for (const i of this.data) {
+    for (const i of this.dataProvince) {
       total += i.deaths;
     }
 
@@ -64,7 +73,7 @@ export class TableComponent implements OnInit {
 
   calculateTotalHospitalizations(): void {
     let total = 0;
-    for (const i of this.data) {
+    for (const i of this.dataProvince) {
       total += i.hospitalBedsSum;
     }
 

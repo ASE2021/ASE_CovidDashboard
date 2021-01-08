@@ -6,6 +6,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import {FormsModule} from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TableComponent} from './table.component';
+import {ButtonModule} from "primeng/button";
+import {RippleModule} from "primeng/ripple";
 
 @NgModule({
   declarations: [TableComponent],
@@ -14,7 +16,9 @@ import {TableComponent} from './table.component';
     TableModule,
     MultiSelectModule,
     FormsModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    ButtonModule,
+    RippleModule
   ],
 
   exports: [TableComponent]
