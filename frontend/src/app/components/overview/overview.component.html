@@ -59,7 +59,6 @@
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
-              Show Pie chart here
               <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
                        [data]="positiveCasesPerDateData"></p-chart>
               <p-progressSpinner
@@ -72,25 +71,21 @@
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
+              <h3>Bed Utilisation in Hospitals</h3>
               <p-chart type="line" [data]="hospitalBedsPerDate"></p-chart>
-              show line chart here
             </div>
           </div>
         </div>
       </p-tabPanel>
       <p-tabPanel header="Sex Distribution">
-        <div class="p-grid">
-          <div class="p-col-12">
-            <div class="p-grid">
-              <div class="p-col-6 p-offset-3">
-                <p-chart type="pie" [data]="sexDistributionCasesData"></p-chart>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="p-col-12">
           <div class="p-grid">
-            <div class="p-col-6 p-offset-3">
+            <div class="p-col-5 p-offset-1">
+              <h3>Active Cases Sex Distribution</h3>
+              <p-chart type="pie" [data]="sexDistributionCasesData"></p-chart>
+            </div>
+            <div class="p-col-5 p-offset-1">
+              <h3>Death Sex Distribution</h3>
               <p-chart type="pie" [data]="sexDistributionDeathsData"></p-chart>
             </div>
           </div>

@@ -4,8 +4,8 @@ import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
 import {MessageResponse} from '../../model/MessageResponse';
 import {IMqttMessage} from 'ngx-mqtt';
-import {SexDistribution} from "../../model/sex-distribution";
-import {HospitalBedsDaily} from "../../model/hospital-beds-daily";
+import {SexDistribution} from '../../model/sex-distribution';
+import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
 
 @Component({
   selector: 'app-overview',
