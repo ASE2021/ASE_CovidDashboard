@@ -55,13 +55,13 @@
   <!-- TODO: change data of the line and pie charts -->
   <div class="p-col-12">
     <p-tabView>
-      <p-tabPanel header="Gender Pie Chart">
+      <p-tabPanel header="Comparison">
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
-              Show Pie chart here
-              <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
-                       [data]="positiveCasesPerDateData"></p-chart>
+              This is a comparison of active cases, cures and deaths since the beginning of the pandemic.
+              <p-chart *ngIf="comparison && positiveCasesPerDateData.datasets.length > 0" type="bar"
+                       [data]="comparison"></p-chart>
               <p-progressSpinner
                 *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
             </div>

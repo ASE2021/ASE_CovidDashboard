@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {HospitalBedsDaily} from '../model/hospital-beds-daily';
 import {Provinces} from '../model/Provinces';
 import {GeneralSituationDaily} from '../model/general-situation-daily';
+import {ComparisonData} from "../model/comparison-data";
 
 
 @Injectable({
@@ -27,6 +28,11 @@ export class CovidService {
   public getGeneralSituationPerDate(): Promise<GeneralSituationDaily[]> {
     return this.http.get(this.apiUrl + '/daily/generalsituation/10')
       .toPromise().then(item => (item as {situations: GeneralSituationDaily[]}).situations);
+  }
+
+  public getComparisonData(): Promise<ComparisonData[]> {
+    return this.http.get(this.apiUrl + '/distribution/comparison')
+      .toPromise().then(item => (item as { situations: ComparisonData[] }).situations);
   }
 
   public getProvinces(): Promise<Provinces> {

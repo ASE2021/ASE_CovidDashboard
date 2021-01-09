@@ -4,6 +4,7 @@ import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
 import {MessageResponse} from '../../model/MessageResponse';
 import {IMqttMessage} from 'ngx-mqtt';
+import {ComparisonData} from "../../model/comparison-data";
 
 @Component({
   selector: 'app-overview',
@@ -17,6 +18,7 @@ export class OverviewComponent implements OnInit {
   activeCases: number;
   numberOfCases: number;
   deaths: number;
+  comparison: ComparisonData[]
   province: any;
 
 
@@ -25,6 +27,7 @@ export class OverviewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.initializeComparisonChart()
     this.initializePositiveCasesPerDateChart();
     this.initializeBasicInformation();
     this.initializeHospitalBedsPerDateChart();
@@ -37,6 +40,7 @@ export class OverviewComponent implements OnInit {
             console.log(message.payload.toString());
             try {
               if ((JSON.parse(message.payload.toString()) as MessageResponse).update) {
+                this.initializeComparisonChart()
                 this.initializePositiveCasesPerDateChart();
                 this.initializeBasicInformation();
                 this.initializeHospitalBedsPerDateChart();
@@ -55,6 +59,18 @@ export class OverviewComponent implements OnInit {
     this.deaths = 2000;
   }
 
+  private async initializeComparisonChart(): Promise<void> {
+    const data = await this.covidService.getComparisonData();
+    this.comparison = new ChartModelBuilder()
+      .buildBasicChartModel(['Cases', 'Cures', 'Deaths'], ['Cases', 'Cures', 'Deaths'],
+        data.reduce((dataArray, current) =>
+          [
+            [...dataArray[0], current.cases],
+            [...dataArray[1], current.cures],
+            [...dataArray[2], current.deaths]
+          ], [[], []]));
+  }
+
   private async initializePositiveCasesPerDateChart(): Promise<void> {
     const data = await this.covidService.getNewCasesPerDate();
     this.positiveCasesPerDateData = new ChartModelBuilder()
@@ -65,15 +81,15 @@ export class OverviewComponent implements OnInit {
 
 
   private async initializeHospitalBedsPerDateChart(): Promise<void> {
-    const data = await  this.covidService.getHospitalBedsPerDate();
+    const data = await this.covidService.getHospitalBedsPerDate();
     this.hospitalBedsPerDate = new ChartModelBuilder()
       .buildBasicChartModel(['Intense beds used', 'Normal beds used'],
         data.map(item => item.date.split('T')[0]),
         data.reduce((dataArray, current) =>
-        [
-          [...dataArray[0], current.intenseBeds],
-          [...dataArray[1], current.normalBeds],
-        ], [[], []]));
+          [
+            [...dataArray[0], current.intenseBeds],
+            [...dataArray[1], current.normalBeds],
+          ], [[], []]));
 
   }
 
