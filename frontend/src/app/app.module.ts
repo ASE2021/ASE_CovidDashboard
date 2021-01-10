@@ -23,50 +23,54 @@ import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
 import {MqttModule} from 'ngx-mqtt';
 import {TableWithFilterModule} from './components/tableWithFilter/table.module';
+import { CalendarPickerModule } from './components/calendarPicker/calendarPicker.module';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule, BrowserAnimationsModule,
-    HttpClientModule,
-    FormsModule,
-    ChartModule,
-    AustriaMapModule,
-    TabMenuModule,
-    OverviewModule,
-    RoutingModule,
-    InputTextModule,
-    TableModule,
-    CalendarModule,
-    SliderModule,
-    DialogModule,
-    MultiSelectModule,
-    ContextMenuModule,
-    DropdownModule,
-    ButtonModule,
-    ToastModule,
-    TableWithFilterModule,
-    ProgressBarModule,
-    MqttModule.forRoot({
-      connectOnCreate: false,
+    declarations: [
+        AppComponent,
+    ],
+    imports: [
+        BrowserModule, BrowserAnimationsModule,
+        HttpClientModule,
+        FormsModule,
+        ChartModule,
+        AustriaMapModule,
+        TabMenuModule,
+        OverviewModule,
+        RoutingModule,
+        InputTextModule,
+        TableModule,
+        CalendarModule,
+        SliderModule,
+        DialogModule,
+        MultiSelectModule,
+        ContextMenuModule,
+        DropdownModule,
+        ButtonModule,
+        ToastModule,
+        TableWithFilterModule,
+        CalendarPickerModule,
+        ProgressBarModule,
+        MqttModule.forRoot({
+            connectOnCreate: false,
 
-    }),
+        }),
 
-  ],
-  providers: [HttpClient,
-    {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
-    {provide: 'BACKEND_NOTIFICATION_URL', useValue: environment.backendNotificationUrl},
-    {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort}
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: FakeBackendInterceptor,
-    //   multi: true,
-    // }
-  ],
-  bootstrap: [AppComponent],
+    ],
+    providers: [HttpClient,
+        {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
+        {provide: 'BACKEND_NOTIFICATION_URL', useValue: environment.backendNotificationUrl},
+        {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort}
+        // {
+        //   provide: HTTP_INTERCEPTORS,
+        //   useClass: FakeBackendInterceptor,
+        //   multi: true,
+        // }
+    ],
+    bootstrap: [AppComponent],
+    exports: [
+    ]
 })
 export class AppModule {
 

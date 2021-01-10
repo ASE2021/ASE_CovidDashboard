@@ -17,6 +17,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import {FormsModule} from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TableWithFilterModule} from '../tableWithFilter/table.module';
+import {CalendarModule} from 'primeng/calendar';
+import {CalendarPickerModule} from '../calendarPicker/calendarPicker.module';
 
 @NgModule({
   declarations: [OverviewComponent],
@@ -37,7 +39,9 @@ import {TableWithFilterModule} from '../tableWithFilter/table.module';
     MultiSelectModule,
     FormsModule,
     ProgressSpinnerModule,
-    TableWithFilterModule
+    TableWithFilterModule,
+    CalendarModule,
+    CalendarPickerModule
   ],
 
   exports: [OverviewComponent]
