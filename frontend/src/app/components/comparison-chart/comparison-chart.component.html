@@ -1,0 +1,14 @@
+<div class="p-grid p-nested-grid">
+  <div class="p-col-12">
+    <div class="p-grid">
+      <div class="p-col-6"><span>Select the provinces you want to compare</span></div>
+      <div class="p-col-4">
+        <p-multiSelect style="width: 100%" [options]="provinces" optionLabel="areaName"></p-multiSelect>
+      </div>
+    </div>
+  </div>
+  <div class="p-col-12">
+    <p-chart *ngIf="chartData" [data]="chartData"></p-chart>
+  </div>
+
+</div>

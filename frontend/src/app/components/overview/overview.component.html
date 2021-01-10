@@ -41,6 +41,7 @@
       <div class="p-col-12">
         <div class="p-grid">
           <div class="p-col-8 p-offset-2">
+
             <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
                      [data]="positiveCasesPerDateData"></p-chart>
             <p-progressSpinner
@@ -55,6 +56,11 @@
   <!-- TODO: change data of the line and pie charts -->
   <div class="p-col-12">
     <p-tabView>
+      <p-tabPanel header="Comparison">
+        <div class="p-col-12">
+              <app-comparison-chart></app-comparison-chart>
+        </div>
+      </p-tabPanel>
       <p-tabPanel header="Another Chart">
         <div class="p-col-12">
           <div class="p-grid">

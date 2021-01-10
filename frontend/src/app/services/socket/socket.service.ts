@@ -1,5 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
-import {MqttService} from 'ngx-mqtt';
+import {IMqttMessage, MqttService} from 'ngx-mqtt';
+import {MessageResponse} from '../../model/MessageResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -61,6 +62,4 @@ export class SocketService {
       console.log(e);
     }
   }
-
-
 }
