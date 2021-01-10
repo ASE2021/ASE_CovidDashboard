@@ -12,7 +12,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/comparison")
-public class CovidComparisonController {
+public class ComparisonCovidController {
 
     @CrossOrigin
     @GetMapping(value = "/cases", produces = "application/json")

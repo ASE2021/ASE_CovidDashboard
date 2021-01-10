@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class HospitalSituationPerDateDto {
+public class DailyHospitalSituationPerProvinceDto {
 
     private final int provinceId;
     private final List<HospitalSituationPerDate> situations;
 
-    public HospitalSituationPerDateDto(int provinceId, List<HospitalSituationPerDate> situations) {
+    public DailyHospitalSituationPerProvinceDto(int provinceId, List<HospitalSituationPerDate> situations) {
         this.provinceId = provinceId;
         this.situations = situations;
     }
