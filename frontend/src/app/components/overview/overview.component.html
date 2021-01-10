@@ -63,27 +63,27 @@
       <p-tabPanel header="Gender Pie Chart">
 
         <div class="p-col-12">
-          <div class="p-grid">
+          <div class="p-grid p-nested-grid">
             <div class="p-col-6 p-offset-3">
-              Show Pie chart here
               <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
                        [data]="positiveCasesPerDateData"></p-chart>
               <p-progressSpinner
                 *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
+              <br><app-calendarpicker></app-calendarpicker>
             </div>
-            <app-calendarpicker></app-calendarpicker>
+
           </div>
 
         </div>
       </p-tabPanel>
       <p-tabPanel header="Hospital Situation">
         <div class="p-col-12">
-          <div class="p-grid">
+          <div class="p-grid p-nested-grid">
             <div class="p-col-6 p-offset-3">
               <p-chart type="line" [data]="hospitalBedsPerDate"></p-chart>
-              show line chart here
+              <br><app-calendarpicker></app-calendarpicker>
             </div>
-            <app-calendarpicker></app-calendarpicker>
+
           </div>
         </div>
       </p-tabPanel>
@@ -93,10 +93,8 @@
 
       <!-- TABLE OVERVIEW -------------------------------->
       <p-tabPanel header="Table Overview">
-        <!-- TODO: fill tableWithFilter with data -->
 
         <app-table></app-table>
-
 
       </p-tabPanel>
     </p-tabView>

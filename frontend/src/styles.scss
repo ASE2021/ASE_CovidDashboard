@@ -5,6 +5,14 @@ html {
   margin: 0;
 }
 
+app-calendarpicker .p-calendar {
+  width: 100%;
+  .p-inputtext {
+    text-align: center;
+  }
+
+}
+
 body{
   margin-left: 4rem;
   margin-right: 4rem;
