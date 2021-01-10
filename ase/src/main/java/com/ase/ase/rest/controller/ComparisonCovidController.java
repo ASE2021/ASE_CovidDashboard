@@ -1,8 +1,8 @@
 package com.ase.ase.rest.controller;
 
-import com.ase.ase.rest.response.ValuesForREST;
-import com.ase.ase.rest.response.ValuesForRESTPerAreaDto;
-import com.ase.ase.rest.response.ValuesForRESTPerDate;
+import com.ase.ase.rest.response.InfoData;
+import com.ase.ase.rest.response.AreaResponse;
+import com.ase.ase.rest.response.InformationPerDate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,13 +17,13 @@ public class ComparisonCovidController {
     @CrossOrigin
     @GetMapping(value = "/cases", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<ValuesForRESTPerAreaDto> listCasesComparisonFor(@RequestParam("area-id") List<Integer> areaId) {
+    public ResponseEntity<AreaResponse> listCasesComparisonFor(@RequestParam("area-id") List<Integer> areaId) {
         return ResponseEntity.ok(
-                new ValuesForRESTPerAreaDto(areaId, "Austria", Arrays.asList(
-                        new ValuesForRESTPerDate("10.10.2020", Arrays.asList(
-                                new ValuesForREST("deaths", 100),
-                                new ValuesForREST("cured", 40),
-                                new ValuesForREST("newCases", 20)))
+                new AreaResponse(areaId, "Austria", Arrays.asList(
+                        new InformationPerDate("10.10.2020", Arrays.asList(
+                                new InfoData("deaths", 100),
+                                new InfoData("cured", 40),
+                                new InfoData("newCases", 20)))
                 ))
         );
     }

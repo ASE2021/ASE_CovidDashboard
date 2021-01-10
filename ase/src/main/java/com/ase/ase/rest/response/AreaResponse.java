@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ValuesForRESTPerAreaDto {
+public class AreaResponse {
     private final List<Integer> areaId;
     private final String areaName;
-    private final List<ValuesForRESTPerDate> data;
+    private final List<InformationPerDate> data;
 
-    public ValuesForRESTPerAreaDto(List<Integer> areaId, String areaName, List<ValuesForRESTPerDate> data) {
+    public AreaResponse(List<Integer> areaId, String areaName, List<InformationPerDate> data) {
         this.areaId = areaId;
         this.areaName = areaName;
         this.data = data;
@@ -24,7 +24,7 @@ public class ValuesForRESTPerAreaDto {
         return areaName;
     }
     @JsonProperty("data")
-    public List<ValuesForRESTPerDate> getCases() {
+    public List<InformationPerDate> getCases() {
         return data;
     }
 }

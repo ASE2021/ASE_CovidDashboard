@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ValuesForRESTPerDate {
+public class InformationPerDate {
     private final String date;
-    private final List<ValuesForREST> values;
+    private final List<InfoData> values;
 
-    public ValuesForRESTPerDate(String date, List<ValuesForREST> values) {
+    public InformationPerDate(String date, List<InfoData> values) {
         this.date = date;
         this.values = values;
     }
@@ -19,7 +19,7 @@ public class ValuesForRESTPerDate {
     }
 
     @JsonProperty("values")
-    public List<ValuesForREST> getValues() {
+    public List<InfoData> getValues() {
         return values;
     }
 
