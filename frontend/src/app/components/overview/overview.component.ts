@@ -4,21 +4,26 @@ import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
 import {MessageResponse} from '../../model/MessageResponse';
 import {IMqttMessage} from 'ngx-mqtt';
-import {ComparisonData} from "../../model/comparison-data";
+import {ComparisonCasesData} from "../../model/comparison-cases-data";
+import {SexDistribution} from '../../model/sex-distribution';
+import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
 
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss'],
 })
+
 export class OverviewComponent implements OnInit {
 
   positiveCasesPerDateData: any;
-  hospitalBedsPerDate: any;
+  sexDistributionCasesData: SexDistribution;
+  sexDistributionDeathsData: SexDistribution;
+  hospitalBedsPerDate: HospitalBedsDaily;
   activeCases: number;
   numberOfCases: number;
   deaths: number;
-  comparison: ComparisonData[]
+  comparison: ComparisonCasesData;
   province: any;
 
 
@@ -27,9 +32,10 @@ export class OverviewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.initializeComparisonChart()
+    this.initializeComparisonChart();
     this.initializePositiveCasesPerDateChart();
     this.initializeBasicInformation();
+    this.initializeSexDistributionCharts();
     this.initializeHospitalBedsPerDateChart();
 
 
@@ -40,10 +46,11 @@ export class OverviewComponent implements OnInit {
             console.log(message.payload.toString());
             try {
               if ((JSON.parse(message.payload.toString()) as MessageResponse).update) {
-                this.initializeComparisonChart()
+                this.initializeComparisonChart();
                 this.initializePositiveCasesPerDateChart();
                 this.initializeBasicInformation();
                 this.initializeHospitalBedsPerDateChart();
+                this.initializeSexDistributionCharts();
               }
             } catch (e) {
             }
@@ -66,7 +73,7 @@ export class OverviewComponent implements OnInit {
         data.reduce((dataArray, current) =>
           [
             [...dataArray[0], current.cases],
-            [...dataArray[1], current.cures],
+            [...dataArray[1], current.cured],
             [...dataArray[2], current.deaths]
           ], [[], []]));
   }
@@ -79,11 +86,29 @@ export class OverviewComponent implements OnInit {
         [data.map(item => item.cases)]);
   }
 
+  private async initializeSexDistributionCharts(): Promise<void> {
+    const data = await this.covidService.getSexDistribution();
+    this.sexDistributionCasesData =
+      new ChartModelBuilder().withCustomColors([['#1B2771', '#A93226']]).buildBasicChartModel(['Covid Cases Distributed per sex'],
+        ['female', 'male'],
+        data.reduce((dataArray, current) =>
+          [
+            [...dataArray[0], current.femaleCases, current.maleCases]
+          ], [[], []]));
+
+    this.sexDistributionDeathsData = new ChartModelBuilder().withCustomColors([['#1B2771', '#A93226']]).buildBasicChartModel(['Deaths Distributed per sex'],
+      ['female', 'male'],
+      data.reduce((dataArray, current) =>
+        [
+          [...dataArray[0], current.femaleDeaths, current.maleDeaths]
+        ], [[], []])
+    );
+  }
 
   private async initializeHospitalBedsPerDateChart(): Promise<void> {
     const data = await this.covidService.getHospitalBedsPerDate();
     this.hospitalBedsPerDate = new ChartModelBuilder()
-      .buildBasicChartModel(['Intense beds used', 'Normal beds used'],
+      .buildBasicChartModel(['intense beds', 'normal beds'],
         data.map(item => item.date.split('T')[0]),
         data.reduce((dataArray, current) =>
           [
@@ -94,5 +119,3 @@ export class OverviewComponent implements OnInit {
   }
 
 }
-
-

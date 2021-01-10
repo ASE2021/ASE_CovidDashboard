@@ -1,10 +1,12 @@
 import {Inject, Injectable} from '@angular/core';
 import {CovidCasesDaily} from '../model/covid-cases-daily';
 import {HttpClient} from '@angular/common/http';
+import {SexDistribution} from '../model/sex-distribution';
 import {HospitalBedsDaily} from '../model/hospital-beds-daily';
 import {Provinces} from '../model/Provinces';
 import {GeneralSituationDaily} from '../model/general-situation-daily';
-import {ComparisonData} from "../model/comparison-data";
+import {ComparisonCasesData} from "../model/comparison-cases-data";
+
 
 
 @Injectable({
@@ -25,14 +27,20 @@ export class CovidService {
       .toPromise().then(item => (item as { situations: HospitalBedsDaily[] }).situations);
   }
 
+
+  public getSexDistribution(): Promise<SexDistribution[]> {
+    return this.http.get(this.apiUrl + '/distribution/sex/10')
+      .toPromise().then(item => (item as { cases: SexDistribution[] }).cases);
+  }
+
   public getGeneralSituationPerDate(): Promise<GeneralSituationDaily[]> {
     return this.http.get(this.apiUrl + '/daily/generalsituation/10')
       .toPromise().then(item => (item as {situations: GeneralSituationDaily[]}).situations);
   }
 
-  public getComparisonData(): Promise<ComparisonData[]> {
-    return this.http.get(this.apiUrl + '/distribution/comparison')
-      .toPromise().then(item => (item as { situations: ComparisonData[] }).situations);
+  public getComparisonData(): Promise<ComparisonCasesData[]> {
+    return this.http.get(this.apiUrl + '/comparison/cases', {params: {'area-id': ['10','20']}})
+      .toPromise().then(item => (item as { data: ComparisonCasesData[] }).data);
   }
 
   public getProvinces(): Promise<Provinces> {
