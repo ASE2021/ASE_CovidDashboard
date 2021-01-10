@@ -23,22 +23,22 @@ public class Overview {
         this.sumdeaths = sumdeaths;
     }
 
-    @JsonProperty("sumcured")
+    @JsonProperty("cured")
     public int getsumcured() {
         return sumcured;
     }
 
-    @JsonProperty("sumcases")
+    @JsonProperty("sumCases")
     public int getsumcases() {
         return sumcases;
     }
 
-    @JsonProperty("currentsick")
+    @JsonProperty("activeCases")
     public int getcurrentsick(){
         return currentsick;
     }
 
-    @JsonProperty("sumdeaths")
+    @JsonProperty("deaths")
     public int getsumdeaths() {
         return sumdeaths;
     }
