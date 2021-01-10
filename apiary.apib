@@ -1,0 +1,450 @@
+FORMAT: 1A
+HOST: https://polls.apiblueprint.org/
+
+# COVID
+
+
+Polls is a simple API allowing consumers to view polls and vote in them.
+
+## Questions Collection [/overview]
+
+### Overview [GET]
+
++ Response 200 (application/json)
+        {
+            "activeCases": 12,
+            "deaths": 12,
+            "sumCases": 12,
+            "cured": 10
+        }
+
+## Questions Collection [/daily/hospital?area=[1,2,3]]
+
+### List hospitalizations [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "areaId": 10,
+                    "areaName": "Austria",
+                    "data": [
+                        {
+                            "date": "01.02.2020",
+                            "values": [
+                                {
+                                    "identifier": "intenseBeds",
+                                    "value": 12
+                                },
+                                {
+                                    "identifier": "normalBeds",
+                                    "value": 15
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+        
+
+## Questions Collection [/daily/new-cases?area=[1,2,3]&relative=true]
+
+
+### List new cases [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "areaId": 10,
+                    "areaName": "Austria",
+                    "data": [
+                        {
+                            "date": "01.02.2020",
+                            "values": [
+                                {
+                                    "identifier": "newCases",
+                                    "value": 120
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+        
+
+## Questions Collection [/daily/deaths?provinces=[1,2,3]&relative=true]
+
+
+### List new cases [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "provinceId": 10,
+                    "provinceName": "Austria",
+                    "data": [
+                        {
+                            "date": "01.02.2020",
+                            "values": [
+                                {
+                                    "identifier": "deaths",
+                                    "value": 120
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+       
+
+## Questions Collection [/daily/tests?area=[1,2,3]&relative=true]
+
+
+### List tests [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "areaId": 10,
+                    "areaName": "Austria",
+                    "data": [
+                        {
+                            "date": "01.02.2020",
+                            "values": [
+                                {
+                                    "identifier": "tests",
+                                    "value": 120
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+        
+
+## Questions Collection [/daily/cases?area=[1,2,3]]
+
+
+### List cases [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "areaId": 10,
+                    "areaName": "Austria",
+                    "data": [
+                        {
+                            "date": "01.02.2020",
+                            "values": [
+                                {
+                                    "identifier": "activeCases",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "newCases",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "deaths",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "tests"
+                                    "value": 120
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+        
+
+## Questions Collection [/provinces-info?provinces=[1,2,3]&relative=true]
+
+
+### List new cases [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "provinceId": 1,
+                    "provinceName": "Burgenland",
+                    "data": [
+                        {
+                            "identifier": "activeCases",
+                            "value": 120
+                        },
+                        {
+                            "identifier": "sumCases",
+                            "value": 120
+                        },
+                        {
+                            "identifier": "sumDeaths",
+                            "value": 120
+                        }
+                    ]
+                }
+            ]
+        }
+
+## Questions Collection [/districts-info?district=[11, 12, 13]&relative=true]
+
+
+### List new cases [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "districtId": 11,
+                    "districtName": "Villach-Stadt",
+                    "data": [
+                        {
+                            "identifier": "activeCases",
+                            "value": 120
+                        },
+                        {
+                            "identifier": "sumCases",
+                            "value": 120
+                        },
+                        {
+                            "identifier": "sumDeaths",
+                            "value": 120
+                        }
+                    ]
+                }
+            ]
+        }
+        
+
+## Questions Collection [/distribution/sex/{province-id}]
+
+
+### List new cases [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "provinceId": 10,
+                    "provinceName": "Austria",
+                    "data": [
+                        {
+                            "date": "01.02.2020",
+                            "values": [
+                                {
+                                    "identifier": "maleCases",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "femaleCases",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "maleDeaths",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "femaleDeaths",
+                                    "value": 120
+                                },
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+        
+
+## Questions Collection [/provinces]
+
+
+### List regions [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "provinceId": 1,
+                    "provinceName": "Burgenland"
+                },
+                {
+                    "provinceId": 10,
+                    "provinceName": "Austria"
+                }
+            ]
+        }
+        
+
+## Questions Collection [/districts]
+
+
+### List districts [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "districtId": 11,
+                    "districtName": "Villach-Stadt"
+                }
+            ]
+        }
+        
+
+## Questions Collection [/distribution/age-sex/cases/{province-id}]
+
+
+### Age-Sex Comparison [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                  "areaId": "1",
+                  "areaName": "Burgenland",
+                  "cases": [
+                    {
+                     "ageInterval": "< 5",
+                     "maleCases": 123,
+                     "femaleCases": 234
+                    }
+                  ]
+                }
+            ]
+        }
+
+## Questions Collection [/distribution/age-sex/deaths/{province-id}]
+
+
+### Age-Sex Comparison [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                  "areaId": "1",
+                  "areaName": "Burgenland",
+                  "cases": [
+                    {
+                     "ageInterval": "< 5",
+                     "maleDeaths": 2,
+                     "femaleDeaths": 1
+                    }
+                  ]
+                }
+            ]
+        }
+        
+
+## Comparison [/comparison/cases?area=[1,2,3]]
+
+### List tests [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "areaId": 10,
+                    "areaName": "Austria",
+                    "data": [
+                        {
+                            "date": "01.02.2020",
+                            "values": [
+                                {
+                                    "identifier": "deaths",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "cured",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "newCases",
+                                    "value": 120
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }        
+        
+        
+
+## Comparison [/hospital-bed-utilizations?area=[1,2,3]&type=0]
+
+
+### List tests [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "areaId": 10,
+                    "areaName": "Austria",
+                    "data": [
+                        {
+                            "date": "01.02.2020",
+                            "values": [
+                                {
+                                    "identifier": "availableBeds",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "utilizedBeds",
+                                    "value": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }        
+
+## Comparison [/daily/generalSituation/{province-id}]
+
+### List tests [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                    "areaId": 10,
+                    "areaName": "Austria",
+                    "data": [
+                        {
+                            "date": "01.02.2020",
+                            "values": [
+                                {
+                                    "identifier": "deaths",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "newCases",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "hospitalizations",
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "casesDifference",
+                                    "value": 10
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
