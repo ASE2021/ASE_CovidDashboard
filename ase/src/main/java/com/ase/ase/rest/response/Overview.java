@@ -11,21 +11,21 @@ import java.util.Date;
 
 public class Overview {
 
-    private final int sumtested;
-    private final int sumcases;
     private final int currentsick;
     private final int sumdeaths;
-
-    public Overview(int sumtested, int sumcases, int currentsick, int sumdeaths) {
-        this.sumtested = sumtested;
+    private final int sumcases;
+    private final int sumcured;
+    
+    public Overview(int currentsick, int sumdeaths, int sumcases, int sumcured) {
+        this.sumcured = sumcured;
         this.sumcases = sumcases;
         this.currentsick = currentsick;
         this.sumdeaths = sumdeaths;
     }
 
-    @JsonProperty("sumtested")
-    public int getsumtested() {
-        return sumtested;
+    @JsonProperty("sumcured")
+    public int getsumcured() {
+        return sumcured;
     }
 
     @JsonProperty("sumcases")
