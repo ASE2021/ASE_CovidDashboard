@@ -3,12 +3,17 @@
     <div class="p-grid">
       <div class="p-col-6"><span>Select the provinces you want to compare</span></div>
       <div class="p-col-4">
-        <p-multiSelect style="width: 100%" [options]="provinces" optionLabel="areaName"></p-multiSelect>
+        <p-multiSelect style="width: 100%" [(ngModel)]="selectedRegions" [options]="provinces" optionLabel="areaName" (onChange)="regionChanged($event)"></p-multiSelect>
       </div>
+       <div class="p-col-6"><span>Select which elements you want to see</span></div>
+      <div class="p-col-4">
+        <p-multiSelect [(ngModel)]="selectedElements" style="width: 100%" [options]="elements" (onChange)="elementChanged($event)"></p-multiSelect>
+      </div>
+
     </div>
   </div>
   <div class="p-col-12">
-    <p-chart *ngIf="chartData" [data]="chartData"></p-chart>
+        <p-chart *ngIf="chartData" [options]="options" [data]="chartData" type="line"></p-chart>
   </div>
 
 </div>

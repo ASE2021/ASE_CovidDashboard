@@ -5,6 +5,7 @@ import {SexDistribution} from '../model/sex-distribution';
 import {HospitalBedsDaily} from '../model/hospital-beds-daily';
 import {GeneralSituationDaily} from '../model/general-situation-daily';
 import {Area} from '../model/area';
+import {AreaResponse} from '../model/area-response';
 
 
 @Injectable({
@@ -40,6 +41,38 @@ export class CovidService {
     return this.http.get<any>(this.apiUrl + '/provinces')
       .toPromise()
       .then(res => (res as { items: Area[] }).items);
+  }
+
+  async getInfosForAndMap(data: any, regions: Area[]): Promise<any> {
+    const array = regions.filter(item => !data[item.areaId]);
+    console.log(array);
+    console.log(data);
+    console.log(regions);
+
+    let newData = {};
+    if (array.length >= 1) {
+      newData = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/daily/cases',
+        {params: {'area-id': array.map(item => item.areaId.toString())}})
+        .toPromise()
+        .then(res => (res as { items: AreaResponse[] }).items));
+    }
+
+    return {...data, ...newData};
+
+  }
+
+  private mapResponseDataToObject(data: AreaResponse[]): any {
+    const obj = {dates: []};
+    data.forEach((item, idx) => {
+      obj[item.areaId] = item.data.reduce((d, c) => {
+        c.values.forEach(e => d[e.identifier] = [...d[e.identifier] || [], e.value]);
+        if (idx === 0) {
+          obj.dates.push(c.date);
+        }
+        return d;
+      }, {});
+    });
+    return obj;
   }
 
 }

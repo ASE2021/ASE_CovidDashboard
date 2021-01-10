@@ -7,14 +7,15 @@ export class ChartModelBuilder {
   }
 
   public buildBasicChartModel(chartNames: string[], labels: string[], data: any[][]): any {
+    console.log(data);
     return {
       labels,
       datasets: data.map((item, index) => (
         {
           label: chartNames[index],
-          backgroundColor: this.colors[index],
-          borderColor: '#FFFFFF',
+          borderColor: this.colors[index],
           data: item,
+          ...this.options
         }
       )),
     };
