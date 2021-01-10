@@ -13,7 +13,6 @@
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th style="width: 3rem"></th>
       <th>
         <div class="p-d-flex p-jc-between p-ai-center">
           Date
@@ -39,48 +38,26 @@
           <p-columnFilter field="hospitalBedsSum" type="text" display="menu"></p-columnFilter>
         </div>
       </th>
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          + / - Cases yesterday
+          <p-columnFilter field="compare" type="number" display="menu"></p-columnFilter>
+        </div>
+      </th>
     </tr>
 
   </ng-template>
 
 
-  <ng-template pTemplate="body" let-data let-expanded="expanded">
+  <ng-template pTemplate="body" let-data>
     <tr>
-      <td>
-        <button type="button" pButton pRipple [pRowToggler]="data" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-      </td>
       <td>{{data.date| date: 'dd/MM/yyyy'}}</td>
       <td>{{data.cases}}</td>
       <td>{{data.deaths}}</td>
       <td>{{data.hospitalBedsSum}}</td>
+      <td>compareWithYesterday(index)</td>
     </tr>
   </ng-template>
-
-  <ng-template pTemplate="rowexpansion" let-dataProvince>
-    <tr>
-      <td colspan="7">
-        <div class="p-p-3">
-          <p-table [value]="dataProvince" dataKey="date">
-            <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="province">Province <p-sortIcon field="province"></p-sortIcon></th>
-      <th pSortableColumn="cases">Cases<p-sortIcon field="cases"></p-sortIcon></th>
-      <th pSortableColumn="deaths">Deaths<p-sortIcon field="deaths"></p-sortIcon></th>
-      <th pSortableColumn="hospitalizations">Hospitalizations<p-sortIcon field="hospitalizations"></p-sortIcon></th>
-      <th pSortableColumn="stats">Status<p-sortIcon field="status"></p-sortIcon></th>
-      <th style="width: 4rem"></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-dataProvince>
-    <tr>
-      <td>{{dataProvince.province}}</td>
-      <td>{{dataProvince.cases}}</td>
-      <td>{{dataProvince.deaths}}</td>
-      <td>{{dataProvince.hospitalizations}}</td>
-      <td><span [class]="'order-badge order-' + dataProvince.status.toLowerCase()">{{data.status}}</span></td>
-    </tr>
-
-
 
 
   <ng-template pTemplate="footer">
@@ -91,6 +68,6 @@
       <td>{{totalHospitalizations}}</td>
 
     </tr>
-  </ng-template>
+
   </ng-template>
 </p-table>

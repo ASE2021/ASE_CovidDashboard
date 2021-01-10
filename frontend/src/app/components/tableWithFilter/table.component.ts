@@ -10,26 +10,27 @@ import {Provinces} from '../../model/Provinces';
 export class TableComponent implements OnInit {
 
   data: Array<any>;
-  dataProvince: Array<any>;
   provinces: Provinces[]; // saving the enum Provinces
 
   // calculation of numbers in whole Austria
   totalCases: number;
   totalHospitalizations: number;
   totalDeaths: number;
+  compare: number;
 
   constructor(private covidService: CovidService) { }
 
   ngOnInit(): void {
     this.loadTableData();
-    this.loadProvinceData();
+
 
   }
 
 
   private async loadTableData(): Promise<void> {
     this.data = await this.covidService.getGeneralSituationPerDate();
-    this.dataProvince = await this.covidService.getProvinceSituationPerDate();
+
+    //this.dataProvince = await this.covidService.getProvinceSituationPerDate();
 
     this.calculateTotalCases();
     this.calculateTotalDeaths();
@@ -47,16 +48,12 @@ export class TableComponent implements OnInit {
  */
 
 
-  private loadProvinceData() {
-    this.dataProvince = [{province: 'Kärnten', cases: 1200 , deaths: 2, hospitalizations: 50},
-      {province: 'Steiermark', cases: 970, deaths: 5, hospitalizations: 35}];
-  }
 
 
 
   calculateTotalCases(): void {
     let total = 0;
-    for (const i of this.dataProvince) {
+    for (const i of this.data) {
       total += i.cases;
     }
     this.totalCases = total;
@@ -64,7 +61,7 @@ export class TableComponent implements OnInit {
 
   calculateTotalDeaths(): void {
     let total = 0;
-    for (const i of this.dataProvince) {
+    for (const i of this.data) {
       total += i.deaths;
     }
 
@@ -73,11 +70,16 @@ export class TableComponent implements OnInit {
 
   calculateTotalHospitalizations(): void {
     let total = 0;
-    for (const i of this.dataProvince) {
+    for (const i of this.data) {
       total += i.hospitalBedsSum;
     }
 
     this.totalHospitalizations = total;
+  }
+
+  compareWithYesterday(index): number{
+    return (this.data[index].cases - this.data[index - 1].cases);
+
   }
 
 
