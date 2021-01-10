@@ -1,6 +1,9 @@
-
-<div class="p-field p-col-12 p-md-6">
-  <label>Select your own period of time for the chart: </label>
-  <p-calendar [(ngModel)]="rangeDates"  dateFormat="dd.mm.yy" selectionMode="range" inputId="range"
-            [maxDate]="maxDate" [minDate]="minDate" placeholder="26.02.2021-today"></p-calendar>
+<div class="p-grid">
+  <div class="p-col-3">
+    <label>Select your own period of time for the chart: </label>
+  </div>
+  <div class="p-col-6">
+    <p-calendar style="width: 100%" [(ngModel)]="rangeDates" dateFormat="dd.mm.yy" selectionMode="range" inputId="range"
+                [maxDate]="maxDate" [minDate]="minDate" placeholder="26.02.2021-today"></p-calendar>
+  </div>
 </div>

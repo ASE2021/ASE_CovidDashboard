@@ -18,16 +18,12 @@
     </p-panel>
 
 
-
   </div>
 
 
   <div class="p-col-12">
     <div class="overview p-shadow-11">
       <h2 class="display-3">Overview</h2>
-
-      <app-calendarpicker></app-calendarpicker>
-
       <div class="p-grid">
         <div class="p-col-4">
           <p-card header="Active cases in Austria" style="background: #85e085">
@@ -47,16 +43,17 @@
       </div>
 
       <div class="p-col-12">
-        <div class="p-grid">
+        <div class="p-grid p-nested-grid">
           <div class="p-col-8 p-offset-2">
-            <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
-                     [data]="positiveCasesPerDateData"></p-chart>
-            <p-progressSpinner
-              *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
+                <app-calendarpicker></app-calendarpicker>
+                <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
+                         [data]="positiveCasesPerDateData"></p-chart>
+                <p-progressSpinner
+                  *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
           </div>
+
         </div>
       </div>
-
     </div>
   </div>
 
@@ -64,7 +61,6 @@
   <div class="p-col-12">
     <p-tabView>
       <p-tabPanel header="Gender Pie Chart">
-        <app-calendarpicker></app-calendarpicker>
 
         <div class="p-col-12">
           <div class="p-grid">
@@ -75,17 +71,19 @@
               <p-progressSpinner
                 *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
             </div>
+            <app-calendarpicker></app-calendarpicker>
           </div>
+
         </div>
       </p-tabPanel>
       <p-tabPanel header="Hospital Situation">
-        <app-calendarpicker></app-calendarpicker>
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
               <p-chart type="line" [data]="hospitalBedsPerDate"></p-chart>
               show line chart here
             </div>
+            <app-calendarpicker></app-calendarpicker>
           </div>
         </div>
       </p-tabPanel>
