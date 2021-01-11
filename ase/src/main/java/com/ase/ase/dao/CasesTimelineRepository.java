@@ -163,4 +163,38 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
             "order by t1.area_id" +
             ") areaItem", nativeQuery = true)
     String getRelativeCasesBy(@Param("areas") Set<Integer> areas);
+
+    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
+            "Select json_build_object(" +
+                "'areaId', area_id, " +
+                "'areaName', area, " +
+                "'data', array[" +
+                    "json_build_object('identifier', 'activeCases', 'value', sum_cases - sum_dead - sum_cured)," +
+                    "json_build_object('identifier', 'sumCases', 'value', sum_cases)," +
+                    "json_build_object('identifier', 'sumCured', 'value', sum_cured)," +
+                    "json_build_object('identifier', 'sumDeaths', 'value', sum_dead)" +
+                "]) as item " +
+            "from cases_timeline " +
+            "where area_id < 10 " +
+            "order by time desc, area_id " +
+            "limit 9" +
+            ") areaItem", nativeQuery = true)
+    String getProvincesInfoBy();
+
+    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
+            "Select json_build_object(" +
+                "'areaId', t.area_id, " +
+                "'areaName', t.area, " +
+                "'data', array[" +
+                    "json_build_object('identifier', 'activeCases', 'value', (t.sum_cases - t.sum_dead - t.sum_cured)/(p.population/100000.0))," +
+                    "json_build_object('identifier', 'sumCases', 'value', t.sum_cases/(p.population/100000.0))," +
+                    "json_build_object('identifier', 'sumCured', 'value', t.sum_cured/(p.population/100000.0))," +
+                    "json_build_object('identifier', 'sumDeaths', 'value', t.sum_dead/(p.population/100000.0))" +
+                "]) as item " +
+            "from cases_timeline t , population p " +
+            "where t.area_id > 10 and t.area_id = p.id " +
+            "order by time desc, area_id " +
+            "limit 94" +
+            ") areaItem", nativeQuery = true)
+    String getRelativeProvincesInfoBy();
 }
