@@ -53,4 +53,38 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
             "order by t.area_id" +
             ") areaItem", nativeQuery = true)
     String getRelativeNewCasesBy(@Param("areas") Set<Integer> areas);
+
+    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
+            "Select json_build_object(" +
+                "'areaId', area_id, " +
+                "'areaName', area, " +
+                "'data', json_agg(json_build_object(" +
+                    "'date', time, " +
+                    "'values', array[" +
+                        "json_build_object('identifier', 'deaths', 'value', new_dead)" +
+                    "]" +
+            "))) as item " +
+            "from cases_timeline " +
+            "where area_id in :areas " +
+            "group by area_id, area " +
+            "order by area_id" +
+            ") areaItem", nativeQuery = true)
+    String getNewDeathsBy(@Param("areas") Set<Integer> areas);
+
+    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
+            "Select json_build_object(" +
+                "'areaId', t.area_id, " +
+                "'areaName', t.area, " +
+                "'data', json_agg(json_build_object(" +
+                    "'date', t.time, " +
+                    "'values', array[" +
+                        "json_build_object('identifier', 'deaths', 'value', t.new_dead/(p.population/100000.0))" +
+                "]" +
+            "))) as item " +
+            "from cases_timeline t, population p " +
+            "where t.area_id in :areas and t.area_id = p.id " +
+            "group by t.area_id, area " +
+            "order by t.area_id" +
+            ") areaItem", nativeQuery = true)
+    String getRelativeNewDeathsBy(@Param("areas") Set<Integer> areas);
 }
