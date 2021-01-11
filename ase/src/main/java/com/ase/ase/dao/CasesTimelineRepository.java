@@ -11,6 +11,10 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
     @Query("SELECT new com.ase.ase.rest.response.CasesPerDate(t.time, t.newCases) FROM CasesTimeline t WHERE t.areaId = ?1")
     List<CasesPerDate> findAllBy(int areaId);
 
-    @Query(value = "SELECT b.sum_tested, c.sum_cases, c.sum_cases - c.sum_cured - c.sum_dead as current_sick, c.sum_dead FROM bed_and_test_timeline b, cases_timeline  c WHERE b.area_id = 10 and c.area_id = 10 and c.time = b.time order by b.time desc limit 1", nativeQuery = true)
-    Object[] getOverview();
+    @Query(value = "Select CAST(json_build_object('activeCases', sum_cases - sum_dead - sum_cured, " +
+            "'sumDeaths', sum_dead, " +
+            "'sumCases', sum_cases, " +
+            "'sumCured', sum_cured) AS VARCHAR) " +
+            "from cases_timeline where area_id = 10 order by time desc limit 1", nativeQuery = true)
+    String getOverview();
 }
