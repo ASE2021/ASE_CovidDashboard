@@ -13,9 +13,9 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 + Response 200 (application/json)
         {
             "activeCases": 12,
-            "deaths": 12,
+            "sumDeaths": 12,
             "sumCases": 12,
-            "cured": 10
+            "sumCured": 10
         }
 
 ## Questions Collection [/daily/hospital?area=[1,2,3]]
@@ -75,7 +75,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
         }
         
 
-## Questions Collection [/daily/deaths?provinces=[1,2,3]&relative=true]
+## Questions Collection [/daily/deaths?area=[1,2,3]&relative=true]
 
 
 ### List new cases [GET]
@@ -84,8 +84,8 @@ Polls is a simple API allowing consumers to view polls and vote in them.
         {
             "items": [
                 {
-                    "provinceId": 10,
-                    "provinceName": "Austria",
+                    "areaId": 10,
+                    "areaName": "Austria",
                     "data": [
                         {
                             "date": "01.02.2020",
@@ -153,6 +153,10 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                                     "value": 120
                                 },
                                 {
+                                    "identifier": "cured",
+                                    "value": 120
+                                },
+                                {
                                     "identifier": "deaths",
                                     "value": 120
                                 },
@@ -168,7 +172,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
         }
         
 
-## Questions Collection [/provinces-info?provinces=[1,2,3]&relative=true]
+## Questions Collection [/provinces-info?relative=true]
 
 
 ### List new cases [GET]
@@ -189,6 +193,10 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                             "value": 120
                         },
                         {
+                            "identifier": "sumCured",
+                            "value": 120
+                        },
+                        {
                             "identifier": "sumDeaths",
                             "value": 120
                         }
@@ -197,7 +205,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             ]
         }
 
-## Questions Collection [/districts-info?district=[11, 12, 13]&relative=true]
+## Questions Collection [/districts-info?relative=true]
 
 
 ### List new cases [GET]
@@ -215,6 +223,10 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                         },
                         {
                             "identifier": "sumCases",
+                            "value": 120
+                        },
+                        {
+                            "identifier": "sumCured",
                             "value": 120
                         },
                         {
