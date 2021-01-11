@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {HospitalBedsDaily} from '../model/hospital-beds-daily';
 import {Provinces} from '../model/Provinces';
 import {Observable, of} from 'rxjs';
+import {CovidDataMap} from "../model/covid-data-map";
 
 
 @Injectable({
@@ -34,19 +35,26 @@ export class CovidService {
       });
   }
 
-  getDataForMap(): Promise<any> {
+  getSimpleDataForMap(): Promise<CovidDataMap[]> {
     //  return this.http.get(this.apiUrl + '/overview').toPromise();
     return of([
-      {id: '1', name: 'Burgenland', active: 123, deaths: 12},
-      {id: '2', name: 'Kärnten', active: 1412, deaths: 12},
-      {id: '3', name: 'Niederösterreich', active: 342, deaths: 12},
-      {id: '4', name: 'Oberösterreich', active: 6434, deaths: 12},
-      {id: '5', name: 'Salzburg', active: 2433, deaths: 12},
-      {id: '6', name: 'Steiermark', active: 1223, deaths: 12},
-      {id: '7', name: 'Tirol', active: 3123, deaths: 12},
-      {id: '8', name: 'Vorarlberg', active: 973, deaths: 12},
-      {id: '9', name: 'Wien', active: 7123, deaths: 12}
-      ]
-    ).toPromise().then(result => result.map(item => ({...item, geoId: `AUT.${item.id}_1`})));
+        {activeCases: 1220, casesPer100Thousand: 70, deaths: 300, intensiveBeds: 20, normalBeds: 30, provinceId: '1', provinceName: 'Burgenland'},
+        {activeCases: 1220, casesPer100Thousand: 200, deaths: 300, intensiveBeds: 20, normalBeds: 30, provinceId: '2', provinceName: 'Kärnten'},
+        {activeCases: 1220, casesPer100Thousand: 250, deaths: 300, intensiveBeds: 20, normalBeds: 30, provinceId: '3', provinceName: 'Niederösterreich'},
+        {activeCases: 1220, casesPer100Thousand: 160, deaths: 300, intensiveBeds: 20, normalBeds: 30, provinceId: '4', provinceName: 'Oberösterreich'},
+        {activeCases: 1220, casesPer100Thousand: 300, deaths: 300, intensiveBeds: 20, normalBeds: 30, provinceId: '5', provinceName: 'Salzburg'},
+        {activeCases: 1220, casesPer100Thousand: 234, deaths: 300, intensiveBeds: 20, normalBeds: 30, provinceId: '6', provinceName: 'Steiermark'},
+        {activeCases: 1220, casesPer100Thousand: 142, deaths: 300, intensiveBeds: 20, normalBeds: 30, provinceId: '7', provinceName: 'Tirol'},
+        {activeCases: 1220, casesPer100Thousand: 463, deaths: 300, intensiveBeds: 20, normalBeds: 30, provinceId: '8', provinceName: 'Vorarlberg'},
+        {activeCases: 1220, casesPer100Thousand: 463, deaths: 300, intensiveBeds: 20, normalBeds: 30, provinceId: '9', provinceName: 'Wien'}
+      ] as CovidDataMap[]
+    ).toPromise().then(result => result.map(item => ({...item, geoId: `AUT.${item.provinceId}_1`})));
+  }
+  getDetailedDataForMap(): Promise<CovidDataMap[]> { // TODO: I dont want to fake data for all "Bezirke"
+    //  return this.http.get(this.apiUrl + '/overview').toPromise();
+    return of([
+        {activeCases: 1220, casesPer100Thousand: 70, deaths: 300, intensiveBeds: 20, normalBeds: 30, provinceId: '1', provinceName: 'Burgenland'},
+      ] as CovidDataMap[]
+    ).toPromise().then(result => result.map(item => ({...item, geoId: `AUT.${item.provinceId}_1`})));
   }
 }

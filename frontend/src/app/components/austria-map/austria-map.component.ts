@@ -5,6 +5,7 @@ import {MapService} from '../../services/map.service';
 import {AustrianProvinceData} from '../../model/austrian-province-data';
 import {Provinces} from '../../model/Provinces';
 import {LayerEventControlOptions} from '../../model/layer-event-control-options';
+import {CovidDataMap} from '../../model/covid-data-map';
 
 @Component({
   selector: 'app-austria-map',
@@ -30,15 +31,15 @@ export class AustriaMapComponent implements OnInit {
   l = [];
 
   colors = [];
-  cases: any[];
+  cases: CovidDataMap[];
   fitBounds: any;
 
   private mapData: AustrianProvinceData;
+  private casesBezirke: CovidDataMap[];
 
 
   constructor(private covidService: CovidService, private mapService: MapService, private cd: ChangeDetectorRef) {
-    this.loadMapData();
-    this.loadCovidData();
+    this.initializeData();
     // this.getJSON().subscribe(data => {
     //   this.data = data;
     //   console.log(data);
@@ -56,9 +57,17 @@ export class AustriaMapComponent implements OnInit {
   lcc: any;
   control: Control;
   zoom = 7.4;
+  onlyRegions = true;
+
+  // tslint:disable-next-line:typedef
+  private async initializeData() {
+    await this.loadCovidData();
+    this.loadMapData();
+  }
 
   private async loadMapData(): Promise<any> {
     this.mapData = await this.mapService.loadCoordinateData();
+    this.mapData.fillWithCovidData(this.cases, this.casesBezirke);
     console.log(this.mapData);
     this.l = this.mapData.getBorderLayers({
       onClick: ev => {
@@ -73,18 +82,16 @@ export class AustriaMapComponent implements OnInit {
         this.layers = [...this.l, ...this.colors, ...this.mapData.getBezirkLayersFor(ev.target.options.attribution)];
       },
       onMouseEnter: ev => {
-        this.highlightFeature(ev);
         console.log(ev);
         const covidDateForProvince = this.cases.find(item => item.geoId === ev.target.options.attribution);
         this.control.getContainer().innerHTML = `<div class="map-info-box">
         <ul>
-            <li>Province: ${covidDateForProvince.name}</li>
-            <li>Active cases: ${covidDateForProvince.active}</li>
+            <li>Province: ${covidDateForProvince.provinceName}</li>
+            <li>Active cases: ${covidDateForProvince.activeCases}</li>
             <li>Deaths: ${covidDateForProvince.deaths}</li>
         </ul></div>`;
         this.cd.detectChanges();
-      },
-      onMouseOut: ev => this.resetHighlight(ev),
+      }
     });
 
     this.layers = [...this.l, ...this.colors];
@@ -145,13 +152,16 @@ export class AustriaMapComponent implements OnInit {
   }
 
 
+  // tslint:disable-next-line:typedef
   doubleClick(event: LeafletMouseEvent) {
     event.originalEvent.stopPropagation();
   }
 
+  // tslint:disable-next-line:typedef
   onMapReady(map: any) {
     this.control = new Control({position: 'topleft'});
 
+    // tslint:disable-next-line:no-shadowed-variable
     this.control.onAdd = (map: any) => {
       const div = DomUtil.create('div', 'legend');
 
@@ -162,7 +172,17 @@ export class AustriaMapComponent implements OnInit {
   }
 
   private async loadCovidData(): Promise<any> {
-    this.cases = await this.covidService.getDataForMap();
+    this.cases = await this.covidService.getSimpleDataForMap();
+    this.casesBezirke = await this.covidService.getDetailedDataForMap();
     console.log(this.cases);
+  }
+
+  styleChanged(): void {
+    if (this.onlyRegions) {
+      this.layers = [...this.l];
+    } else {
+      this.layers = [...this.mapData.getBezirkLayer()];
+    }
+    this.cd.detectChanges();
   }
 }
