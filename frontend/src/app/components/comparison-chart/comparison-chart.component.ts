@@ -23,14 +23,19 @@ export class ComparisonChartComponent implements OnInit {
     dates: string[]
   } = {dates: []};
   options: any;
-
+  selectButtonModel: SelectItem[];
 
   constructor(private covidService: CovidService, private socketService: SocketService) {
     this.elements = [
-      {label: 'new cases', value: {id: 'newCases', idx: 0}},
-      {label: 'dead cases', value:  {id: 'deaths', idx: 1}},
-      {label: 'taken tests', value:  {id: 'tests', idx: 2}}];
+      {label: 'new cases', value: {id: 'newCases', idx: 0, val: 'off'}},
+      {label: 'dead cases', value: {id: 'deaths', idx: 1, val: 'off'}},
+      {label: 'taken tests', value: {id: 'tests', idx: 2, val: 'off'}}];
     this.options = {pointRadius: 0};
+    this.selectButtonModel = [
+      {label: 'Disabled', value: 'off'},
+      {label: 'Line', value: 'line'},
+      {label: 'Bar', value: 'bar'},
+    ];
   }
 
   public ngOnInit(): void {
@@ -84,15 +89,15 @@ export class ComparisonChartComponent implements OnInit {
         '#8000FF', '#AC58FA', '#BCA9F5',
       ]];
 
-    console.log(this.selectedElements);
-    if (this.selectedRegions && this.selectedRegions.length > 0 && this.selectedElements && this.selectedElements.length > 0) {
+    console.log(this.elements);
+    if (this.selectedRegions && this.selectedRegions.length > 0 && this.elements.filter(item => item.value.val !== 'off').length > 0) {
       const dataToShow = {dates: this.loadedData.dates};
 
       this.selectedRegions.forEach(item => dataToShow[item.areaId] = this.loadedData[item.areaId]);
 
       console.log(dataToShow);
-      console.log( this.selectedRegions);
-      console.log( this.selectedElements);
+      console.log(this.selectedRegions);
+      console.log(this.selectedElements);
       this.chartData = new ChartModelBuilder()
         .withCustomOptions({
           fill: false,

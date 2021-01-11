@@ -7,7 +7,21 @@
       </div>
        <div class="p-col-6"><span>Select which elements you want to see</span></div>
       <div class="p-col-4">
-        <p-multiSelect [(ngModel)]="selectedElements" style="width: 100%" [options]="elements" (onChange)="elementChanged($event)"></p-multiSelect>
+        <p-overlayPanel #op>
+          <ng-template pTemplate>
+            <p-listbox [options]="elements" [multiple]="true" [listStyle]="{'max-height':'250px'}">
+              <ng-template let-country pTemplate="item">
+                <div class="country-item">
+                  <span>{{country.label}}</span>
+                  <p-selectButton [options]="selectButtonModel" [(ngModel)]="country.val" (onChange)="elementChanged()"></p-selectButton>
+                </div>
+              </ng-template>
+            </p-listbox>
+          </ng-template>
+        </p-overlayPanel>
+
+        <button type="text" pButton value="Test" label="Basic" (click)="op.toggle($event)"></button>
+
       </div>
 
     </div>
