@@ -49,7 +49,7 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
             "))) as item " +
             "from cases_timeline t, population p " +
             "where t.area_id in :areas and t.area_id = p.id " +
-            "group by t.area_id, area " +
+            "group by t.area_id, t.area " +
             "order by t.area_id" +
             ") areaItem", nativeQuery = true)
     String getRelativeNewCasesBy(@Param("areas") Set<Integer> areas);
@@ -83,8 +83,42 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
             "))) as item " +
             "from cases_timeline t, population p " +
             "where t.area_id in :areas and t.area_id = p.id " +
-            "group by t.area_id, area " +
+            "group by t.area_id, t.area " +
             "order by t.area_id" +
             ") areaItem", nativeQuery = true)
     String getRelativeNewDeathsBy(@Param("areas") Set<Integer> areas);
+
+    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
+            "Select json_build_object(" +
+                "'areaId', t1.area_id, " +
+                "'areaName', t1.area, " +
+                "'data', json_agg(json_build_object(" +
+                    "'date', t1.time, " +
+                    "'values', array[" +
+                        "json_build_object('identifier', 'tests', 'value', t2.sum_tested - t1.sum_tested)" +
+                    "]" +
+            "))) as item " +
+            "from bed_and_test_timeline t1, bed_and_test_timeline t2 " +
+            "where t1.area_id in :areas and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time " +
+            "group by t1.area_id, t1.area " +
+            "order by t1.area_id" +
+            ") areaItem", nativeQuery = true)
+    String getNewTestsBy(@Param("areas") Set<Integer> areas);
+
+    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
+            "Select json_build_object(" +
+                "'areaId', t1.area_id, " +
+                "'areaName', t1.area, " +
+                "'data', json_agg(json_build_object(" +
+                    "'date', t1.time, " +
+                    "'values', array[" +
+                        "json_build_object('identifier', 'tests', 'value', (t2.sum_tested - t1.sum_tested)/(p.population/100000.0))" +
+                "]" +
+            "))) as item " +
+            "from bed_and_test_timeline t1, bed_and_test_timeline t2, population p " +
+            "where t1.area_id in :areas and t1.area_id = p.id and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time " +
+            "group by t1.area_id, t1.area " +
+            "order by t1.area_id" +
+            ") areaItem", nativeQuery = true)
+    String getRelativeNewTestsBy(@Param("areas") Set<Integer> areas);
 }
