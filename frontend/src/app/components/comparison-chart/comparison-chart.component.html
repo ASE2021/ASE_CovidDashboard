@@ -7,13 +7,17 @@
       </div>
        <div class="p-col-6"><span>Select which elements you want to see</span></div>
       <div class="p-col-4">
-        <p-multiSelect [(ngModel)]="selectedElements" style="width: 100%" [options]="elements" (onChange)="elementChanged($event)"></p-multiSelect>
+        <p-multiSelect [(ngModel)]="selectedElements" style="width: 100%" [options]="elements" (onChange)="elementChanged()"></p-multiSelect>
+      </div>
+       <div class="p-col-6"><span>Choose if you want so see the data in a line or a bar chart</span></div>
+      <div class="p-col-4">
+        <p-selectButton [options]="chartTypes" [(ngModel)]="selectedChartType" (onChange)="chartTypeSwitched($event)"></p-selectButton>
       </div>
 
     </div>
   </div>
   <div class="p-col-12">
-        <p-chart *ngIf="chartData" [options]="options" [data]="chartData" type="line"></p-chart>
+        <p-chart #chart *ngIf="chartData"  [data]="chartData" [type]="selectedChartType"></p-chart>
   </div>
 
 </div>

@@ -47,7 +47,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     },
                     {
                       identifier: 'newCases',
-                      value:  (parseInt(area, 10) + idx) * 10 * (0.5 + Math.random()),
+                      value: (20 * parseInt(area, 10) + 2000 + idx) * (0.95 + (Math.random() / 10)),
                     },
                     {
                       identifier: 'deaths',
