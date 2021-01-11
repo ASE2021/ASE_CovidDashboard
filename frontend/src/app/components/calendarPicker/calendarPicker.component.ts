@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-calendarpicker',
@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalendarPickerComponent implements OnInit {
 
+  @Output() calendarEvent = new EventEmitter<any>();
+
   rangeDates: Date[];
+  dates: any[];
+  date: any;
 
   minDate: Date;
   maxDate: Date;
@@ -30,4 +34,10 @@ export class CalendarPickerComponent implements OnInit {
 
   }
 
+  getSelectedPeriod() {
+    console.log(JSON.stringify(this.rangeDates));
+
+    this.calendarEvent.emit(JSON.stringify(this.rangeDates));
+
+  }
 }

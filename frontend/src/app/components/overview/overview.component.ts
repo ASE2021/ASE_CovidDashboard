@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
 import {MessageResponse} from '../../model/MessageResponse';
 import {IMqttMessage} from 'ngx-mqtt';
+import {CalendarPickerComponent} from "../calendarPicker/calendarPicker.component";
 
 @Component({
   selector: 'app-overview',
@@ -11,6 +12,9 @@ import {IMqttMessage} from 'ngx-mqtt';
   styleUrls: ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
+
+  @Input()
+  rangeDates: Date[]
 
   positiveCasesPerDateData: any;
   hospitalBedsPerDate: any;
@@ -57,10 +61,14 @@ export class OverviewComponent implements OnInit {
 
   private async initializePositiveCasesPerDateChart(): Promise<void> {
     const data = await this.covidService.getNewCasesPerDate();
+
+
     this.positiveCasesPerDateData = new ChartModelBuilder()
       .buildBasicChartModel(['Positive Covid-19 cases per date'],
         data.map(item => item.date.split('T')[0]),
         [data.map(item => item.cases)]);
+
+
   }
 
 
@@ -77,6 +85,15 @@ export class OverviewComponent implements OnInit {
 
   }
 
+  setDateRange($event: any) {
+    console.log(this.rangeDates);
+
+
+
+
+
+
+  }
 }
 
 

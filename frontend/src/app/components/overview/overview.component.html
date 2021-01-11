@@ -45,7 +45,7 @@
       <div class="p-col-12">
         <div class="p-grid p-nested-grid">
           <div class="p-col-8 p-offset-2">
-                <app-calendarpicker></app-calendarpicker>
+                <app-calendarpicker (calendarEvent)="setDateRange($event)"> </app-calendarpicker>
                 <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
                          [data]="positiveCasesPerDateData"></p-chart>
                 <p-progressSpinner

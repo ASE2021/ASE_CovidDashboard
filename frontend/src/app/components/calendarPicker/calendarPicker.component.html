@@ -4,6 +4,8 @@
   </div>
   <div class="p-col-6">
     <p-calendar [(ngModel)]="rangeDates" dateFormat="dd.mm.yy" selectionMode="range" inputId="range"
-                [maxDate]="maxDate" [minDate]="minDate" placeholder="26.02.2021-today"></p-calendar>
+                [maxDate]="maxDate" [minDate]="minDate" placeholder="26.02.2020-today"
+                [showIcon]="true"
+                (onSelect)="getSelectedPeriod()"></p-calendar>
   </div>
 </div>

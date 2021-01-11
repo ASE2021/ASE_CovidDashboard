@@ -45,7 +45,7 @@ public class BasicCovidController {
     public ResponseEntity<GeneralSituationPerProvinceDto> listNewTableDataFor(@PathVariable("province-id") int provinceId) {
         return ResponseEntity.ok(
                 new GeneralSituationPerProvinceDto(provinceId, Arrays.asList(
-                        new GeneralSituationPerDate("10.10.2020", 12, 10, 24),
+                        new GeneralSituationPerDate("11.10.2020", 12, 10, 24),
                         new GeneralSituationPerDate("10.10.2020", 12, 12, 24))));
 
 
