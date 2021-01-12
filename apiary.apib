@@ -163,6 +163,14 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                                 {
                                     "identifier": "tests"
                                     "value": 120
+                                },
+                                {
+                                    "identifier": "intenseBeds"
+                                    "value": 120
+                                },
+                                {
+                                    "identifier": "normalBeds"
+                                    "value": 120
                                 }
                             ]
                         }
@@ -371,40 +379,6 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                                 {
                                      "identifier": "femaleDeaths",
                                      "value": 1
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-        
-
-## Comparison [/comparison/cases?area=[1,2,3]]
-
-### List tests [GET]
-
-+ Response 200 (application/json)
-        {
-            "items": [
-                {
-                    "areaId": 10,
-                    "areaName": "Austria",
-                    "data": [
-                        {
-                            "date": "01.02.2020",
-                            "values": [
-                                {
-                                    "identifier": "deaths",
-                                    "value": 120
-                                },
-                                {
-                                    "identifier": "cured",
-                                    "value": 120
-                                },
-                                {
-                                    "identifier": "newCases",
-                                    "value": 120
                                 }
                             ]
                         }
