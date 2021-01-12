@@ -124,26 +124,50 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
 
     @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
             "Select json_build_object(" +
-                "'areaId', t1.area_id, " +
-                "'areaName', t1.area, " +
+                "'areaId', t2.area_id, " +
+                "'areaName', t2.area, " +
                 "'data', json_agg(json_build_object(" +
-                    "'date', t1.time, " +
+                    "'date', t2.time, " +
                     "'values', array[" +
                         "json_build_object('identifier', 'activeCases', 'value', ct.sum_cases - ct.sum_dead - ct.sum_cured)," +
                         "json_build_object('identifier', 'newCases', 'value', ct.new_cases)," +
                         "json_build_object('identifier', 'cured', 'value', ct.new_cured)," +
                         "json_build_object('identifier', 'deaths', 'value', ct.new_dead)," +
                         "json_build_object('identifier', 'tests', 'value', t2.sum_tested - t1.sum_tested)," +
-                        "json_build_object('identifier', 'intenseBeds', 'value', t1.usedib)," +
-                        "json_build_object('identifier', 'normalBeds', 'value', t1.usednb)" +
+                        "json_build_object('identifier', 'intenseBeds', 'value', t2.usedib)," +
+                        "json_build_object('identifier', 'normalBeds', 'value', t2.usednb)" +
                     "]" +
             "))) as item " +
             "from bed_and_test_timeline t1, bed_and_test_timeline t2, cases_timeline ct " +
-            "where t1.area_id in :areas and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time and t1.area_id = ct.area_id and t1.time = ct.time " +
-            "group by t1.area_id, t1.area " +
-            "order by t1.area_id" +
+            "where t1.area_id in :areas " +
+                "and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time " +
+                "and t1.area_id = ct.area_id and t2.time = ct.time " +
+            "group by t2.area_id, t2.area " +
+            "order by t2.area_id" +
             ") areaItem", nativeQuery = true)
     String getCasesBy(@Param("areas") Set<Integer> areas);
+
+    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
+            "Select json_build_object(" +
+                "'areaId', t.area_id, " +
+                "'areaName', t.area, " +
+                "'data', json_agg(json_build_object(" +
+                    "'date', t.time, " +
+                    "'values', array[" +
+                        "json_build_object('identifier', 'deaths', 'value', ct2.new_dead)," +
+                        "json_build_object('identifier', 'newCases', 'value', ct2.new_cases)," +
+                        "json_build_object('identifier', 'hospitalisations', 'value', t.usedib + t.usednb)," +
+                        "json_build_object('identifier', 'casesDifference', 'value', ct2.new_cases - ct1.new_cases)" +
+                    "]" +
+            "))) as item " +
+            "from bed_and_test_timeline t, cases_timeline ct1, cases_timeline ct2 " +
+            "where t.area_id in :areas " +
+                "and t.area_id = ct1.area_id and ct1.time + interval '1 day' = ct2.time " +
+                "and t.area_id = ct2.area_id and t.time = ct2.time " +
+            "group by t.area_id, t.area " +
+            "order by t.area_id" +
+            ") areaItem", nativeQuery = true)
+    String getGeneralSituationBy(@Param("areas") Set<Integer> areas);
 
     @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
             "Select json_build_object(" +
