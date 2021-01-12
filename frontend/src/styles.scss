@@ -45,7 +45,7 @@ p-header {
 
 }
 
-app-comparison-chart {
+.app-comparison-chart {
   .p-multiselect {
     width: 100%;
     text-align: center;
@@ -55,6 +55,8 @@ app-comparison-chart {
     width: 100%
   }
   .p-treetable {
+    width: 200px;
+
     .p-checkbox {
       height: 26px;
     }
@@ -64,9 +66,6 @@ app-comparison-chart {
   }
   .p-treetable .p-treetable-thead > tr > th {
     padding: 0;
-  }
-  .p-treetable {
-    width: 200px;
   }
   .p-button-icon-right {
     margin-right: -4px;

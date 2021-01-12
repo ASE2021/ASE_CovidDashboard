@@ -1,9 +1,8 @@
-import {getTestBed, TestBed} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
 import {CovidService} from './covid.service';
 import {HospitalBedsDaily} from '../model/hospital-beds-daily';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
-import {TestingInterceptor} from '../interceptors/testing.interceptor';
 import {environment} from '../../environments/environment';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -27,12 +26,10 @@ import {TableWithFilterModule} from '../components/tableWithFilter/table.module'
 import {ProgressBarModule} from 'primeng/progressbar';
 import {MqttModule} from 'ngx-mqtt';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Injector} from '@angular/core';
+import {FakeBackendInterceptor} from '../interceptors/fake-backend.interceptor';
 
 describe('CovidService', () => {
   let service: CovidService;
-  let injector: Injector;
-  let httpMock: HttpClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -67,12 +64,10 @@ describe('CovidService', () => {
         {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
         {
           provide: HTTP_INTERCEPTORS,
-          useClass: TestingInterceptor,
+          useClass: FakeBackendInterceptor,
           multi: true,
         }],
     });
-    injector = getTestBed();
-    httpMock = injector.get(HttpClient);
     service = TestBed.inject(CovidService);
   });
 

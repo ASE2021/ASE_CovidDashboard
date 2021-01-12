@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
@@ -6,8 +6,6 @@ import {MessageResponse} from '../../model/MessageResponse';
 import {IMqttMessage} from 'ngx-mqtt';
 import {SexDistribution} from '../../model/sex-distribution';
 import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
-import {SelectItem} from 'primeng/api';
-import {UIChart} from 'primeng/chart';
 
 @Component({
   selector: 'app-overview',

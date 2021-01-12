@@ -10,6 +10,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
+    if (request.url.endsWith('/daily/hospital/10')) {
+      return of(new HttpResponse({
+        body: {
+          situations: [{date: '10.10.2020', intenseBeds: 12, normalBeds: 10},
+            {date: '12.10.2020', intenseBeds: 12, normalBeds: 12}],
+        },
+        status: 200,
+      }));
+    }
     if (request.url.endsWith('/provinces')) {
       return of(new HttpResponse({
         body: {

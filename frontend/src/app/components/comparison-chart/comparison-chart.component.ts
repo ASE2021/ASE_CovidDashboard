@@ -1,8 +1,7 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {SocketService} from '../../services/socket/socket.service';
 import {SelectItem, TreeNode} from 'primeng/api';
-import {Area} from '../../model/area';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {TreeTable} from 'primeng/treetable';
 
