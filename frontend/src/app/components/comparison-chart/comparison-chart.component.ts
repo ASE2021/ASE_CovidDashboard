@@ -18,7 +18,7 @@ export class ComparisonChartComponent implements OnInit {
   selectedElements: any[]; // Selected items for the multiselect "newData" etc.
   selectedDistricts: any[]; // Selected districts from the treetable
   selectedAreas: any[]; // Selected regions from the treetable
-  selectedRegionNames: string // String including the selected region names (for displaying)
+  selectedRegionNames: string; // String including the selected region names (for displaying)
 
   private areasToShowInChart: any[]; // All areas which should be shown (selectedAreas + selectedDistricts)
   private loadedData: {

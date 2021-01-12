@@ -46,7 +46,8 @@ describe('ComparisonChartComponent', () => {
         RippleModule,
         CheckboxModule,
         AutoCompleteModule,
-        InputTextModule,],
+        InputTextModule
+      ],
       providers: [HttpClient, {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
         {provide: 'BACKEND_NOTIFICATION_URL', useValue: environment.backendNotificationUrl},
         {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort}],
