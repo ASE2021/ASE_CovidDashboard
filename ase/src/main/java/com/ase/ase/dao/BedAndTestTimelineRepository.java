@@ -20,7 +20,7 @@ public interface BedAndTestTimelineRepository extends JpaRepository<BedAndTestTi
                         "json_build_object('identifier', 'intenseBeds', 'value', usedib)," +
                         "json_build_object('identifier', 'normalBeds', 'value', usednb)" +
                         "]" +
-                "))) as item " +
+                ") order by time)) as item " +
             "from bed_and_test_timeline " +
             "where area_id in :areas " +
             "group by area_id, area " +
@@ -38,7 +38,7 @@ public interface BedAndTestTimelineRepository extends JpaRepository<BedAndTestTi
                         "json_build_object('identifier', 'availableBeds', 'value', case when :type = 0 then freeib when :type = 1 then freenb else freeib + freenb end)," +
                         "json_build_object('identifier', 'utilizedBeds', 'value', case when :type = 0 then usedib when :type = 1 then usednb else usedib + usednb end)" +
                         "]" +
-                "))) as item " +
+                ") order by time)) as item " +
             "from bed_and_test_timeline " +
             "where area_id in :areas " +
             "group by area_id, area " +

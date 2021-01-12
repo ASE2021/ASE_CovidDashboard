@@ -29,7 +29,7 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                     "'values', array[" +
                         "json_build_object('identifier', 'newCases', 'value', new_cases)" +
                     "]" +
-            "))) as item " +
+            ") order by time)) as item " +
             "from cases_timeline " +
             "where area_id in :areas " +
             "group by area_id, area " +
@@ -46,7 +46,7 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                     "'values', array[" +
                         "json_build_object('identifier', 'newCases', 'value', t.new_cases/(p.population/100000.0))" +
                 "]" +
-            "))) as item " +
+            ") order by t.time)) as item " +
             "from cases_timeline t, population p " +
             "where t.area_id in :areas and t.area_id = p.id " +
             "group by t.area_id, t.area " +
@@ -63,7 +63,7 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                     "'values', array[" +
                         "json_build_object('identifier', 'deaths', 'value', new_dead)" +
                     "]" +
-            "))) as item " +
+            ") order by time)) as item " +
             "from cases_timeline " +
             "where area_id in :areas " +
             "group by area_id, area " +
@@ -80,7 +80,7 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                     "'values', array[" +
                         "json_build_object('identifier', 'deaths', 'value', t.new_dead/(p.population/100000.0))" +
                 "]" +
-            "))) as item " +
+            ") order by t.time)) as item " +
             "from cases_timeline t, population p " +
             "where t.area_id in :areas and t.area_id = p.id " +
             "group by t.area_id, t.area " +
@@ -97,7 +97,7 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                     "'values', array[" +
                         "json_build_object('identifier', 'tests', 'value', t2.sum_tested - t1.sum_tested)" +
                     "]" +
-            "))) as item " +
+            ") order by t1.time)) as item " +
             "from bed_and_test_timeline t1, bed_and_test_timeline t2 " +
             "where t1.area_id in :areas and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time " +
             "group by t1.area_id, t1.area " +
@@ -114,7 +114,7 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                     "'values', array[" +
                         "json_build_object('identifier', 'tests', 'value', (t2.sum_tested - t1.sum_tested)/(p.population/100000.0))" +
                 "]" +
-            "))) as item " +
+            ") order by t1.time)) as item " +
             "from bed_and_test_timeline t1, bed_and_test_timeline t2, population p " +
             "where t1.area_id in :areas and t1.area_id = p.id and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time " +
             "group by t1.area_id, t1.area " +
@@ -161,7 +161,7 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                         "json_build_object('identifier', 'hospitalisations', 'value', t.usedib + t.usednb)," +
                         "json_build_object('identifier', 'casesDifference', 'value', ct2.new_cases - ct1.new_cases)" +
                     "]" +
-            "))) as item " +
+            ") order by t.time)) as item " +
             "from bed_and_test_timeline t, cases_timeline ct1, cases_timeline ct2 " +
             "where t.area_id in :areas " +
                 "and t.area_id = ct1.area_id and ct1.time + interval '1 day' = ct2.time " +
@@ -184,7 +184,7 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                         "json_build_object('identifier', 'deaths', 'value', ct.new_dead/(p.population/100000.0))," +
                         "json_build_object('identifier', 'tests', 'value', (t2.sum_tested - t1.sum_tested)/(p.population/100000.0))" +
                 "]" +
-            "))) as item " +
+            ") order by t1.time)) as item " +
             "from bed_and_test_timeline t1, bed_and_test_timeline t2, cases_timeline ct , population p " +
             "where t1.area_id in :areas and t1.area_id = p.id and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time  and t1.area_id = ct.area_id and t1.time = ct.time " +
             "group by t1.area_id, t1.area " +

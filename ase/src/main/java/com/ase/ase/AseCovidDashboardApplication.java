@@ -2,11 +2,9 @@ package com.ase.ase;
 
 import com.ase.ase.activemq.MessagingService;
 import com.ase.ase.activemq.UpdateDataMessage;
-import com.ase.ase.dao.CasesTimelineRepository;
 import com.ase.ase.downloadServices.DownloadPopulationData;
 import com.ase.ase.downloadServices.DownloadScheduleService;
 import com.ase.ase.downloadServices.DownloadService;
-import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
