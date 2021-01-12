@@ -181,8 +181,8 @@ Polls is a simple API allowing consumers to view polls and vote in them.
         {
             "items": [
                 {
-                    "provinceId": 1,
-                    "provinceName": "Burgenland",
+                    "areaId": 1,
+                    "areaName": "Burgenland",
                     "data": [
                         {
                             "identifier": "activeCases",
@@ -214,8 +214,8 @@ Polls is a simple API allowing consumers to view polls and vote in them.
         {
             "items": [
                 {
-                    "districtId": 11,
-                    "districtName": "Villach-Stadt",
+                    "areaId": 11,
+                    "areaName": "Villach-Stadt",
                     "data": [
                         {
                             "identifier": "activeCases",
@@ -239,7 +239,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
         }
         
 
-## Questions Collection [/distribution/sex/{province-id}]
+## Questions Collection [/distribution/sex?area=[1,2,3]]
 
 
 ### List new cases [GET]
@@ -248,30 +248,33 @@ Polls is a simple API allowing consumers to view polls and vote in them.
         {
             "items": [
                 {
-                    "provinceId": 10,
-                    "provinceName": "Austria",
+                    "areaId": 10,
+                    "areaName": "Austria",
                     "data": [
-                        {
-                            "date": "01.02.2020",
-                            "values": [
-                                {
-                                    "identifier": "maleCases",
-                                    "value": 120
-                                },
-                                {
-                                    "identifier": "femaleCases",
-                                    "value": 120
-                                },
-                                {
-                                    "identifier": "maleDeaths",
-                                    "value": 120
-                                },
-                                {
-                                    "identifier": "femaleDeaths",
-                                    "value": 120
-                                },
-                            ]
-                        }
+			{
+			    "sex": "male",
+			    "values": [
+  	                  	{
+        	                    "identifier": "cured",
+        	               	    "value": 120
+        	                },
+        	                {
+                	            "identifier": "dead",
+                        	    "value": 120
+	                        }
+			    ]
+			    "sex": "female",
+			    "values": [
+  	                  	{
+        	                    "identifier": "cured",
+        	               	    "value": 120
+        	                },
+        	                {
+                	            "identifier": "dead",
+                        	    "value": 120
+	                        }
+			    ]
+			}
                     ]
                 }
             ]
@@ -287,12 +290,12 @@ Polls is a simple API allowing consumers to view polls and vote in them.
         {
             "items": [
                 {
-                    "provinceId": 1,
-                    "provinceName": "Burgenland"
+                    "areaId": 1,
+                    "areaName": "Burgenland"
                 },
                 {
-                    "provinceId": 10,
-                    "provinceName": "Austria"
+                    "areaId": 10,
+                    "areaName": "Austria"
                 }
             ]
         }
@@ -307,14 +310,14 @@ Polls is a simple API allowing consumers to view polls and vote in them.
         {
             "items": [
                 {
-                    "districtId": 11,
-                    "districtName": "Villach-Stadt"
+                    "areaId": 11,
+                    "areaName": "Villach-Stadt"
                 }
             ]
         }
         
 
-## Questions Collection [/distribution/age-sex/cases/{province-id}]
+## Questions Collection [/distribution/age-sex/cases?area=[1,2,3]]
 
 
 ### Age-Sex Comparison [GET]
@@ -325,18 +328,27 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 {
                   "areaId": "1",
                   "areaName": "Burgenland",
-                  "cases": [
-                    {
-                     "ageInterval": "< 5",
-                     "maleCases": 123,
-                     "femaleCases": 234
-                    }
-                  ]
+                  "data": [
+                       {
+                            "ageIntervalId": 1,
+                            "ageInterval": "< 5",
+                            "values": [
+                                {
+                                     "identifier": "maleCases",
+                                     "value": 123
+                                },
+                                {
+                                     "identifier": "femaleCases",
+                                     "value": 234
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }
 
-## Questions Collection [/distribution/age-sex/deaths/{province-id}]
+## Questions Collection [/distribution/age-sex/deaths?area=[1,2,3]]
 
 
 ### Age-Sex Comparison [GET]
@@ -347,13 +359,22 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 {
                   "areaId": "1",
                   "areaName": "Burgenland",
-                  "cases": [
-                    {
-                     "ageInterval": "< 5",
-                     "maleDeaths": 2,
-                     "femaleDeaths": 1
-                    }
-                  ]
+                  "data": [
+                       {
+                            "ageIntervalId": 1,
+                            "ageInterval": "< 5",
+                            "values": [
+                                {
+                                     "identifier": "maleDeaths",
+                                     "value": 2
+                                },
+                                {
+                                     "identifier": "femaleDeaths",
+                                     "value": 1
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }
@@ -424,7 +445,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             ]
         }        
 
-## Comparison [/daily/generalSituation/{province-id}]
+## Comparison [/daily/generalSituation?area=[1,2,3]]
 
 ### List tests [GET]
 
