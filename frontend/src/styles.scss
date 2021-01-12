@@ -47,8 +47,44 @@ p-header {
 
 app-comparison-chart {
   .p-multiselect {
+    width: 100%;
+    text-align: center;
+    padding-left: 16px;
+  }
+  .p-button {
     width: 100%
   }
+  .p-treetable {
+    .p-checkbox {
+      height: 26px;
+    }
+  }
+  .p-treetable .p-treetable-tbody > tr > td {
+    padding: 0;
+  }
+  .p-treetable .p-treetable-thead > tr > th {
+    padding: 0;
+  }
+  .p-treetable {
+    width: 200px;
+  }
+  .p-button-icon-right {
+    margin-right: -4px;
+  }
+
+  .p-overlaypanel {
+    height: 420px;
+  }
+  .p-treetable-scrollable-body {
+    height: 300px;
+  }
+  .p-button.p-button-secondary.p-button-outlined, .p-buttonset.p-button-secondary > .p-button.p-button-outlined, .p-splitbutton.p-button-secondary > .p-button.p-button-outlined {
+    border-color: lightgray;
+  }
+}
+
+.card-style-active {
+  background-color: #85e085
 }
 
 .chart-view {

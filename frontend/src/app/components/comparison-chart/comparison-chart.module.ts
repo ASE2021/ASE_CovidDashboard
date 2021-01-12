@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ComparisonChartComponent } from './comparison-chart.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ComparisonChartComponent} from './comparison-chart.component';
 import {ChartModule} from 'primeng/chart';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {MultiSelectModule} from 'primeng/multiselect';
@@ -10,8 +10,12 @@ import {ListboxModule} from 'primeng/listbox';
 import {ButtonModule} from 'primeng/button';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
-
+import {InputSwitchModule} from 'primeng/inputswitch';
+import {TreeTableModule} from 'primeng/treetable';
+import {RippleModule} from 'primeng/ripple';
+import {CheckboxModule} from 'primeng/checkbox';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {InputTextModule} from 'primeng/inputtext';
 
 @NgModule({
   declarations: [ComparisonChartComponent],
@@ -25,8 +29,17 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ListboxModule,
     ButtonModule,
     SelectButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    InputSwitchModule,
+    SelectButtonModule,
+    TreeTableModule,
+    RippleModule,
+    CheckboxModule,
+    AutoCompleteModule,
+    InputTextModule,
   ],
-  exports: [ComparisonChartComponent]
+  exports: [ComparisonChartComponent],
 })
-export class ComparisonChartModule { }
+
+export class ComparisonChartModule {
+}

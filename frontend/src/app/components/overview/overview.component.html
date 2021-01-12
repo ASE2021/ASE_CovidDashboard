@@ -22,7 +22,7 @@
       <h2 class="display-3">Overview</h2>
       <div class="p-grid">
         <div class="p-col-4">
-          <p-card header="Active cases in Austria" style="background: #85e085">
+          <p-card header="Active cases in Austria" class="card-style-active">
             {{activeCases}}
           </p-card>
         </div>
@@ -41,7 +41,6 @@
       <div class="p-col-12">
         <div class="p-grid">
           <div class="p-col-8 p-offset-2">
-
             <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
                      [data]="positiveCasesPerDateData"></p-chart>
             <p-progressSpinner

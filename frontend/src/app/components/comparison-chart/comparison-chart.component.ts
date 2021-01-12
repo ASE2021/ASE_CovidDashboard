@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {SocketService} from '../../services/socket/socket.service';
-import {IMqttMessage} from 'ngx-mqtt';
-import {MessageResponse} from '../../model/MessageResponse';
-import {SelectItem} from 'primeng/api';
+import {SelectItem, TreeNode} from 'primeng/api';
 import {Area} from '../../model/area';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
+import {TreeTable} from 'primeng/treetable';
 
 @Component({
   selector: 'app-comparison-chart',
@@ -14,27 +13,33 @@ import {ChartModelBuilder} from '../../model/chart-model-builder';
 })
 export class ComparisonChartComponent implements OnInit {
   chartData: any;
-  provinces: Area[] = [];
-  elements: SelectItem[];
-  selectedElements: any;
-  selectedRegions: Area[];
+  elements: SelectItem[]; // Items for the multiselect "newData" etc.
+  regionData: TreeNode[]; // Data for the treetable
+  selectedElements: any[]; // Selected items for the multiselect "newData" etc.
+  selectedDistricts: any[]; // Selected districts from the treetable
+  selectedAreas: any[]; // Selected regions from the treetable
+  selectedRegionNames: string // String including the selected region names (for displaying)
 
-  loadedData: {
+  private areasToShowInChart: any[]; // All areas which should be shown (selectedAreas + selectedDistricts)
+  private loadedData: {
     dates: string[]
   } = {dates: []};
-  options: any;
-  selectButtonModel: SelectItem[];
+  private currentChartData: { colors: string[][], names: string[], labels: string[], values: number[][] } = {
+    values: [],
+    colors: [],
+    labels: [],
+    names: [],
+  };
 
-  constructor(private covidService: CovidService, private socketService: SocketService) {
+
+  constructor(private readonly covidService: CovidService,
+              private readonly socketService: SocketService) {
     this.elements = [
-      {label: 'new cases', value: {id: 'newCases', idx: 0, val: 'off'}},
-      {label: 'dead cases', value: {id: 'deaths', idx: 1, val: 'off'}},
-      {label: 'taken tests', value: {id: 'tests', idx: 2, val: 'off'}}];
-    this.options = {pointRadius: 0};
-    this.selectButtonModel = [
-      {label: 'Disabled', value: 'off'},
-      {label: 'Line', value: 'line'},
-      {label: 'Bar', value: 'bar'},
+      {label: 'New cases', value: {id: 'newCases', text: 'new cases', idx: 0, type: 0}},
+      {label: 'Dead cases', value: {id: 'deaths', text: 'deaths', idx: 1, type: 0}},
+      {label: 'Tests', value: {id: 'tests', idx: 2, text: 'tests', type: 0}},
+      {label: 'Normal beds', value: {id: 'normalBeds', idx: 3, text: 'normal beds', type: 1}},
+      {label: 'Intense beds', value: {id: 'intenseBeds', idx: 4, text: 'intense beds', type: 1}},
     ];
   }
 
@@ -42,75 +47,54 @@ export class ComparisonChartComponent implements OnInit {
 
     this.loadRegions();
 
-    this.socketService.connectToMqtt(
-      () => {
-        this.socketService.observe('new-data')
-          .subscribe((message: IMqttMessage) => {
-            console.log(message.payload.toString());
-            try {
-              if ((JSON.parse(message.payload.toString()) as MessageResponse).update) {
+    this.socketService.connectAndObserveNewData()
+      .subscribe(() => this.loadDataAndUpdateChart(true));
 
-              }
-            } catch (e) {
-            }
-          });
-      },
-    );
   }
 
   private async loadRegions(): Promise<any> {
-    this.provinces = await this.covidService.getProvinces();
+    this.regionData = await this.covidService.loadProvincesAndDistrictsAsTableData();
   }
 
-
-  async regionChanged(event: any): Promise<void> {
-    this.loadedData = await this.covidService.getInfosForAndMap(this.loadedData, this.selectedRegions);
-
-
+  private async loadDataAndUpdateChart(forceUpdate: boolean): Promise<void> {
+    this.loadedData = await this.covidService.getInfosForAndMap(this.loadedData, this.areasToShowInChart, forceUpdate);
     this.elementChanged();
+  }
 
-    console.log(this.loadedData);
+  async regionChanged(): Promise<void> {
+    this.areasToShowInChart = [
+      ...this.selectedAreas || [],
+      ...this.selectedDistricts?.filter(item => item.parent).map(item => item.data) || [],
+    ];
+    this.selectedRegionNames = this.areasToShowInChart
+      .map(item => item.areaName)
+      .join(', ');
+
+    this.loadDataAndUpdateChart(false);
 
   }
 
   elementChanged(): void {
+    if (this.areasToShowInChart &&
+      this.selectedElements) {
 
-    const colors = [[
-      '#F5A9A9', '#FE2E2E', '#B40404', '#8A0808',
-      '#8A4B08', '#FF8000', '#FA8258', '#F5DA81',
-      '#F6D8CE', '#F6CECE'],
-      [
-        '#BCF5A9', '#80FF00', '#688A08', '#21610B',
-        '#088A29', '#01DF3A', '#2EFE64', '#0B3B0B', '#81F79F',
-        '#088A68'],
-      [
-        '#A9BCF5', '#2E9AFE', '#084B8A', '#5858FA',
-        '#0101DF', '#210B61', '#3A01DF',
-        '#8000FF', '#AC58FA', '#BCA9F5',
-      ]];
-
-    console.log(this.elements);
-    if (this.selectedRegions && this.selectedRegions.length > 0 && this.elements.filter(item => item.value.val !== 'off').length > 0) {
-      const dataToShow = {dates: this.loadedData.dates};
-
-      this.selectedRegions.forEach(item => dataToShow[item.areaId] = this.loadedData[item.areaId]);
-
-      console.log(dataToShow);
-      console.log(this.selectedRegions);
-      console.log(this.selectedElements);
+      this.currentChartData = this.covidService.buildCurrentChartData(
+        this.loadedData,
+        this.areasToShowInChart,
+        this.selectedElements);
       this.chartData = new ChartModelBuilder()
-        .withCustomOptions({
-          fill: false,
-          pointRadius: 0,
-          borderWidth: 2,
-        })
-        .withCustomColors(
-          this.selectedRegions.reduce((arr, reg, idx) => [...arr, ...this.selectedElements.map((e, i) => colors[e.idx][reg.areaId])], []),
-        )
-        .buildBasicChartModel(this.selectedRegions.map(item => item.areaName)
-            .reduce((p, c) => [...p, ...this.selectedElements.map(i => c + '_' + i.id)], []),
-          this.loadedData.dates,
-          this.selectedRegions.reduce((arr, reg) => [...arr, ...this.selectedElements.map(item => dataToShow[reg.areaId][item.id])], []));
+        .useCustomColors(this.currentChartData.colors)
+        .useLineChartStyle()
+        .buildBasicChartModel(this.currentChartData.names, this.currentChartData.labels, this.currentChartData.values);
+
     }
+  }
+
+  onFilter(tt: TreeTable, filterValue: string): void {
+    setTimeout(() => {
+      tt.filteredNodes.forEach(item => item.children.some(c => c.data.areaName.includes(filterValue)) ?
+        item.expanded = true : null);
+      tt.updateSerializedValue();
+    }, 300);
   }
 }
