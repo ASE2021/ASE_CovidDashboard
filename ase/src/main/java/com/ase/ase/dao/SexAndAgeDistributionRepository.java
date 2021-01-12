@@ -10,9 +10,11 @@ import java.util.Set;
 public interface SexAndAgeDistributionRepository extends JpaRepository<SexAndAgeDistribution, Long> {
 
     @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
-            "select json_build_object('areaId', dataItems.area_id, 'data', json_agg(dataItems.dataItem)) as item " +
+            "select json_build_object('areaId', dataItems.area_id, 'areaName', dataItems.area, 'data', json_agg(dataItems.dataItem)) as item " +
             "from (" +
-                "select area_id, " +
+                "select " +
+                    "area_id, " +
+                    "area, " +
                     "json_build_object(" +
                         "'ageIntervalId', age_interval_id, " +
                         "'ageInterval', age_interval, " +
@@ -22,18 +24,20 @@ public interface SexAndAgeDistributionRepository extends JpaRepository<SexAndAge
                             "end)" +
                     ") as dataItem " +
                 "from sex_and_age_distribution " +
-                "group by area_id, age_interval_id, age_interval " +
+                "group by area_id, area, age_interval_id, age_interval " +
                 "order by area_id, age_interval_id" +
             ") dataItems " +
             "where area_id in :areas " +
-            "group by dataItems.area_id " +
+            "group by dataItems.area_id, dataItems.area " +
             ") areaItems", nativeQuery = true)
     String getSexAndAgeCaseDistributionBy(@Param("areas")Set<Integer> areas);
 
     @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
-            "select json_build_object('areaId', dataItems.area_id, 'data', json_agg(dataItems.dataItem)) as item " +
+            "select json_build_object('areaId', dataItems.area_id, 'areaName', dataItems.area, 'data', json_agg(dataItems.dataItem)) as item " +
             "from (" +
-                "select area_id, " +
+                "select " +
+                    "area_id, " +
+                    "area, " +
                     "json_build_object(" +
                         "'ageIntervalId', age_interval_id, " +
                         "'ageInterval', age_interval, " +
@@ -43,11 +47,33 @@ public interface SexAndAgeDistributionRepository extends JpaRepository<SexAndAge
                             "end)" +
                     ") as dataItem " +
                 "from sex_and_age_distribution " +
-                "group by area_id, age_interval_id, age_interval " +
+                "group by area_id, area, age_interval_id, age_interval " +
                 "order by area_id, age_interval_id" +
             ") dataItems " +
             "where area_id in :areas " +
-            "group by dataItems.area_id " +
+            "group by dataItems.area_id, dataItems.area " +
             ") areaItems", nativeQuery = true)
     String getSexAndAgeDeathDistributionBy(@Param("areas")Set<Integer> areas);
+
+    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
+            "select json_build_object('areaId', dataItems.area_id, 'areaName', dataItems.area, 'data', json_agg(dataItems.dataItem)) as item " +
+            "from (" +
+                "select " +
+                    "area_id, " +
+                    "area, " +
+                    "json_build_object(" +
+                        "'sex', sex, " +
+                        "'values', array[" +
+                            "json_build_object('identifier', 'cured', 'value', sum(sum_cured)), " +
+                            "json_build_object('identifier', 'dead', 'value', sum(sum_dead)) " +
+                    "]) as dataItem " +
+                "from sex_and_age_distribution " +
+                "group by area_id, area, sex " +
+                "order by area_id" +
+            ") dataItems " +
+            "where area_id in :areas " +
+            "group by dataItems.area_id, dataItems.area " +
+            "order by dataItems.area_id" +
+            ") areaItems", nativeQuery = true)
+    String getSexDistributionBy(@Param("areas")Set<Integer> areas);
 }
