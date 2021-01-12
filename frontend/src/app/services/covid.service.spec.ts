@@ -63,12 +63,13 @@ describe('CovidService', () => {
         }),
         HttpClientTestingModule,
       ],
-      providers: [HttpClient, {
-        provide: HTTP_INTERCEPTORS,
-        useClass: TestingInterceptor,
-        multi: true,
-      },
-        {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl}],
+      providers: [HttpClient,
+        {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: TestingInterceptor,
+          multi: true,
+        }],
     });
     injector = getTestBed();
     httpMock = injector.get(HttpClient);
@@ -83,11 +84,9 @@ describe('CovidService', () => {
     const expectedSituations: HospitalBedsDaily[] = [{date: '10.10.2020', intenseBeds: 12, normalBeds: 10},
       {date: '12.10.2020', intenseBeds: 12, normalBeds: 12}];
 
-    const spy = spyOn(httpMock, 'get');
     service.getHospitalBedsPerDate().then(
       situations => {
         expect(situations).toEqual(expectedSituations, 'expected situations');
-        expect(spy.calls.count()).toBe(1, 'one call');
       },
       fail,
     );

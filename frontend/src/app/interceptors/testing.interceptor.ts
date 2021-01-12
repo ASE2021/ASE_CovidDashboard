@@ -10,8 +10,6 @@ export class TestingInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-
-
     if (request.url.endsWith('/daily/hospital/10')) {
       return of(new HttpResponse({
         body: {
