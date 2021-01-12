@@ -124,26 +124,28 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
 
     @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
             "Select json_build_object(" +
-                "'areaId', t2.area_id, " +
-                "'areaName', t2.area, " +
+                "'areaId', ct.area_id, " +
+                "'areaName', ct.area, " +
                 "'data', json_agg(json_build_object(" +
-                    "'date', t2.time, " +
+                    "'date', ct.time, " +
                     "'values', array[" +
                         "json_build_object('identifier', 'activeCases', 'value', ct.sum_cases - ct.sum_dead - ct.sum_cured)," +
                         "json_build_object('identifier', 'newCases', 'value', ct.new_cases)," +
                         "json_build_object('identifier', 'cured', 'value', ct.new_cured)," +
                         "json_build_object('identifier', 'deaths', 'value', ct.new_dead)," +
-                        "json_build_object('identifier', 'tests', 'value', t2.sum_tested - t1.sum_tested)," +
-                        "json_build_object('identifier', 'intenseBeds', 'value', t2.usedib)," +
-                        "json_build_object('identifier', 'normalBeds', 'value', t2.usednb)" +
+                        "json_build_object('identifier', 'tests', 'value', case when t1.sum_tested is null then 0 else t2.sum_tested - t1.sum_tested end)," +
+                        "json_build_object('identifier', 'intenseBeds', 'value', case when t2.usedib is null then 0 else t2.usedib end)," +
+                        "json_build_object('identifier', 'normalBeds', 'value', case when t2.usednb is null then 0 else t2.usednb end)" +
                     "]" +
-            "))) as item " +
-            "from bed_and_test_timeline t1, bed_and_test_timeline t2, cases_timeline ct " +
-            "where t1.area_id in :areas " +
-                "and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time " +
-                "and t1.area_id = ct.area_id and t2.time = ct.time " +
-            "group by t2.area_id, t2.area " +
-            "order by t2.area_id" +
+            ") order by ct.time )) as item " +
+            "from cases_timeline ct " +
+                "left join bed_and_test_timeline t2 on ct.time = t2.time " +
+                "left join bed_and_test_timeline t1 on t1.time + interval '1 day' = t2.time " +
+            "where ct.area_id in :areas " +
+                "and (t2.area_id is null or ct.area_id = t2.area_id) " +
+                "and (t1.area_id is null or ct.area_id = t1.area_id) " +
+            "group by ct.area_id, ct.area " +
+            "order by ct.area_id" +
             ") areaItem", nativeQuery = true)
     String getCasesBy(@Param("areas") Set<Integer> areas);
 
