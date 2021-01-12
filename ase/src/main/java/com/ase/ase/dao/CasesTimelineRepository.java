@@ -133,7 +133,9 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                         "json_build_object('identifier', 'newCases', 'value', ct.new_cases)," +
                         "json_build_object('identifier', 'cured', 'value', ct.new_cured)," +
                         "json_build_object('identifier', 'deaths', 'value', ct.new_dead)," +
-                        "json_build_object('identifier', 'tests', 'value', t2.sum_tested - t1.sum_tested)" +
+                        "json_build_object('identifier', 'tests', 'value', t2.sum_tested - t1.sum_tested)," +
+                        "json_build_object('identifier', 'intenseBeds', 'value', t1.usedib)," +
+                        "json_build_object('identifier', 'normalBeds', 'value', t1.usednb)" +
                     "]" +
             "))) as item " +
             "from bed_and_test_timeline t1, bed_and_test_timeline t2, cases_timeline ct " +
