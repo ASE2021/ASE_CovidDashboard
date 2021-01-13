@@ -74,7 +74,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
               areaName: 'A-' + area,
               data: getDatesBetweenDates(new Date(2020, 1, 1), new Date()).map((date, idx) =>
                 ({
-                  date: date.toLocaleString()
+                  date: date.toLocaleDateString()
                   ,
                   values: [
                     {

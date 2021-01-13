@@ -18,7 +18,7 @@ import {FormsModule} from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TableWithFilterModule} from '../tableWithFilter/table.module';
 import {CalendarModule} from 'primeng/calendar';
-import {ComparisonChartModule} from '../comparison-chart/comparison-chart.module';
+import {CompareRegionsChartModule} from '../comparison-chart/compare-regions-chart.module';
 
 @NgModule({
   declarations: [OverviewComponent],
@@ -41,7 +41,7 @@ import {ComparisonChartModule} from '../comparison-chart/comparison-chart.module
     ProgressSpinnerModule,
     TableWithFilterModule,
     CalendarModule,
-    ComparisonChartModule,
+    CompareRegionsChartModule,
   ],
 
   exports: [OverviewComponent]
