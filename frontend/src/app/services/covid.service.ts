@@ -94,7 +94,8 @@ export class CovidService {
 
     chartData.colors = selectedRegions
       .reduce((arr, reg, i) => [...arr, ...selectedElements
-        .map(e => this.getColorsFromMatrixAt(e.idx, reg.areaId < 10 ? reg.areaId : (idx >= idxNotAreaIds.length ? ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])[idx++ % 10] : idxNotAreaIds[idx++])))], []);
+        .map(e => this.getColorsFromMatrixAt(e.idx, reg.areaId < 10 ? reg.areaId :
+          (idx >= idxNotAreaIds.length ? ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])[idx++ % 10] : idxNotAreaIds[idx++])))], []);
     chartData.names = selectedRegions.map(item => item.areaName)
       .reduce((p, c) => [...p, ...selectedElements
         .map(i => c + ' ' + i.text)], []);
