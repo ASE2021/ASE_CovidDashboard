@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/overview")
 public class OverviewController {
 
-    @GetMapping(value = "/overview", produces = "application/json")
+    @GetMapping(value = "", produces = "application/json")
     @ResponseBody
     
     @Autowired
