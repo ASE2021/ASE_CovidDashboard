@@ -2,6 +2,7 @@ package com.ase.ase.dao;
 
 import com.ase.ase.entities.CasesTimeline;
 import com.ase.ase.rest.response.CasesPerDate;
+import com.ase.ase.rest.response.Overview;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
