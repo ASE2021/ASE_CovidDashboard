@@ -64,11 +64,16 @@
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
-              This is a comparison of active cases, cures and deaths since the beginning of the pandemic.
+              <div class="p-col-6 p-offset-3">
+                <p-checkbox name="dataPer100.000" label="Show data per 100.000 residents"
+                            [binary]="true" (onChange)="showRelativeComparisonData()"></p-checkbox>
+              </div>
               <p-chart *ngIf="comparison" type="bar"
                        [data]="comparison" [options]="options"></p-chart>
               <p-progressSpinner
                 *ngIf="!comparison"></p-progressSpinner>
+
+              This is a comparison of active cases, cures and deaths in Austria since the beginning of the pandemic.
             </div>
           </div>
         </div>

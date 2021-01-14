@@ -25,7 +25,8 @@ export class OverviewComponent implements OnInit {
   deaths: number;
   comparison: any;
   province: any;
-  private options: any;
+  relative = false;
+  options: any;
 
 
   constructor(private covidService: CovidService, private socketService: SocketService) {
@@ -33,7 +34,7 @@ export class OverviewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.initializeComparisonCasesChart();
+    this.initializeComparisonCasesChart(this.relative);
     this.initializePositiveCasesPerDateChart();
     this.initializeBasicInformation();
     this.initializeSexDistributionCharts();
@@ -47,7 +48,7 @@ export class OverviewComponent implements OnInit {
             console.log(message.payload.toString());
             try {
               if ((JSON.parse(message.payload.toString()) as MessageResponse).update) {
-                this.initializeComparisonCasesChart();
+                this.initializeComparisonCasesChart(this.relative);
                 this.initializePositiveCasesPerDateChart();
                 this.initializeBasicInformation();
                 this.initializeHospitalBedsPerDateChart();
@@ -67,8 +68,16 @@ export class OverviewComponent implements OnInit {
     this.deaths = 2000;
   }
 
-  private async initializeComparisonCasesChart(): Promise<void> {
-    const data = await this.covidService.getComparisonData();
+  private async initializeComparisonCasesChart(relative): Promise<void> {
+    let data;
+    if (relative) {
+      data = await this.covidService.getComparisonCasesDataRelative();
+
+    } else {
+      data = await this.covidService.getComparisonData();
+    }
+
+
     console.log(data);
     this.options = {
       scales: {
@@ -78,16 +87,18 @@ export class OverviewComponent implements OnInit {
           }
         }]
       }
-    }
+    };
+
     this.comparison = new ChartModelBuilder()
       .buildBasicChartModel(Object.keys(data['10'])
-        .map(item => item[0].toUpperCase()
-          + item.substring(1, item.length)
-            .replace(/([A-Z])/g, ' $1')
-            .trim()
-            .toLowerCase()), data.dates,
+          .map(item => item[0].toUpperCase()
+            + item.substring(1, item.length)
+              .replace(/([A-Z])/g, ' $1')
+              .trim()
+              .toLowerCase()), data.dates,
         Object.values(data['10']));
     console.log(this.comparison);
+    console.log(Object.values(data['10']));
   }
 
   private async initializePositiveCasesPerDateChart(): Promise<void> {
@@ -137,4 +148,8 @@ export class OverviewComponent implements OnInit {
 
   }
 
+  public showRelativeComparisonData(): void {
+    this.relative = true;
+    this.initializeComparisonCasesChart(this.relative);
+  }
 }

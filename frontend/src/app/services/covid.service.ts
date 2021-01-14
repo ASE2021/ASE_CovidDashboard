@@ -39,8 +39,17 @@ export class CovidService {
 
 
   public async getComparisonData(): Promise<any> {
-    let data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
       {params: {'area-id': ['10', '20']}})
+      .toPromise()
+      .then(res => (res as { items: AreaResponse[] }).items));
+    return {...data};
+  }
+
+
+  public async getComparisonCasesDataRelative(): Promise<any> {
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
+      {params: {'area-id': ['10'], relative: 'true'}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items));
     return {...data};

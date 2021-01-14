@@ -108,7 +108,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         status: 200,
       }));
     }
-    if (request.url.includes('/comparison/cases')) {
+    if (request.url.endsWith('/comparison/cases')) {
 
       return of(new HttpResponse({
         body: {
@@ -136,6 +136,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                   ],
                 })),
             })),
+
         },
         status: 200,
       }));
