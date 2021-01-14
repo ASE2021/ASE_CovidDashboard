@@ -15,7 +15,7 @@ public class OverviewController {
     @ResponseBody
 
     public ResponseEntity getOverview(){
-        Overview o = CasesTimelineRepository.getOverview();
+        String o = CasesTimelineRepository.getOverview();
       return ResponseEntity.ok(o);
   }
 
