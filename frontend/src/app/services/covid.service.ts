@@ -37,6 +37,14 @@ export class CovidService {
       .toPromise().then(item => (item as { situations: GeneralSituationDaily[] }).situations);
   }
 
+  public async getHospitalUtilizationPerProvince() {
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/daily/hospital',
+      {params: {'area-id': ['10']}})
+      .toPromise()
+      .then(res => (res as { items: AreaResponse[] }).items));
+    return {...data};
+  }
+
   public getProvinces(): Promise<Area[]> {
     return this.http.get<any>(this.apiUrl + '/provinces')
       .toPromise()
@@ -153,5 +161,7 @@ export class CovidService {
           })),
       }));
   }
+
+
 
 }

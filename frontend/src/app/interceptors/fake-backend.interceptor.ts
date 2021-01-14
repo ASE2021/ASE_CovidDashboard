@@ -108,6 +108,36 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         status: 200,
       }));
     }
+
+    if (request.url.includes('/daily/hospital')) {
+
+      return of(new HttpResponse({
+        body: {
+          items: request.params.getAll('area-id').map(area =>
+            ({
+              areaId: area,
+              areaName: 'A-' + area,
+              data: getDatesBetweenDates(new Date(2020, 1, 1), new Date()).map((date, idx) =>
+                ({
+                  date: date.toLocaleDateString()
+                  ,
+                  values: [
+                    {
+                      identifier: 'intenseBeds',
+                      value: (100 - parseInt(area, 10) + Math.abs(50 - Math.abs(50 - (idx / (3))))) * (0.95 + (Math.random() / 10)),
+                    },
+                    {
+                      identifier: 'normalBeds',
+                      value: (100 - parseInt(area, 10) + Math.abs(150 - Math.abs(50 - (idx / (1.3))))) * (0.95 + (Math.random() / 10)),
+                    },
+                  ],
+                })),
+            })),
+        },
+        status: 200,
+      }));
+    }
+
     return next.handle(request);
   }
 }
