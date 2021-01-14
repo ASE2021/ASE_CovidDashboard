@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class OverviewController {
 
     @GetMapping(value = "/overview", produces = "application/json")
-    @ResponseBody
+    
     
     @Autowired
     private CasesTimelineRepository casesTimelineRepository;
-
+    
+    @ResponseBody
     public ResponseEntity getOverview(){
         String o = casesTimelineRepository.getOverview();
       return ResponseEntity.ok(o);
