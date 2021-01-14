@@ -23,7 +23,7 @@ export class OverviewComponent implements OnInit {
   activeCases: number;
   numberOfCases: number;
   deaths: number;
-  comparison: ComparisonCasesData;
+  comparison: any;
   province: any;
 
 
@@ -68,14 +68,11 @@ export class OverviewComponent implements OnInit {
 
   private async initializeComparisonCasesChart(): Promise<void> {
     const data = await this.covidService.getComparisonData();
+    console.log(data);
     this.comparison = new ChartModelBuilder()
-      .buildBasicChartModel(['Cases', 'Cures', 'Deaths'], ['Cases', 'Cures', 'Deaths'],
-        data.reduce((dataArray, current) =>
-          [
-            [...dataArray[0], current.cases],
-            [...dataArray[1], current.cured],
-            [...dataArray[2], current.deaths]
-          ], [[], []]));
+      .buildBasicChartModel(['new Cases', 'Cured', 'Deaths'], data.dates,
+        [data["10"].newCases, data["10"].cured, data["10"].deaths]);
+    console.log(this.comparison);
   }
 
   private async initializePositiveCasesPerDateChart(): Promise<void> {

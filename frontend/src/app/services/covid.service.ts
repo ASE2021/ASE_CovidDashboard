@@ -3,7 +3,6 @@ import {CovidCasesDaily} from '../model/covid-cases-daily';
 import {HttpClient} from '@angular/common/http';
 import {HospitalBedsDaily} from '../model/hospital-beds-daily';
 import {GeneralSituationDaily} from '../model/general-situation-daily';
-import {ComparisonCasesData} from "../model/comparison-cases-data";
 import {Area} from '../model/area';
 import {AreaResponse} from '../model/area-response';
 import {TreeNode} from 'primeng/api';
@@ -40,13 +39,11 @@ export class CovidService {
 
 
   public async getComparisonData(): Promise<any> {
-    let newData = {};
-    newData = this.mapResponseDataToObject(await this.http.get(this.apiUrl + '/comparison/cases',
+    let data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
       {params: {'area-id': ['10', '20']}})
       .toPromise()
-      .then(item => (item as { items: AreaResponse[] }).items));
-
-    return {...newData}
+      .then(res => (res as { items: AreaResponse[] }).items));
+    return {...data};
   }
 
   public getProvinces(): Promise<Area[]> {

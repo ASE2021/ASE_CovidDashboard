@@ -1,5 +1,5 @@
 export class ComparisonCasesData {
-  cases: number;
+  newCases: number;
   deaths: number;
   cured: number;
 }

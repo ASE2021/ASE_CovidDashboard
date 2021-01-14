@@ -65,10 +65,10 @@
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
               This is a comparison of active cases, cures and deaths since the beginning of the pandemic.
-              <p-chart *ngIf="comparison && positiveCasesPerDateData.datasets.length > 0" type="bar"
+              <p-chart *ngIf="comparison" type="bar"
                        [data]="comparison"></p-chart>
               <p-progressSpinner
-                *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
+                *ngIf="!comparison"></p-progressSpinner>
             </div>
           </div>
         </div>
