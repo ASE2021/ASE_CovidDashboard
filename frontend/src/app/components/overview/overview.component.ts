@@ -4,9 +4,9 @@ import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
 import {MessageResponse} from '../../model/MessageResponse';
 import {IMqttMessage} from 'ngx-mqtt';
-import {ComparisonCasesData} from "../../model/comparison-cases-data";
 import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
 import {SexDistribution} from '../../model/sex-distribution';
+
 
 @Component({
   selector: 'app-overview',
@@ -25,6 +25,7 @@ export class OverviewComponent implements OnInit {
   deaths: number;
   comparison: any;
   province: any;
+  private options: any;
 
 
   constructor(private covidService: CovidService, private socketService: SocketService) {
@@ -69,9 +70,23 @@ export class OverviewComponent implements OnInit {
   private async initializeComparisonCasesChart(): Promise<void> {
     const data = await this.covidService.getComparisonData();
     console.log(data);
+    this.options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
     this.comparison = new ChartModelBuilder()
-      .buildBasicChartModel(['new Cases', 'Cured', 'Deaths'], data.dates,
-        [data["10"].newCases, data["10"].cured, data["10"].deaths]);
+      .buildBasicChartModel(Object.keys(data['10'])
+        .map(item => item[0].toUpperCase()
+          + item.substring(1, item.length)
+            .replace(/([A-Z])/g, ' $1')
+            .trim()
+            .toLowerCase()), data.dates,
+        Object.values(data['10']));
     console.log(this.comparison);
   }
 

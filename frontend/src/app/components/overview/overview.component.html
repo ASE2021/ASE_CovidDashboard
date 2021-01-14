@@ -66,7 +66,7 @@
             <div class="p-col-6 p-offset-3">
               This is a comparison of active cases, cures and deaths since the beginning of the pandemic.
               <p-chart *ngIf="comparison" type="bar"
-                       [data]="comparison"></p-chart>
+                       [data]="comparison" [options]="options"></p-chart>
               <p-progressSpinner
                 *ngIf="!comparison"></p-progressSpinner>
             </div>
