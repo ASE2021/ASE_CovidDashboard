@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/overview")
+@RequestMapping(method = { RequestMethod.GET })
 public class OverviewController {
 
-    @GetMapping(value = "", produces = "application/json")
+    @GetMapping(value = "/overview", produces = "application/json")
     @ResponseBody
     
     @Autowired
