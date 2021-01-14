@@ -10,17 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class OverviewController {
-
-    @GetMapping(value = "/overview", produces = "application/json")
-    
-    
-    @Autowired
-    private CasesTimelineRepository casesTimelineRepository;
-    
-    @ResponseBody
+   
+    //@GetMapping(value = "/overview", produces = "application/json")
+    //@ResponseBody
+    @RequestMapping("/overview")
     public ResponseEntity getOverview(){
         String o = casesTimelineRepository.getOverview();
       return ResponseEntity.ok(o);
   }
 
+     @Autowired
+    private CasesTimelineRepository casesTimelineRepository;
 }
