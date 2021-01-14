@@ -14,7 +14,7 @@ public class OverviewController {
     private CasesTimelineRepository casesTimelineRepository;
     
     @CrossOrigin
-    @GetMapping(value = "/overview}", produces = "application/json")
+    @GetMapping(value = "/overview", produces = "application/json")
     @ResponseBody
     public ResponseEntity getOverview(){
         String o = casesTimelineRepository.getOverview();
