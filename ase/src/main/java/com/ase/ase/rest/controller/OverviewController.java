@@ -7,16 +7,20 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin("*")
 @RestController
 public class OverviewController {
    
-    @RequestMapping("/overview")
+    @Autowired
+    private CasesTimelineRepository casesTimelineRepository;
+    
+    @CrossOrigin
+    @GetMapping(value = "/overview}", produces = "application/json")
+    @ResponseBody
     public ResponseEntity getOverview(){
         String o = casesTimelineRepository.getOverview();
       return ResponseEntity.ok(o);
   }
 
-     @Autowired
-    private CasesTimelineRepository casesTimelineRepository;
+     
 }
