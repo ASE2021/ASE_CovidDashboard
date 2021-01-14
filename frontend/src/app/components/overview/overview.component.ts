@@ -18,6 +18,7 @@ export class OverviewComponent implements OnInit {
   sexDistributionCasesData: SexDistribution;
   sexDistributionDeathsData: SexDistribution;
   hospitalBedsPerDate: HospitalBedsDaily;
+  hospitalUtilizationData: any;
   activeCases: number;
   numberOfCases: number;
   deaths: number;
@@ -107,6 +108,8 @@ export class OverviewComponent implements OnInit {
           ], [[], []]));
 
   }
+
+
 
 }
 
