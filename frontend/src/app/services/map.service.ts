@@ -14,7 +14,6 @@ export class MapService {
   async loadCoordinateData(): Promise<AustrianProvinceData> {
 
     const jsonData = await this.http.get('/assets/convert.json').toPromise() as any;
-    console.log(jsonData);
     const groupedData = jsonData.features.reduce((obj, curr) => {
       if (!obj[curr.properties.NAME_1]) {
         obj[curr.properties.NAME_1] = [curr];
@@ -23,7 +22,6 @@ export class MapService {
       }
       return obj;
     }, {});
-    console.log(groupedData);
     return new AustrianProvinceData(Object.keys(groupedData).map(provinceKey =>
       new ProvinceCoordinates(
         provinceKey,
