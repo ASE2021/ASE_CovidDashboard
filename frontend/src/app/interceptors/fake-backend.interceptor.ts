@@ -110,7 +110,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
     if (request.url.includes('/comparison/cases')) {
 
-      if(request.params.has('relative')){
+      if (request.params.has('relative')) {
+
         return of(new HttpResponse({
           body: {
             items: request.params.getAll('area-id').map(area =>
