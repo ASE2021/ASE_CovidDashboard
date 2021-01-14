@@ -19,7 +19,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TableWithFilterModule} from '../tableWithFilter/table.module';
 import {CalendarModule} from 'primeng/calendar';
 import {CompareRegionsChartModule} from '../comparison-chart/compare-regions-chart.module';
-import {HospitalUtilizationModule} from "../hospital-utilization-chart/hospital-utilization.module";
+import {HospitalUtilizationModule} from '../hospital-utilization-chart/hospital-utilization.module';
 
 @NgModule({
   declarations: [OverviewComponent],

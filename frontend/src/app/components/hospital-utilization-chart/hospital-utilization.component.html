@@ -1,7 +1,13 @@
 <div class="p-grid">
   <div class="p-col-8 p-offset-2">
-    <p-cascadeSelect [(ngModel)]="regionData" [options]="regionData" optionLabel="cname" optionGroupLabel="name"
-                   [style]="{'minWidth': '14rem'}"></p-cascadeSelect>
+    <div class="p-grid">
+      <div class="p-col-5 p-offset-4">
+        <h3>Hospital Utilization</h3>
+      </div>
+      <div class="p-col-5 p-offset-3">
+        place select box here
+      </div>
+    </div>
     <p-chart *ngIf="hospitalUtilizationData" type="line"
              [data]="hospitalUtilizationData"></p-chart>
     <p-progressSpinner

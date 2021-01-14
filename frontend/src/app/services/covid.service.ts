@@ -37,7 +37,7 @@ export class CovidService {
       .toPromise().then(item => (item as { situations: GeneralSituationDaily[] }).situations);
   }
 
-  public async getHospitalUtilizationPerProvince() {
+  public async getHospitalUtilizationPerProvince(): Promise<any>{
     const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/daily/hospital',
       {params: {'area-id': ['10']}})
       .toPromise()
