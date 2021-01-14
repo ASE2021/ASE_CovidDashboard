@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(method = { RequestMethod.GET })
 public class OverviewController {
 
     @GetMapping(value = "/overview", produces = "application/json")
