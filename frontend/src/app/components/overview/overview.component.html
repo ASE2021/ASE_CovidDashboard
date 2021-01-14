@@ -22,7 +22,7 @@
       <h2 class="display-3">Overview</h2>
       <div class="p-grid">
         <div class="p-col-4">
-          <p-card header="Active cases in Austria" style="background: #85e085">
+          <p-card header="Active cases in Austria" class="card-style-active">
             {{activeCases}}
           </p-card>
         </div>
@@ -53,9 +53,14 @@
   </div>
 
   <!-- TODO: change data of the line and pie charts -->
-  <div class="p-col-12">
+  <div class="p-col-12 chart-view">
     <p-tabView>
-      <p-tabPanel header="Comparison">
+      <p-tabPanel header="Compare Regions">
+        <div class="p-col-12">
+              <app-comparison-chart class="app-comparison-chart"></app-comparison-chart>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Compare Cases, Deaths and Cured">
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">

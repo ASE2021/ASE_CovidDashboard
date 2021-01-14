@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {ChartModule} from 'primeng/chart';
 import {AustriaMapModule} from './components/austria-map/austria-map.module';
@@ -23,7 +23,7 @@ import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
 import {MqttModule} from 'ngx-mqtt';
 import {TableWithFilterModule} from './components/tableWithFilter/table.module';
-
+import {FakeBackendInterceptor} from './interceptors/fake-backend.interceptor';
 
 @NgModule({
   declarations: [
@@ -59,12 +59,12 @@ import {TableWithFilterModule} from './components/tableWithFilter/table.module';
   providers: [HttpClient,
     {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
     {provide: 'BACKEND_NOTIFICATION_URL', useValue: environment.backendNotificationUrl},
-    {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort}
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: FakeBackendInterceptor,
-    //   multi: true,
-    // }
+    {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FakeBackendInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

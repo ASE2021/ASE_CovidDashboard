@@ -5,8 +5,8 @@ import {SocketService} from '../../services/socket/socket.service';
 import {MessageResponse} from '../../model/MessageResponse';
 import {IMqttMessage} from 'ngx-mqtt';
 import {ComparisonCasesData} from "../../model/comparison-cases-data";
-import {SexDistribution} from '../../model/sex-distribution';
 import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
+import {SexDistribution} from '../../model/sex-distribution';
 
 @Component({
   selector: 'app-overview',
@@ -32,7 +32,7 @@ export class OverviewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.initializeComparisonChart();
+    this.initializeComparisonCasesChart();
     this.initializePositiveCasesPerDateChart();
     this.initializeBasicInformation();
     this.initializeSexDistributionCharts();
@@ -46,7 +46,7 @@ export class OverviewComponent implements OnInit {
             console.log(message.payload.toString());
             try {
               if ((JSON.parse(message.payload.toString()) as MessageResponse).update) {
-                this.initializeComparisonChart();
+                this.initializeComparisonCasesChart();
                 this.initializePositiveCasesPerDateChart();
                 this.initializeBasicInformation();
                 this.initializeHospitalBedsPerDateChart();
@@ -66,7 +66,7 @@ export class OverviewComponent implements OnInit {
     this.deaths = 2000;
   }
 
-  private async initializeComparisonChart(): Promise<void> {
+  private async initializeComparisonCasesChart(): Promise<void> {
     const data = await this.covidService.getComparisonData();
     this.comparison = new ChartModelBuilder()
       .buildBasicChartModel(['Cases', 'Cures', 'Deaths'], ['Cases', 'Cures', 'Deaths'],
@@ -81,6 +81,7 @@ export class OverviewComponent implements OnInit {
   private async initializePositiveCasesPerDateChart(): Promise<void> {
     const data = await this.covidService.getNewCasesPerDate();
     this.positiveCasesPerDateData = new ChartModelBuilder()
+      .useBarChartStyle()
       .buildBasicChartModel(['Positive Covid-19 cases per date'],
         data.map(item => item.date.split('T')[0]),
         [data.map(item => item.cases)]);
@@ -89,25 +90,31 @@ export class OverviewComponent implements OnInit {
   private async initializeSexDistributionCharts(): Promise<void> {
     const data = await this.covidService.getSexDistribution();
     this.sexDistributionCasesData =
-      new ChartModelBuilder().withCustomColors([['#1B2771', '#A93226']]).buildBasicChartModel(['Covid Cases Distributed per sex'],
+      new ChartModelBuilder().useCustomColors([['#1B2771', '#A93226']])
+        .useBarChartStyle()
+        .buildBasicChartModel(['Covid Cases Distributed per sex'],
+          ['female', 'male'],
+          data.reduce((dataArray, current) =>
+            [
+              [...dataArray[0], current.femaleCases, current.maleCases],
+            ], [[], []]));
+
+    this.sexDistributionDeathsData = new ChartModelBuilder()
+      .useCustomColors([['#1B2771', '#A93226']])
+      .useBarChartStyle()
+      .buildBasicChartModel(['Deaths Distributed per sex'],
         ['female', 'male'],
         data.reduce((dataArray, current) =>
           [
-            [...dataArray[0], current.femaleCases, current.maleCases]
-          ], [[], []]));
-
-    this.sexDistributionDeathsData = new ChartModelBuilder().withCustomColors([['#1B2771', '#A93226']]).buildBasicChartModel(['Deaths Distributed per sex'],
-      ['female', 'male'],
-      data.reduce((dataArray, current) =>
-        [
-          [...dataArray[0], current.femaleDeaths, current.maleDeaths]
-        ], [[], []])
-    );
+            [...dataArray[0], current.femaleDeaths, current.maleDeaths],
+          ], [[], []]),
+      );
   }
 
   private async initializeHospitalBedsPerDateChart(): Promise<void> {
     const data = await this.covidService.getHospitalBedsPerDate();
     this.hospitalBedsPerDate = new ChartModelBuilder()
+      .useLineChartStyle()
       .buildBasicChartModel(['intense beds', 'normal beds'],
         data.map(item => item.date.split('T')[0]),
         data.reduce((dataArray, current) =>
