@@ -7,10 +7,10 @@ import {TreeTable} from 'primeng/treetable';
 
 @Component({
   selector: 'app-comparison-chart',
-  templateUrl: './comparison-chart.component.html',
-  styleUrls: ['./comparison-chart.component.scss'],
+  templateUrl: './compare-regions-chart.component.html',
+  styleUrls: ['./compare-regions-chart.component.scss'],
 })
-export class ComparisonChartComponent implements OnInit {
+export class CompareRegionsChartComponent implements OnInit {
   chartData: any;
   elements: SelectItem[]; // Items for the multiselect "newData" etc.
   regionData: TreeNode[]; // Data for the treetable

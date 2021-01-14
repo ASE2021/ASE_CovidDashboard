@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ComparisonChartComponent} from './comparison-chart.component';
+import {CompareRegionsChartComponent} from './compare-regions-chart.component';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MqttModule} from 'ngx-mqtt';
@@ -22,12 +22,12 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import {InputTextModule} from 'primeng/inputtext';
 
 describe('ComparisonChartComponent', () => {
-  let component: ComparisonChartComponent;
-  let fixture: ComponentFixture<ComparisonChartComponent>;
+  let component: CompareRegionsChartComponent;
+  let fixture: ComponentFixture<CompareRegionsChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ComparisonChartComponent],
+      declarations: [CompareRegionsChartComponent],
       imports: [HttpClientModule, MqttModule.forRoot({
         connectOnCreate: false,
       }), CommonModule,
@@ -56,7 +56,7 @@ describe('ComparisonChartComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ComparisonChartComponent);
+    fixture = TestBed.createComponent(CompareRegionsChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

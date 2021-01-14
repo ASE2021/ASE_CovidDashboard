@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ComparisonChartComponent} from './comparison-chart.component';
+import {CompareRegionsChartComponent} from './compare-regions-chart.component';
 import {ChartModule} from 'primeng/chart';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {MultiSelectModule} from 'primeng/multiselect';
@@ -18,7 +18,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import {InputTextModule} from 'primeng/inputtext';
 
 @NgModule({
-  declarations: [ComparisonChartComponent],
+  declarations: [CompareRegionsChartComponent],
   imports: [
     CommonModule,
     ChartModule,
@@ -38,8 +38,8 @@ import {InputTextModule} from 'primeng/inputtext';
     AutoCompleteModule,
     InputTextModule,
   ],
-  exports: [ComparisonChartComponent],
+  exports: [CompareRegionsChartComponent],
 })
 
-export class ComparisonChartModule {
+export class CompareRegionsChartModule {
 }

@@ -20,7 +20,7 @@ import {FormsModule} from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TableWithFilterModule} from '../tableWithFilter/table.module';
 import {CalendarModule} from 'primeng/calendar';
-import {ComparisonChartModule} from '../comparison-chart/comparison-chart.module';
+import {CompareRegionsChartModule} from '../comparison-chart/compare-regions-chart.module';
 import {MqttModule} from 'ngx-mqtt';
 
 describe('OverviewComponent', () => {
@@ -49,7 +49,7 @@ describe('OverviewComponent', () => {
         TableWithFilterModule,
         CalendarModule,
         MqttModule.forRoot({connectOnCreate: false}),
-        ComparisonChartModule],
+        CompareRegionsChartModule],
       providers: [HttpClient, {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
         {provide: 'BACKEND_NOTIFICATION_URL', useValue: environment.backendNotificationUrl},
         {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort}]

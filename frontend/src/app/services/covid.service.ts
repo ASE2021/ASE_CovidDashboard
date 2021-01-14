@@ -88,10 +88,14 @@ export class CovidService {
       labels: [],
       names: [],
     };
+    let idx = 0;
+    const idxFromAreaIds = selectedRegions.filter(reg => reg.areaId < 10).map(item => item.areaId);
+    const idxNotAreaIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].filter(n => !idxFromAreaIds.includes(n));
 
     chartData.colors = selectedRegions
       .reduce((arr, reg, i) => [...arr, ...selectedElements
-        .map(e => this.getColorsFromMatrixAt(e.idx, reg.areaId > 9 ? i : reg.areaId))], []);
+        .map(e => this.getColorsFromMatrixAt(e.idx, reg.areaId < 10 ? reg.areaId :
+          (idx >= idxNotAreaIds.length ? ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])[idx++ % 10] : idxNotAreaIds[idx++])))], []);
     chartData.names = selectedRegions.map(item => item.areaName)
       .reduce((p, c) => [...p, ...selectedElements
         .map(i => c + ' ' + i.text)], []);
