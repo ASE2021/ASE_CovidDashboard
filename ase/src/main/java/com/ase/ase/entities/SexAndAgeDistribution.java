@@ -13,6 +13,7 @@ public class SexAndAgeDistribution {
     private long id;
 
     private String ageInterval;
+    private int ageIntervalId;
     private String area;
     private int areaId;
     private int population;
@@ -23,8 +24,9 @@ public class SexAndAgeDistribution {
 
     protected SexAndAgeDistribution() { }
 
-    public SexAndAgeDistribution(String ageInterval, String area, int areaId, int population, String sex, int sumCases, int sumCured, int sumDead) {
+    public SexAndAgeDistribution(String ageInterval, int ageIntervalId, String area, int areaId, int population, String sex, int sumCases, int sumCured, int sumDead) {
         this.ageInterval = ageInterval;
+        this.ageIntervalId = ageIntervalId;
         this.area = area;
         this.areaId = areaId;
         this.population = population;
@@ -40,6 +42,14 @@ public class SexAndAgeDistribution {
 
     public void setAgeInterval(String ageInterval) {
         this.ageInterval = ageInterval;
+    }
+
+    public int getAgeIntervalId() {
+        return ageIntervalId;
+    }
+
+    public void setAgeIntervalId(int ageIntervalId) {
+        this.ageIntervalId = ageIntervalId;
     }
 
     public String getArea() {
@@ -103,6 +113,7 @@ public class SexAndAgeDistribution {
         return "SexAndAgeDistribution{" +
                 "id=" + id +
                 ", ageInterval='" + ageInterval + '\'' +
+                ", ageIntervalId=" + ageIntervalId +
                 ", area='" + area + '\'' +
                 ", areaId=" + areaId +
                 ", population=" + population +
