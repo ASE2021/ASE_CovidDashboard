@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class OverviewController {
    
-    //@GetMapping(value = "/overview", produces = "application/json")
-    //@ResponseBody
     @RequestMapping("/overview")
     public ResponseEntity getOverview(){
         String o = casesTimelineRepository.getOverview();
