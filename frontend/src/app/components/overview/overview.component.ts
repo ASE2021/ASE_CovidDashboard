@@ -149,7 +149,7 @@ export class OverviewComponent implements OnInit {
   }
 
   public showRelativeComparisonData(): void {
-    this.relative = true;
+    this.relative = !this.relative;
     this.initializeComparisonCasesChart(this.relative);
   }
 }

@@ -108,38 +108,71 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         status: 200,
       }));
     }
-    if (request.url.endsWith('/comparison/cases')) {
+    if (request.url.includes('/comparison/cases')) {
 
-      return of(new HttpResponse({
-        body: {
-          items: request.params.getAll('area-id').map(area =>
-            ({
-              areaId: area,
-              areaName: 'A-' + area,
-              data: getDatesBetweenDates(new Date(2020, 1, 1), new Date(2020, 1, 5)).map((date) =>
-                ({
-                  date: date.toLocaleDateString()
-                  ,
-                  values: [
-                    {
-                      identifier: 'deaths',
-                      value: 50,
-                    },
-                    {
-                      identifier: 'newCases',
-                      value: 100,
-                    },
-                    {
-                      identifier: 'cured',
-                      value: 30,
-                    },
-                  ],
-                })),
-            })),
+      if(request.params.has('relative')){
+        return of(new HttpResponse({
+          body: {
+            items: request.params.getAll('area-id').map(area =>
+              ({
+                areaId: area,
+                areaName: 'A-' + area,
+                data: getDatesBetweenDates(new Date(2020, 1, 1), new Date(2020, 1, 5)).map((date) =>
+                  ({
+                    date: date.toLocaleDateString()
+                    ,
+                    values: [
+                      {
+                        identifier: 'deaths',
+                        value: 0.5,
+                      },
+                      {
+                        identifier: 'newCases',
+                        value: 1,
+                      },
+                      {
+                        identifier: 'cured',
+                        value: 0.3,
+                      },
+                    ],
+                  })),
+              })),
 
-        },
-        status: 200,
-      }));
+          },
+          status: 200,
+        }));
+      }else {
+        return of(new HttpResponse({
+          body: {
+            items: request.params.getAll('area-id').map(area =>
+              ({
+                areaId: area,
+                areaName: 'A-' + area,
+                data: getDatesBetweenDates(new Date(2020, 1, 1), new Date(2020, 1, 5)).map((date) =>
+                  ({
+                    date: date.toLocaleDateString()
+                    ,
+                    values: [
+                      {
+                        identifier: 'deaths',
+                        value: 50,
+                      },
+                      {
+                        identifier: 'newCases',
+                        value: 100,
+                      },
+                      {
+                        identifier: 'cured',
+                        value: 30,
+                      },
+                    ],
+                  })),
+              })),
+
+          },
+          status: 200,
+        }));
+      }
     }
 
     return next.handle(request);
