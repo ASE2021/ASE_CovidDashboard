@@ -30,7 +30,6 @@ export class TableComponent implements OnInit {
   private async loadTableData(): Promise<void> {
     this.data = await this.covidService.getGeneralSituationPerDate();
 
-    //this.dataProvince = await this.covidService.getProvinceSituationPerDate();
 
     this.calculateTotalCases();
     this.calculateTotalDeaths();
@@ -77,10 +76,6 @@ export class TableComponent implements OnInit {
     this.totalHospitalizations = total;
   }
 
-  compareWithYesterday(index): number{
-    return (this.data[index].cases - this.data[index - 1].cases);
-
-  }
 
 
 
