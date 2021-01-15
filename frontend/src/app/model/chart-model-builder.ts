@@ -6,7 +6,7 @@ export class ChartModelBuilder {
   constructor() {
   }
 
-  public buildBasicChartModel(chartNames: string[], labels: string[], data: any[][]): any {
+  public buildBasicChartModel(chartNames: string[], labels: string[], data: any[][], dateRange: Date[]): any {
     return {
       labels,
       datasets: data.map((item, index) => (
@@ -17,6 +17,7 @@ export class ChartModelBuilder {
           data: item,
         }
       )),
+      dateRange,
     };
   }
 

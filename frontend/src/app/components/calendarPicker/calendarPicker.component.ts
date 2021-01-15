@@ -37,7 +37,11 @@ export class CalendarPickerComponent implements OnInit {
   getSelectedPeriod() {
     console.log(JSON.stringify(this.rangeDates));
 
-    this.calendarEvent.emit(JSON.stringify(this.rangeDates));
+    if(this.rangeDates[1] != null) {
+      this.calendarEvent.emit(JSON.stringify(this.rangeDates));
+    }
+
+
 
   }
 }

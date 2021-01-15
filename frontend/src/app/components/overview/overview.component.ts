@@ -13,8 +13,7 @@ import {CalendarPickerComponent} from "../calendarPicker/calendarPicker.componen
 })
 export class OverviewComponent implements OnInit {
 
-  @Input()
-  rangeDates: Date[]
+  range: Date[];
 
   positiveCasesPerDateData: any;
   hospitalBedsPerDate: any;
@@ -62,11 +61,10 @@ export class OverviewComponent implements OnInit {
   private async initializePositiveCasesPerDateChart(): Promise<void> {
     const data = await this.covidService.getNewCasesPerDate();
 
-
     this.positiveCasesPerDateData = new ChartModelBuilder()
       .buildBasicChartModel(['Positive Covid-19 cases per date'],
         data.map(item => item.date.split('T')[0]),
-        [data.map(item => item.cases)]);
+        [data.map(item => item.cases)], this.range);
 
 
   }
@@ -81,16 +79,13 @@ export class OverviewComponent implements OnInit {
         [
           [...dataArray[0], current.intenseBeds],
           [...dataArray[1], current.normalBeds],
-        ], [[], []]));
+        ], [[], []]), this.range);
 
   }
 
   setDateRange($event: any) {
-    console.log(this.rangeDates);
-
-
-
-
+    console.log(this.range);
+    this.range = $event;
 
 
   }
