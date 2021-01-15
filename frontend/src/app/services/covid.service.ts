@@ -32,9 +32,16 @@ export class CovidService {
       .toPromise().then(item => (item as { cases: SexDistribution[] }).cases);
   }
 
-  public getGeneralSituationPerDate(): Promise<GeneralSituationDaily[]> {
-    return this.http.get(this.apiUrl + '/daily/generalsituation/10')
-      .toPromise().then(item => (item as { situations: GeneralSituationDaily[] }).situations);
+
+  public getGeneralSituationPerDate(): Promise<any> {
+    return this.http.get<any>(this.apiUrl + '/daily/generalSituation', {params: {area: ['10']}})
+      .toPromise().then(item => (item as {items: AreaResponse[] }).items[0].data.map(data => ({
+          date: data.date,
+          values: {
+            ...data.values.reduce((obj, curr) => ({...obj, [curr.identifier]: curr.value}), {}),
+          },
+        }
+      )));
   }
 
   public async getHospitalUtilizationPerProvince(): Promise<any>{
@@ -162,6 +169,9 @@ export class CovidService {
       }));
   }
 
-
+  public getProvinceSituationPerDate(): Promise<Area[]> {
+    return this.http.get<any>(this.apiUrl + '/daily/generalSituation', {params: {area: ['10']}})
+      .toPromise().then(item => (item as {items: AreaResponse[] }).items);
+  }
 
 }
