@@ -11,11 +11,7 @@ export class TableComponent implements OnInit {
 
   data: Array<any>;
   provinces: Provinces[]; // saving the enum Provinces
-
-  // calculation of numbers in whole Austria
   totalCases: number;
-  totalHospitalizations: number;
-  totalDeaths: number;
 
   columns: { field: string, label: string }[];
   totals: any;
@@ -46,46 +42,13 @@ export class TableComponent implements OnInit {
       return obj;
     }, {...this.data[0].values});
 
-/*
-    this.calculateTotalCases();
-    this.calculateTotalDeaths();
-    this.calculateTotalHospitalizations();
 
- */
   }
 
 
 
 
-/*
-  calculateTotalCases(): void {
-    let total = 0;
-    for (const i of this.data) {
-      total += i.cases;
-    }
-    this.totalCases = total;
-    }
 
-  calculateTotalDeaths(): void {
-    let total = 0;
-    for (const i of this.data) {
-      total += i.deaths;
-    }
-
-    this.totalDeaths = total;
-  }
-
-  calculateTotalHospitalizations(): void {
-    let total = 0;
-    for (const i of this.data) {
-      total += i.hospitalBedsSum;
-    }
-
-    this.totalHospitalizations = total;
-  }
-
-
-*/
 
 
 }

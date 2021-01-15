@@ -35,10 +35,10 @@ export class CovidService {
 
   public getGeneralSituationPerDate(): Promise<any> {
     return this.http.get<any>(this.apiUrl + '/daily/generalSituation', {params: {area: ['10']}})
-      .toPromise().then(item => (item as {items: AreaResponse[] }).items[0].data.map(item => ({
-          date: item.date,
+      .toPromise().then(item => (item as {items: AreaResponse[] }).items[0].data.map(data => ({
+          date: data.date,
           values: {
-            ...item.values.reduce((obj, curr) => ({...obj, [curr.identifier]: curr.value}), {}),
+            ...data.values.reduce((obj, curr) => ({...obj, [curr.identifier]: curr.value}), {}),
           },
         }
       )));
