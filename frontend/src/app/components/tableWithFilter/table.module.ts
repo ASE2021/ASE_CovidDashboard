@@ -8,6 +8,8 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TableComponent} from './table.component';
 import {ButtonModule} from 'primeng/button';
 import {RippleModule} from 'primeng/ripple';
+import { InputTextModule} from 'primeng/inputtext';
+import { InputNumberModule} from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [TableComponent],
@@ -18,7 +20,9 @@ import {RippleModule} from 'primeng/ripple';
     FormsModule,
     ProgressSpinnerModule,
     ButtonModule,
-    RippleModule
+    RippleModule,
+    InputTextModule,
+    InputNumberModule
   ],
 
   exports: [TableComponent]
