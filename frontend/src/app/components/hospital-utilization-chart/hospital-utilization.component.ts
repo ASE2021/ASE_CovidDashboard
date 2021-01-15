@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
-import {SocketService} from '../../services/socket/socket.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
+import {SocketService} from '../../services/socket/socket.service';
 
 @Component({
   selector: 'app-hospital-utilization',
@@ -11,13 +11,20 @@ import {ChartModelBuilder} from '../../model/chart-model-builder';
 export class HospitalUtilizationComponent implements OnInit {
 
   hospitalUtilizationData: any;
+  options: string[];
 
-  constructor(private covidService: CovidService) {
+  constructor(private covidService: CovidService, private socketService: SocketService) {
 
   }
+
   public ngOnInit(): void {
 
-  this.initializeHospitalUtilisationPerProvinceChart();
+    this.options = ['intense beds', 'normal beds', 'both'];
+
+    this.initializeHospitalUtilisationPerProvinceChart();
+
+    this.socketService.connectAndObserveNewData()
+      .subscribe(() => this.initializeHospitalUtilisationPerProvinceChart());
 
   }
 
@@ -38,7 +45,6 @@ export class HospitalUtilizationComponent implements OnInit {
     console.log(this.hospitalUtilizationData);
     console.log(Object.values(data['10']));
   }
-
 
 
 }

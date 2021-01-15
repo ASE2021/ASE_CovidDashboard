@@ -36,23 +36,13 @@ export class OverviewComponent implements OnInit {
     this.initializeHospitalBedsPerDateChart();
 
 
-    this.socketService.connectToMqtt(
-      () => {
-        this.socketService.observe('new-data')
-          .subscribe((message: IMqttMessage) => {
-            console.log(message.payload.toString());
-            try {
-              if ((JSON.parse(message.payload.toString()) as MessageResponse).update) {
-                this.initializePositiveCasesPerDateChart();
-                this.initializeBasicInformation();
-                this.initializeHospitalBedsPerDateChart();
-                this.initializeSexDistributionCharts();
-              }
-            } catch (e) {
-            }
-          });
-      },
-    );
+    this.socketService.connectAndObserveNewData()
+      .subscribe(() => (
+        this.initializePositiveCasesPerDateChart(),
+        this.initializeBasicInformation(),
+        this.initializeHospitalBedsPerDateChart(),
+        this.initializeSexDistributionCharts()));
+
   }
 
   // TODO: get data from backend (receive object with these (or more) properties)
