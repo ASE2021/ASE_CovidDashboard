@@ -36,6 +36,7 @@ public class DownloadSexAndAgeDistributionData {
         while (line != null) {
             String[] cells = line.split(";");
             String ageInterval = "";
+            int ageIntervalId = 0;
             String area = "";
             int areaId = 0;
             int population = 0;
@@ -46,6 +47,9 @@ public class DownloadSexAndAgeDistributionData {
 
             for (int i = 0; i<attributes.length; i++) {
                 switch (attributes[i]) {
+                    case "AltersgruppeID":
+                        ageIntervalId = Integer.parseInt(cells[i]);
+                        break;
                     case "Altersgruppe":
                         ageInterval = cells[i];
                         break;
@@ -73,7 +77,7 @@ public class DownloadSexAndAgeDistributionData {
                 }
             }
 
-            sexAndAgeDistributionList.add(new SexAndAgeDistribution(ageInterval, area, areaId, population, sex, sumCases, sumCured, sumDead));
+            sexAndAgeDistributionList.add(new SexAndAgeDistribution(ageInterval, ageIntervalId, area, areaId, population, sex, sumCases, sumCured, sumDead));
             line = in.readLine();
         }
         return sexAndAgeDistributionList;
