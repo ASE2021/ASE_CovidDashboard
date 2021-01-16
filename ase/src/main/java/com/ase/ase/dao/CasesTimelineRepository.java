@@ -193,7 +193,7 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
     String getRelativeCasesBy(@Param("areas") Set<Integer> areas);
 
     @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
-            "Select json_build_object(" +
+            "Select distinct on (area_id) json_build_object(" +
                 "'areaId', area_id, " +
                 "'areaName', area, " +
                 "'data', array[" +
@@ -204,30 +204,12 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                 "]) as item " +
             "from cases_timeline " +
             "where area_id in :areas " +
-            "order by time desc, area_id " +
-            "limit 9" +
+            "order by area_id, time desc" +
             ") areaItem", nativeQuery = true)
     String getAreaInfoBy(@Param("areas") Set<Integer> areas);
 
     @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
-            "Select json_build_object(" +
-                "'areaId', area_id, " +
-                "'areaName', area, " +
-                "'data', array[" +
-                    "json_build_object('identifier', 'activeCases', 'value', sum_cases - sum_dead - sum_cured)," +
-                    "json_build_object('identifier', 'sumCases', 'value', sum_cases)," +
-                    "json_build_object('identifier', 'sumCured', 'value', sum_cured)," +
-                    "json_build_object('identifier', 'sumDeaths', 'value', sum_dead)" +
-                "]) as item " +
-            "from cases_timeline " +
-            "where area_id > 10 " +
-            "order by time desc, area_id " +
-            "limit 94" +
-            ") areaItem", nativeQuery = true)
-    String getDistrictsInfoBy();
-
-    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
-            "Select json_build_object(" +
+            "Select distinct on (t.area_id) json_build_object(" +
                 "'areaId', t.area_id, " +
                 "'areaName', t.area, " +
                 "'data', array[" +
@@ -237,9 +219,8 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                     "json_build_object('identifier', 'sumDeaths', 'value', t.sum_dead/(p.population/100000.0))" +
                 "]) as item " +
             "from cases_timeline t , population p " +
-            "where t.area_id > 10 and t.area_id = p.id " +
-            "order by time desc, area_id " +
-            "limit 94" +
+            "where area_id in :areas and t.area_id = p.id " +
+            "order by area_id, time desc" +
             ") areaItem", nativeQuery = true)
-    String getRelativeDistrictsInfoBy();
+    String getRelativeAreaInfoBy(@Param("areas") Set<Integer> areas);
 }
