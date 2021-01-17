@@ -25,9 +25,9 @@ public class AreaController {
     public ResponseEntity getRelativeAreaInfoBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative){
         String o ="";
         if(relative == true){
-            o = casesTimelineRepository.getRelativeAreaInfoBy();
+            o = casesTimelineRepository.getRelativeAreaInfoBy(areas);
         } else {
-            o = casesTimelineRepository.getAreaInfoBy();
+            o = casesTimelineRepository.getAreaInfoBy(areas);
         }
         return ResponseEntity.ok(o);
     }
