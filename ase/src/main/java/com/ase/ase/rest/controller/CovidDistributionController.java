@@ -5,8 +5,9 @@ import com.ase.ase.rest.response.SexDistribution;
 import com.ase.ase.rest.response.SexDistributionPerProvinceDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
+import java.util.*;
 
 @CrossOrigin("*")
 @RestController
