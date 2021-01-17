@@ -34,7 +34,7 @@ public class BasicCovidController {
     @CrossOrigin
     @GetMapping(value = "/hospital/{area-id}", produces = "application/json") 
     @ResponseBody
-    public static ResponseEntity getHospitalisationsBy(@PathVariable("area-id") Set<Integer> areas) {
+    public ResponseEntity getHospitalisationsBy(@PathVariable("area-id") Set<Integer> areas) {
         String g = bedAndTestTimelineRepository.getHospitalisationsBy(areas);
         return ResponseEntity.ok(g);
     }
@@ -42,7 +42,7 @@ public class BasicCovidController {
     @CrossOrigin
     @GetMapping(value = "/new-cases?{area-id}&{relative}", produces = "application/json")
     @ResponseBody
-    public static ResponseEntity getRelativeNewCasesBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
+    public ResponseEntity getRelativeNewCasesBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
       String o ="";
         if(relative == true){
             o = casesTimelineRepository.getRelativeNewCasesBy(areas);
@@ -55,7 +55,7 @@ public class BasicCovidController {
     @CrossOrigin
     @GetMapping(value = "/deaths?{area-id}&{relative}", produces = "application/json")
     @ResponseBody
-    public static ResponseEntity getRelativeNewDeathsBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
+    public ResponseEntity getRelativeNewDeathsBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
       String o ="";
         if(relative == true){
             o = casesTimelineRepository.getRelativeNewDeathsBy(areas);
@@ -68,7 +68,7 @@ public class BasicCovidController {
     @CrossOrigin
     @GetMapping(value = "/tests?{area-id}&{relative}", produces = "application/json")
     @ResponseBody
-    public static ResponseEntity getRelativeNewTestsBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
+    public ResponseEntity getRelativeNewTestsBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
       String o ="";
         if(relative == true){
             o = casesTimelineRepository.getRelativeNewTestsBy(areas);
@@ -81,7 +81,7 @@ public class BasicCovidController {
     @CrossOrigin
     @GetMapping(value = "/cases?{area-id}", produces = "application/json")
     @ResponseBody
-    public static ResponseEntity getCasesBy(@PathVariable("area-id") Set<Integer> areas) {
+    public ResponseEntity getCasesBy(@PathVariable("area-id") Set<Integer> areas) {
         String g = casesTimelineRepository.getCasesBy(areas);
         return ResponseEntity.ok(g);
     }
