@@ -6,6 +6,7 @@ import {MessageResponse} from '../../model/MessageResponse';
 import {IMqttMessage} from 'ngx-mqtt';
 import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
 import {SexDistribution} from '../../model/sex-distribution';
+import {Area} from '../../model/area';
 
 
 @Component({
@@ -70,11 +71,18 @@ export class OverviewComponent implements OnInit {
 
   private async initializeComparisonCasesChart(relative): Promise<void> {
     let data;
+
+    const dummyAreaData: Area[] = [{
+      areaId: 10,
+      areaName: 'Austria'
+    }
+    ];
+
     if (relative) {
-      data = await this.covidService.getComparisonCasesDataRelative();
+      data = await this.covidService.getComparisonCasesDataRelative(dummyAreaData);
 
     } else {
-      data = await this.covidService.getComparisonData();
+      data = await this.covidService.getComparisonData(dummyAreaData);
     }
 
 

@@ -44,18 +44,18 @@ export class CovidService {
   }
 
 
-  public async getComparisonData(): Promise<any> {
+  public async getComparisonData(regions: Area[]): Promise<any> {
     const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
-      {params: {'area-id': ['10', '20']}})
+      {params: {'area-id': regions.map(item => item.areaId.toString())}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items));
     return {...data};
   }
 
 
-  public async getComparisonCasesDataRelative(): Promise<any> {
+  public async getComparisonCasesDataRelative(regions: Area[]): Promise<any> {
     const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
-      {params: {'area-id': ['10'], relative: 'true'}})
+      {params: {'area-id': regions.map(item => item.areaId.toString()), relative: 'true'}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items));
     return {...data};
