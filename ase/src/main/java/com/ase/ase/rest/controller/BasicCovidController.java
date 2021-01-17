@@ -1,6 +1,7 @@
 package com.ase.ase.rest.controller;
 
 import com.ase.ase.dao.CasesTimelineRepository;
+import com.ase.ase.dao.BedAndTestTimelineRepository;
 import com.ase.ase.rest.response.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class BasicCovidController {
 
     @Autowired
     private CasesTimelineRepository casesTimelineRepository;
+    private BedAndTestTimelineRepository bedAndTestTimelineRepository;
 
     @CrossOrigin
     @GetMapping(value = "/{province-id}", produces = "application/json")
@@ -29,42 +31,67 @@ public class BasicCovidController {
                         casesTimelineRepository.findAllBy(provinceId)));
     }
 
-
     @CrossOrigin
-    @GetMapping(value = "/hospital/{province-id}", produces = "application/json")
+    @GetMapping(value = "/hospital/{area-id}", produces = "application/json") 
     @ResponseBody
-    public static ResponseEntity<HospitalSituationPerDateDto> listHospitalCasesFor(@PathVariable("province-id") int provinceId) {
-        String s = "2020-02-01";
-        String e = "2020-12-31";
-        LocalDate start = LocalDate.parse(s);
-        LocalDate end = LocalDate.parse(e);
-        List<LocalDate> totalDates = new ArrayList<>();
-        while (!start.isAfter(end)) {
-            totalDates.add(start);
-            start = start.plusDays(1);
-        }
-        return ResponseEntity.ok(
-                new HospitalSituationPerDateDto(
-                        provinceId,
-                        totalDates
-                                .stream()
-                                .map(item -> new HospitalSituationPerDate(
-                                        item.toString(),
-                                        (int) (Math.random() * 100),
-                                        (int) (Math.random() * 100))).collect(Collectors.toList())));
-
+    public static ResponseEntity getHospitalisationsBy(@PathVariable("area-id") Set<Integer> areas) {
+        String g = bedAndTestTimelineRepository.getHospitalisationsBy(areas);
+        return ResponseEntity.ok(g);
     }
 
     @CrossOrigin
-    @GetMapping(value = "/generalsituation/{province-id}", produces = "application/json")
+    @GetMapping(value = "/new-cases?{area-id}&{relative}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<GeneralSituationPerProvinceDto> listNewTableDataFor(@PathVariable("province-id") int provinceId) {
-        return ResponseEntity.ok(
-                new GeneralSituationPerProvinceDto(provinceId, Arrays.asList(
-                        new GeneralSituationPerDate("10.10.2020", 12, 10, 24),
-                        new GeneralSituationPerDate("10.10.2020", 12, 12, 24))));
+    public static ResponseEntity getRelativeNewCasesBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
+      String o ="";
+        if(relative == true){
+            o = casesTimelineRepository.getRelativeNewCasesBy(areas);
+        } else {
+            o = casesTimelineRepository.getNewCasesBy(areas);
+        }
+        return ResponseEntity.ok(o);
+    }
 
+    @CrossOrigin
+    @GetMapping(value = "/deaths?{area-id}&{relative}", produces = "application/json")
+    @ResponseBody
+    public static ResponseEntity getRelativeNewDeathsBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
+      String o ="";
+        if(relative == true){
+            o = casesTimelineRepository.getRelativeNewDeathsBy(areas);
+        } else {
+            o = casesTimelineRepository.getNewDeathsBy(areas);
+        }
+        return ResponseEntity.ok(o);
+    }
 
+    @CrossOrigin
+    @GetMapping(value = "/tests?{area-id}&{relative}", produces = "application/json")
+    @ResponseBody
+    public static ResponseEntity getRelativeNewTestsBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
+      String o ="";
+        if(relative == true){
+            o = casesTimelineRepository.getRelativeNewTestsBy(areas);
+        } else {
+            o = casesTimelineRepository.getNewTestsBy(areas);
+        }
+        return ResponseEntity.ok(o);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/cases?{area-id}", produces = "application/json")
+    @ResponseBody
+    public static ResponseEntity getCasesBy(@PathVariable("area-id") Set<Integer> areas) {
+        String g = casesTimelineRepository.getCasesBy(areas);
+        return ResponseEntity.ok(g);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/generalSituation?{area-id}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity getGeneralSituationBy(@PathVariable("area-id") Set<Integer> areas) {  
+        String g = casesTimelineRepository.getGeneralSituationBy(areas);
+        return ResponseEntity.ok(g);
     }
 
 }
