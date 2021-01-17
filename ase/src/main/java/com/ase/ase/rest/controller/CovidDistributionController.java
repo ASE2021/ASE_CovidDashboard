@@ -1,5 +1,6 @@
 package com.ase.ase.rest.controller;
 
+import com.ase.ase.dao.SexAndAgeDistributionRepository;
 import com.ase.ase.rest.response.SexDistribution;
 import com.ase.ase.rest.response.SexDistributionPerProvinceDto;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +13,31 @@ import java.util.Arrays;
 @RequestMapping("/distribution")
 public class CovidDistributionController {
 
+    @Autowired
+    private SexAndAgeDistributionRepository sexAndAgeDistributionRepository;
+  
     @CrossOrigin
-    @GetMapping(value = "/sex/{province-id}", produces = "application/json")
+    @GetMapping(value = "/sex?{area-id}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<SexDistributionPerProvinceDto> listSexDistributionFor(@PathVariable("province-id") int provinceId) {
-        return ResponseEntity.ok(
-                new SexDistributionPerProvinceDto(provinceId, Arrays.asList(
-                        new SexDistribution(100, 150, 4, 2)
-                ))
-        );
+    public ResponseEntity getSexDistributionBy(@PathVariable("area-id") Set<Integer> areas) {
+        String g = sexAndAgeDistributionRepository.getSexDistributionBy(areas);
+        return ResponseEntity.ok(g);
     }
+    
+    @CrossOrigin
+    @GetMapping(value = "/age-sex/cases?{area-id}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity getSexAndAgeCaseDistributionBy(@PathVariable("area-id") Set<Integer> areas) {
+            String g = sexAndAgeDistributionRepository.getSexAndAgeCaseDistributionBy(areas);
+        return ResponseEntity.ok(g);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/age-sex/deaths?{area-id}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity getsexAndAgeDeathDistributionBy(@PathVariable("area-id") Set<Integer> areas) {
+        String g = sexAndAgeDistributionRepository.getSexAndAgeDeathDistributionBy(areas);
+        return ResponseEntity.ok(g);
+    }
+
 }
