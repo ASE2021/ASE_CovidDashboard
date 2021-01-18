@@ -25,7 +25,6 @@ import {MqttModule} from 'ngx-mqtt';
 import {TableWithFilterModule} from './components/tableWithFilter/table.module';
 import {FakeBackendInterceptor} from './interceptors/fake-backend.interceptor';
 
-
 @NgModule({
   declarations: [
     AppComponent,
