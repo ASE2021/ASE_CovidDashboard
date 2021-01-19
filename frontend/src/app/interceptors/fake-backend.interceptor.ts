@@ -108,6 +108,36 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         status: 200,
       }));
     }
+
+    if (request.url.includes('/distribution/age-sex/cases')) {
+
+      return of(new HttpResponse({
+        body: {
+          items: request.params.getAll('area-id').map(area =>
+            ({
+              areaId: area,
+              areaName: 'A-' + area,
+              data: getDatesBetweenDates(new Date(2020, 1, 1), new Date()).map((date, idx) =>
+                ({
+                  ageIntervalId: '1',
+                  ageInterval: '< 5'
+                  ,
+                  values: [
+                    {
+                      identifier: 'maleCases',
+                      value: parseInt(area, 10) + idx * (0.5 + Math.random()),
+                    },
+                    {
+                      identifier: 'femaleCases',
+                      value: (100 - parseInt(area, 10) + 2000 + idx) * (0.95 + (Math.random() / 10)),
+                    }
+                  ],
+                })),
+            })),
+        },
+        status: 200,
+      }));
+    }
     return next.handle(request);
   }
 }

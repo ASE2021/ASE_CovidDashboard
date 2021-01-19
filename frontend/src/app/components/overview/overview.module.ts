@@ -19,6 +19,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TableWithFilterModule} from '../tableWithFilter/table.module';
 import {CalendarModule} from 'primeng/calendar';
 import {CompareRegionsChartModule} from '../comparison-chart/compare-regions-chart.module';
+import {AgeSexDistributionChartModule} from '../age-sex-distribution-chart/age-sex-distribution-chart.module';
 
 @NgModule({
   declarations: [OverviewComponent],
@@ -42,6 +43,7 @@ import {CompareRegionsChartModule} from '../comparison-chart/compare-regions-cha
     TableWithFilterModule,
     CalendarModule,
     CompareRegionsChartModule,
+    AgeSexDistributionChartModule,
   ],
 
   exports: [OverviewComponent]
