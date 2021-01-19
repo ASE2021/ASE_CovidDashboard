@@ -51,5 +51,8 @@ export class AgeSexDistributionChartComponent implements OnInit {
     console.log(Object.values(data['10']));
   }
 
+  selectionChanged(): void {
+    this.initializeAgeSexDistributionChart();
+  }
 }
 
