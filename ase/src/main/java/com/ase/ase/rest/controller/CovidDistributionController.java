@@ -18,25 +18,25 @@ public class CovidDistributionController {
     private SexAndAgeDistributionRepository sexAndAgeDistributionRepository;
   
     @CrossOrigin
-    @GetMapping(value = "/sex?{area-id}", produces = "application/json")
+    @GetMapping(value = "/sex?{area}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getSexDistributionBy(@PathVariable("area-id") Set<Integer> areas) {
+    public ResponseEntity getSexDistributionBy(@RequestParam("area") Set<Integer> areas) {
         String g = sexAndAgeDistributionRepository.getSexDistributionBy(areas);
         return ResponseEntity.ok(g);
     }
     
     @CrossOrigin
-    @GetMapping(value = "/age-sex/cases?{area-id}", produces = "application/json")
+    @GetMapping(value = "/age-sex/cases?{area}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getSexAndAgeCaseDistributionBy(@PathVariable("area-id") Set<Integer> areas) {
+    public ResponseEntity getSexAndAgeCaseDistributionBy(@RequestParam("area") Set<Integer> areas) {
             String g = sexAndAgeDistributionRepository.getSexAndAgeCaseDistributionBy(areas);
         return ResponseEntity.ok(g);
     }
 
     @CrossOrigin
-    @GetMapping(value = "/age-sex/deaths?{area-id}", produces = "application/json")
+    @GetMapping(value = "/age-sex/deaths?{area}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getsexAndAgeDeathDistributionBy(@PathVariable("area-id") Set<Integer> areas) {
+    public ResponseEntity getsexAndAgeDeathDistributionBy(@RequestParam("area") Set<Integer> areas) {
         String g = sexAndAgeDistributionRepository.getSexAndAgeDeathDistributionBy(areas);
         return ResponseEntity.ok(g);
     }
