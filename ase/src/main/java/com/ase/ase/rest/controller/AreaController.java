@@ -20,9 +20,9 @@ public class AreaController {
     private CasesTimelineRepository casesTimelineRepository;
 
     @CrossOrigin
-    @GetMapping(value = "?{area-id}&{relative}", produces = "application/json")
+    @GetMapping(value = "?{area}&{relative}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getRelativeAreaInfoBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative){
+    public ResponseEntity getRelativeAreaInfoBy(@RequestParam("area") Set<Integer> areas, @RequestParam("relative") boolean relative){
         String o ="";
         if(relative == true){
             o = casesTimelineRepository.getRelativeAreaInfoBy(areas);
