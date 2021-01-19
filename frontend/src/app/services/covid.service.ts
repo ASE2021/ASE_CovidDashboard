@@ -47,7 +47,7 @@ export class CovidService {
     const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/distribution/age-sex/cases',
       {params: {'area-id': regions.map(item => item.areaId.toString())}})
       .toPromise()
-      .then(res => (res as { items: AreaResponse[] }).items));
+      .then(res => (res as { items: AreaResponse[] }).items), 'ageInterval');
     return {...data};
   }
 
@@ -76,13 +76,13 @@ export class CovidService {
     return {...data, ...newData};
   }
 
-  private mapResponseDataToObject(responseData: AreaResponse[]): any {
-    const obj = {dates: []};
+  private mapResponseDataToObject(responseData: AreaResponse[], fieldname = 'date'): any {
+    const obj = {labels: []};
     responseData.forEach((item, idx) => {
       obj[item.areaId] = item.data.reduce((d, c) => {
         c.values.forEach(e => d[e.identifier] = [...d[e.identifier] || [], e.value]);
         if (idx === 0) {
-          obj.dates.push(c.date);
+          obj.labels.push(c[fieldname]);
         }
         return d;
       }, {});
@@ -90,9 +90,9 @@ export class CovidService {
     return obj;
   }
 
-  public buildCurrentChartData(loadedData: { dates: string[] }, selectedRegions: any[], selectedElements: any[]):
+  public buildCurrentChartData(loadedData: { labels: string[] }, selectedRegions: any[], selectedElements: any[]):
     { colors: string[][], names: string[], labels: string[], values: number[][] } {
-    const dataToShow = {dates: loadedData.dates};
+    const dataToShow = {dates: loadedData.labels};
 
     selectedRegions.forEach(item => dataToShow[item.areaId] = loadedData[item.areaId]);
 
@@ -113,7 +113,7 @@ export class CovidService {
     chartData.names = selectedRegions.map(item => item.areaName)
       .reduce((p, c) => [...p, ...selectedElements
         .map(i => c + ' ' + i.text)], []);
-    chartData.labels = loadedData.dates;
+    chartData.labels = loadedData.labels;
     chartData.values = selectedRegions
       .reduce((arr, reg) => [...arr, ...selectedElements
         .map(item => dataToShow[reg.areaId][item.id])], []);

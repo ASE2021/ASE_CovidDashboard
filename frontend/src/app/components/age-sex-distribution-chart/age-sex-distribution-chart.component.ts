@@ -40,10 +40,11 @@ export class AgeSexDistributionChartComponent implements OnInit {
             + item.substring(1, item.length)
               .replace(/([A-Z])/g, ' $1')
               .trim()
-              .toLowerCase()), data.ageInterval,
+              .toLowerCase()), data.labels,
         Object.values(data['10']));
+    console.log(data);
     console.log(this.ageSexDistributionData);
-    console.log(data.ageInterval);
+    console.log(data.labels);
     console.log(Object.values(data['10']));
   }
 

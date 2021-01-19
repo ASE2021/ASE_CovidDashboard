@@ -125,11 +125,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                   values: [
                     {
                       identifier: 'maleCases',
-                      value: parseInt(area, 10) + idx * (0.5 + Math.random()),
+                      value: (0.5 + Math.random()),
                     },
                     {
                       identifier: 'femaleCases',
-                      value: (100 - parseInt(area, 10) + 2000 + idx) * (0.95 + (Math.random() / 10)),
+                      value:(0.5 + Math.random()),
                     }
                   ],
                 })),
