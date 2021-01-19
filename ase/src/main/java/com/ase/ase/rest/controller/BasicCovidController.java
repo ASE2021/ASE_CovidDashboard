@@ -32,17 +32,17 @@ public class BasicCovidController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/hospital/{area-id}", produces = "application/json") 
+    @GetMapping(value = "/hospital/{area}", produces = "application/json") 
     @ResponseBody
-    public ResponseEntity getHospitalisationsBy(@PathVariable("area-id") Set<Integer> areas) {
+    public ResponseEntity getHospitalisationsBy(@RequestParam("area") Set<Integer> areas) {
         String g = bedAndTestTimelineRepository.getHospitalisationsBy(areas);
         return ResponseEntity.ok(g);
     }
 
     @CrossOrigin
-    @GetMapping(value = "/new-cases?{area-id}&{relative}", produces = "application/json")
+    @GetMapping(value = "/new-cases?{area}&{relative}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getRelativeNewCasesBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
+    public ResponseEntity getRelativeNewCasesBy(@RequestParam("area") Set<Integer> areas, @RequestParam("relative") boolean relative) {
       String o ="";
         if(relative == true){
             o = casesTimelineRepository.getRelativeNewCasesBy(areas);
@@ -53,9 +53,9 @@ public class BasicCovidController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/deaths?{area-id}&{relative}", produces = "application/json")
+    @GetMapping(value = "/deaths?{area}&{relative}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getRelativeNewDeathsBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
+    public ResponseEntity getRelativeNewDeathsBy(@RequestParam("area") Set<Integer> areas, @RequestParam("relative") boolean relative) {
       String o ="";
         if(relative == true){
             o = casesTimelineRepository.getRelativeNewDeathsBy(areas);
@@ -66,9 +66,9 @@ public class BasicCovidController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/tests?{area-id}&{relative}", produces = "application/json")
+    @GetMapping(value = "/tests?{area}&{relative}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getRelativeNewTestsBy(@PathVariable("area-id") Set<Integer> areas, @PathVariable("relative") boolean relative) {
+    public ResponseEntity getRelativeNewTestsBy(@RequestParam("area") Set<Integer> areas, @RequestParam("relative") boolean relative) {
       String o ="";
         if(relative == true){
             o = casesTimelineRepository.getRelativeNewTestsBy(areas);
@@ -79,17 +79,17 @@ public class BasicCovidController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/cases?{area-id}", produces = "application/json")
+    @GetMapping(value = "/cases?{area}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getCasesBy(@PathVariable("area-id") Set<Integer> areas) {
+    public ResponseEntity getCasesBy(@RequestParam("area") Set<Integer> areas) {
         String g = casesTimelineRepository.getCasesBy(areas);
         return ResponseEntity.ok(g);
     }
 
     @CrossOrigin
-    @GetMapping(value = "/generalSituation?{area-id}", produces = "application/json")
+    @GetMapping(value = "/generalSituation?{area}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getGeneralSituationBy(@PathVariable("area-id") Set<Integer> areas) {  
+    public ResponseEntity getGeneralSituationBy(@RequestParam("area") Set<Integer> areas) {  
         String g = casesTimelineRepository.getGeneralSituationBy(areas);
         return ResponseEntity.ok(g);
     }
