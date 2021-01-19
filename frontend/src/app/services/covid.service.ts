@@ -1,11 +1,11 @@
 import {Inject, Injectable} from '@angular/core';
 import {CovidCasesDaily} from '../model/covid-cases-daily';
 import {HttpClient} from '@angular/common/http';
-import {SexDistribution} from '../model/sex-distribution';
 import {HospitalBedsDaily} from '../model/hospital-beds-daily';
 import {Area} from '../model/area';
 import {AreaResponse} from '../model/area-response';
 import {TreeNode} from 'primeng/api';
+import {SexDistribution} from '../model/sex-distribution';
 
 
 @Injectable({
@@ -44,8 +44,6 @@ export class CovidService {
   }
 
   public async getAgeSexDistributionData(regions: Area[], selectedData): Promise<any> {
-    console.log(selectedData);
-
     let postfix = '';
     if (selectedData === 'cured cases'){
       postfix = 'cured';
@@ -59,6 +57,23 @@ export class CovidService {
       {params: {'area-id': regions.map(item => item.areaId.toString())}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items), 'ageInterval');
+    return {...data};
+  }
+
+  public async getComparisonData(regions: Area[]): Promise<any> {
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
+      {params: {'area-id': regions.map(item => item.areaId.toString())}})
+      .toPromise()
+      .then(res => (res as { items: AreaResponse[] }).items));
+    return {...data};
+  }
+
+
+  public async getComparisonCasesDataRelative(regions: Area[]): Promise<any> {
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
+      {params: {'area-id': regions.map(item => item.areaId.toString()), relative: 'true'}})
+      .toPromise()
+      .then(res => (res as { items: AreaResponse[] }).items));
     return {...data};
   }
 
