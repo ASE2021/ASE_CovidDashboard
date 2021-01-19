@@ -117,10 +117,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             ({
               areaId: area,
               areaName: 'A-' + area,
-              data: getDatesBetweenDates(new Date(2020, 1, 1), new Date()).map((date, idx) =>
+              data: getAgeRanges.map((range, idx) =>
                 ({
-                  ageIntervalId: '1',
-                  ageInterval: '< 5'
+                  ageIntervalId: idx,
+                  ageInterval: range
                   ,
                   values: [
                     {
@@ -151,3 +151,5 @@ const getDatesBetweenDates = (startDate, endDate) => {
   }
   return dates;
 };
+
+const getAgeRanges = ['<5', '5-18', '18-25', '25-45', '45-60', '>60'];

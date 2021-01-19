@@ -43,6 +43,13 @@ export class CovidService {
       )));
   }
 
+  public async getAgeSexDistributionData(regions: Area[]): Promise<any> {
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/distribution/age-sex/cases',
+      {params: {'area-id': regions.map(item => item.areaId.toString())}})
+      .toPromise()
+      .then(res => (res as { items: AreaResponse[] }).items));
+    return {...data};
+  }
 
   public getProvinces(): Promise<Area[]> {
     return this.http.get<any>(this.apiUrl + '/provinces')
@@ -164,14 +171,6 @@ export class CovidService {
   public getProvinceSituationPerDate(): Promise<Area[]> {
     return this.http.get<any>(this.apiUrl + '/daily/generalSituation', {params: {area: ['10']}})
       .toPromise().then(item => (item as { items: AreaResponse[] }).items);
-  }
-
-  public async getAgeSexDistributionData(regions: Area[]): Promise<any> {
-    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/distribution/age-sex/cases',
-      {params: {'area-id': regions.map(item => item.areaId.toString())}})
-      .toPromise()
-      .then(res => (res as { items: AreaResponse[] }).items));
-    return {...data};
   }
 
 }

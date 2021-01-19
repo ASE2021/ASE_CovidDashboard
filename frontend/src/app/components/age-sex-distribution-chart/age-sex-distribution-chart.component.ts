@@ -19,6 +19,8 @@ export class AgeSexDistributionChartComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.initializeAgeSexDistributionChart();
+
     this.socketService.connectAndObserveNewData()
       .subscribe(() => this.initializeAgeSexDistributionChart());
   }
@@ -30,15 +32,19 @@ export class AgeSexDistributionChartComponent implements OnInit {
     }
     ];
 
-    let data = this.covidService.getAgeSexDistributionData(dummyAreaData);
+    let data = await this.covidService.getAgeSexDistributionData(dummyAreaData);
     this.ageSexDistributionData = new ChartModelBuilder()
       .useBarChartStyle()
-      .buildBasicChartModel(['Distribution of COVID cases based on age and sex'],
-        data.map(item => item.ageInterval),
-        data.reduce((dataArray, current) =>
-          [
-            [...dataArray[0], current.femaleCases, current.maleCases],
-          ], [[], []]));
+      .buildBasicChartModel(Object.keys(data['10'])
+          .map(item => item[0].toUpperCase()
+            + item.substring(1, item.length)
+              .replace(/([A-Z])/g, ' $1')
+              .trim()
+              .toLowerCase()), data.ageInterval,
+        Object.values(data['10']));
+    console.log(this.ageSexDistributionData);
+    console.log(data.ageInterval);
+    console.log(Object.values(data['10']));
   }
 
 
