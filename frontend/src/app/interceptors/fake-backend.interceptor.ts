@@ -129,7 +129,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     },
                     {
                       identifier: 'femaleCases',
-                      value:(0.5 + Math.random()),
+                      value: (0.5 + Math.random()),
                     }
                   ],
                 })),
@@ -138,6 +138,67 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         status: 200,
       }));
     }
+
+    if (request.url.includes('/distribution/age-sex/cured')) {
+
+      return of(new HttpResponse({
+        body: {
+          items: request.params.getAll('area-id').map(area =>
+            ({
+              areaId: area,
+              areaName: 'A-' + area,
+              data: getAgeRanges.map((range, idx) =>
+                ({
+                  ageIntervalId: idx,
+                  ageInterval: range
+                  ,
+                  values: [
+                    {
+                      identifier: 'maleCases',
+                      value: (0.5 + Math.random()),
+                    },
+                    {
+                      identifier: 'femaleCases',
+                      value: (0.5 + Math.random()),
+                    }
+                  ],
+                })),
+            })),
+        },
+        status: 200,
+      }));
+    }
+
+    if (request.url.includes('/distribution/age-sex/dead')) {
+
+      return of(new HttpResponse({
+        body: {
+          items: request.params.getAll('area-id').map(area =>
+            ({
+              areaId: area,
+              areaName: 'A-' + area,
+              data: getAgeRanges.map((range, idx) =>
+                ({
+                  ageIntervalId: idx,
+                  ageInterval: range
+                  ,
+                  values: [
+                    {
+                      identifier: 'maleCases',
+                      value: (0.5 + Math.random()),
+                    },
+                    {
+                      identifier: 'femaleCases',
+                      value: (0.5 + Math.random()),
+                    }
+                  ],
+                })),
+            })),
+        },
+        status: 200,
+      }));
+    }
+
     return next.handle(request);
   }
 }

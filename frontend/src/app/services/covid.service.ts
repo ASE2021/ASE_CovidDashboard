@@ -43,8 +43,19 @@ export class CovidService {
       )));
   }
 
-  public async getAgeSexDistributionData(regions: Area[]): Promise<any> {
-    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/distribution/age-sex/cases',
+  public async getAgeSexDistributionData(regions: Area[], selectedData): Promise<any> {
+    console.log(selectedData);
+
+    let postfix = '';
+    if (selectedData === 'cured cases'){
+      postfix = 'cured';
+    }else if (selectedData === 'dead cases'){
+      postfix = 'dead';
+    }else{
+      postfix = 'cases';
+    }
+
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/distribution/age-sex/' + postfix,
       {params: {'area-id': regions.map(item => item.areaId.toString())}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items), 'ageInterval');

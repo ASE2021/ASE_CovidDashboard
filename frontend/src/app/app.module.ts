@@ -19,6 +19,7 @@ import {ContextMenuModule} from 'primeng/contextmenu';
 import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from 'primeng/button';
 import {DropdownModule} from 'primeng/dropdown';
+import {RadioButtonModule} from 'primeng/radiobutton';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
 import {MqttModule} from 'ngx-mqtt';
@@ -51,6 +52,7 @@ import {FakeBackendInterceptor} from './interceptors/fake-backend.interceptor';
     ToastModule,
     TableWithFilterModule,
     ProgressBarModule,
+    RadioButtonModule,
     MqttModule.forRoot({
       connectOnCreate: false,
 

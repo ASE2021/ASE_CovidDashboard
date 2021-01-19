@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {CovidService} from "../../services/covid.service";
-import {SocketService} from "../../services/socket/socket.service";
+import {CovidService} from '../../services/covid.service';
+import {SocketService} from '../../services/socket/socket.service';
 import {Area} from '../../model/area';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
+
 
 @Component({
   selector: 'app-age-sex-distribution-chart',
@@ -12,6 +13,7 @@ import {ChartModelBuilder} from '../../model/chart-model-builder';
 export class AgeSexDistributionChartComponent implements OnInit {
 
   ageSexDistributionData: any;
+  selectedValue: string;
 
   constructor(private readonly covidService: CovidService,
               private readonly socketService: SocketService) {
@@ -19,6 +21,7 @@ export class AgeSexDistributionChartComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.selectedValue = 'cases';
     this.initializeAgeSexDistributionChart();
 
     this.socketService.connectAndObserveNewData()
@@ -32,7 +35,7 @@ export class AgeSexDistributionChartComponent implements OnInit {
     }
     ];
 
-    let data = await this.covidService.getAgeSexDistributionData(dummyAreaData);
+    const data = await this.covidService.getAgeSexDistributionData(dummyAreaData, this.selectedValue);
     this.ageSexDistributionData = new ChartModelBuilder()
       .useBarChartStyle()
       .buildBasicChartModel(Object.keys(data['10'])
@@ -48,5 +51,5 @@ export class AgeSexDistributionChartComponent implements OnInit {
     console.log(Object.values(data['10']));
   }
 
-
 }
+

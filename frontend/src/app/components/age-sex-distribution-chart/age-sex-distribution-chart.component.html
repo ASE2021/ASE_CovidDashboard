@@ -1,8 +1,19 @@
 <div class="p-col-12">
   <div class="p-grid">
-    <div class="p-col-5 p-offset-3">
+    <div class="p-col-6 p-offset-2">
       <h3>Active Cases Age and Sex Distribution</h3>
       <p-chart type="bar" [data]="ageSexDistributionData"></p-chart>
+    </div>
+    <div class="p-d-flex p-flex-column">
+        <div class="p-mb-2">
+          <p-radioButton name="selection" value="cases" label="Show Cases" [(ngModel)]="selectedValue" (onClick)="initializeAgeSexDistributionChart()"></p-radioButton>
+        </div>
+        <div class="p-mb-2">
+          <p-radioButton name="selection" value="cured cases" label="Show Cured Cases" [(ngModel)]="selectedValue" (onClick)="initializeAgeSexDistributionChart()"></p-radioButton>
+        </div>
+        <div class="p-mb-2">
+          <p-radioButton name="selection" value="dead cases" label="Show Dead Cases" [(ngModel)]="selectedValue" (onClick)="initializeAgeSexDistributionChart()"></p-radioButton>
+        </div>
     </div>
   </div>
 </div>
