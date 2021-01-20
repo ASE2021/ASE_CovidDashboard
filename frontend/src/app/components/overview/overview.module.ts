@@ -20,6 +20,8 @@ import {TableWithFilterModule} from '../tableWithFilter/table.module';
 import {CalendarModule} from 'primeng/calendar';
 import {CalendarPickerModule} from '../calendarPicker/calendarPicker.module';
 
+import {CompareRegionsChartModule} from '../comparison-chart/compare-regions-chart.module';
+
 @NgModule({
   declarations: [OverviewComponent],
   imports: [
@@ -41,7 +43,8 @@ import {CalendarPickerModule} from '../calendarPicker/calendarPicker.module';
     ProgressSpinnerModule,
     TableWithFilterModule,
     CalendarModule,
-    CalendarPickerModule
+    CalendarPickerModule,
+    CompareRegionsChartModule,
   ],
 
   exports: [OverviewComponent]
