@@ -103,7 +103,7 @@ export class OverviewComponent implements OnInit {
             + item.substring(1, item.length)
               .replace(/([A-Z])/g, ' $1')
               .trim()
-              .toLowerCase()), data.dates,
+              .toLowerCase()), data.labels,
         Object.values(data['10']));
     console.log(this.comparison);
     console.log(Object.values(data['10']));

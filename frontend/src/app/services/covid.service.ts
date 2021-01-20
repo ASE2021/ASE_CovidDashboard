@@ -54,7 +54,7 @@ export class CovidService {
     }
 
     const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/distribution/age-sex/' + postfix,
-      {params: {'area-id': regions.map(item => item.areaId.toString())}})
+      {params: {area: regions.map(item => item.areaId.toString())}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items), 'ageInterval');
     return {...data};
@@ -62,7 +62,7 @@ export class CovidService {
 
   public async getComparisonData(regions: Area[]): Promise<any> {
     const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
-      {params: {'area-id': regions.map(item => item.areaId.toString())}})
+      {params: {area: regions.map(item => item.areaId.toString())}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items));
     return {...data};
@@ -71,7 +71,7 @@ export class CovidService {
 
   public async getComparisonCasesDataRelative(regions: Area[]): Promise<any> {
     const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
-      {params: {'area-id': regions.map(item => item.areaId.toString()), relative: 'true'}})
+      {params: {area: regions.map(item => item.areaId.toString()), relative: 'true'}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items));
     return {...data};
@@ -95,7 +95,7 @@ export class CovidService {
     let newData = {};
     if (casesValuesToLoad.length > 0) {
       newData = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/daily/cases',
-        {params: {'area-id': casesValuesToLoad.map(item => item.areaId.toString())}})
+        {params: {area: casesValuesToLoad.map(item => item.areaId.toString())}})
         .toPromise()
         .then(res => (res as { items: AreaResponse[] }).items));
     }

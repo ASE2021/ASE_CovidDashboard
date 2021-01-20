@@ -68,7 +68,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
       return of(new HttpResponse({
         body: {
-          items: request.params.getAll('area-id').map(area =>
+          items: request.params.getAll('area').map(area =>
             ({
               areaId: area,
               areaName: 'A-' + area,
@@ -113,7 +113,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
       return of(new HttpResponse({
         body: {
-          items: request.params.getAll('area-id').map(area =>
+          items: request.params.getAll('area').map(area =>
             ({
               areaId: area,
               areaName: 'A-' + area,
@@ -143,7 +143,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
       return of(new HttpResponse({
         body: {
-          items: request.params.getAll('area-id').map(area =>
+          items: request.params.getAll('area').map(area =>
             ({
               areaId: area,
               areaName: 'A-' + area,
@@ -173,7 +173,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
       return of(new HttpResponse({
         body: {
-          items: request.params.getAll('area-id').map(area =>
+          items: request.params.getAll('area').map(area =>
             ({
               areaId: area,
               areaName: 'A-' + area,
@@ -205,7 +205,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         return of(new HttpResponse({
           body: {
-            items: request.params.getAll('area-id').map(area =>
+            items: request.params.getAll('area').map(area =>
               ({
                 areaId: area,
                 areaName: 'A-' + area,
@@ -237,7 +237,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       } else {
         return of(new HttpResponse({
           body: {
-            items: request.params.getAll('area-id').map(area =>
+            items: request.params.getAll('area').map(area =>
               ({
                 areaId: area,
                 areaName: 'A-' + area,
