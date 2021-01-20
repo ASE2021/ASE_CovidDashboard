@@ -19,7 +19,9 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TableWithFilterModule} from '../tableWithFilter/table.module';
 import {CalendarModule} from 'primeng/calendar';
 import {CompareRegionsChartModule} from '../comparison-chart/compare-regions-chart.module';
+import {AgeSexDistributionChartModule} from '../age-sex-distribution-chart/age-sex-distribution-chart.module';
 import {CheckboxModule} from 'primeng/checkbox';
+
 
 @NgModule({
   declarations: [OverviewComponent],
@@ -43,6 +45,7 @@ import {CheckboxModule} from 'primeng/checkbox';
     TableWithFilterModule,
     CalendarModule,
     CompareRegionsChartModule,
+    AgeSexDistributionChartModule,
     CheckboxModule,
   ],
 

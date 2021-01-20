@@ -21,8 +21,8 @@ export class CompareRegionsChartComponent implements OnInit {
 
   private areasToShowInChart: any[]; // All areas which should be shown (selectedAreas + selectedDistricts)
   private loadedData: {
-    dates: string[]
-  } = {dates: []};
+    labels: string[]
+  } = {labels: []};
   private currentChartData: { colors: string[][], names: string[], labels: string[], values: number[][] } = {
     values: [],
     colors: [],

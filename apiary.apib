@@ -355,6 +355,38 @@ Polls is a simple API allowing consumers to view polls and vote in them.
         }        
         
         
+## Questions Collection [/distribution/age-sex/cured?area=[1,2,3]]
+
+
+### Age-Sex Comparison [GET]
+
++ Response 200 (application/json)
+        {
+            "items": [
+                {
+                  "areaId": "1",
+                  "areaName": "Burgenland",
+                  "data": [
+                       {
+                            "ageIntervalId": 1,
+                            "ageInterval": "< 5",
+                            "values": [
+                                {
+                                     "identifier": "maleCured",
+                                     "value": 100
+                                },
+                                {
+                                     "identifier": "femaleCured",
+                                     "value": 90
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+
+
 
 ## Comparison [/hospital-bed-utilizations?area=[1,2,3]&type=0]
 
