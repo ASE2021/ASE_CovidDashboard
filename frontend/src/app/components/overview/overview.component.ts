@@ -2,14 +2,17 @@ import {Component, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
-import {SexDistribution} from '../../model/sex-distribution';
 import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
+import {SexDistribution} from '../../model/sex-distribution';
+import {Area} from '../../model/area';
+
 
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss'],
 })
+
 export class OverviewComponent implements OnInit {
 
   positiveCasesPerDateData: any;
@@ -20,7 +23,10 @@ export class OverviewComponent implements OnInit {
   activeCases: number;
   numberOfCases: number;
   deaths: number;
+  comparison: any;
   province: any;
+  relative = false;
+  options: any;
 
 
   constructor(private covidService: CovidService, private socketService: SocketService) {
@@ -28,11 +34,11 @@ export class OverviewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.initializeComparisonCasesChart(this.relative);
     this.initializePositiveCasesPerDateChart();
     this.initializeBasicInformation();
     this.initializeSexDistributionCharts();
     this.initializeHospitalBedsPerDateChart();
-
 
     this.socketService.connectAndObserveNewData()
       .subscribe(() => (
@@ -40,7 +46,6 @@ export class OverviewComponent implements OnInit {
         this.initializeBasicInformation(),
         this.initializeHospitalBedsPerDateChart(),
         this.initializeSexDistributionCharts()));
-
   }
 
   // TODO: get data from backend (receive object with these (or more) properties)
@@ -48,6 +53,46 @@ export class OverviewComponent implements OnInit {
     this.activeCases = 41000;
     this.numberOfCases = 200000;
     this.deaths = 2000;
+  }
+
+  private async initializeComparisonCasesChart(relative): Promise<void> {
+    let data;
+
+    const dummyAreaData: Area[] = [{
+      areaId: 10,
+      areaName: 'Austria'
+    }
+    ];
+
+    if (relative) {
+      data = await this.covidService.getComparisonCasesDataRelative(dummyAreaData);
+
+    } else {
+      data = await this.covidService.getComparisonData(dummyAreaData);
+    }
+
+
+    console.log(data);
+    this.options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    };
+
+    this.comparison = new ChartModelBuilder()
+      .buildBasicChartModel(Object.keys(data['10'])
+          .map(item => item[0].toUpperCase()
+            + item.substring(1, item.length)
+              .replace(/([A-Z])/g, ' $1')
+              .trim()
+              .toLowerCase()), data.labels,
+        Object.values(data['10']));
+    console.log(this.comparison);
+    console.log(Object.values(data['10']));
   }
 
   private async initializePositiveCasesPerDateChart(): Promise<void> {
@@ -98,7 +143,9 @@ export class OverviewComponent implements OnInit {
   }
 
 
+  public showRelativeComparisonData(): void {
+    this.relative = !this.relative;
+    this.initializeComparisonCasesChart(this.relative);
+  }
 
 }
-
-

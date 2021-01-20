@@ -20,6 +20,9 @@ import {TableWithFilterModule} from '../tableWithFilter/table.module';
 import {CalendarModule} from 'primeng/calendar';
 import {CompareRegionsChartModule} from '../comparison-chart/compare-regions-chart.module';
 import {HospitalUtilizationModule} from '../hospital-utilization-chart/hospital-utilization.module';
+import {AgeSexDistributionChartModule} from '../age-sex-distribution-chart/age-sex-distribution-chart.module';
+import {CheckboxModule} from 'primeng/checkbox';
+
 
 @NgModule({
   declarations: [OverviewComponent],
@@ -44,6 +47,8 @@ import {HospitalUtilizationModule} from '../hospital-utilization-chart/hospital-
     CalendarModule,
     CompareRegionsChartModule,
     HospitalUtilizationModule,
+    AgeSexDistributionChartModule,
+    CheckboxModule,
   ],
 
   exports: [OverviewComponent]

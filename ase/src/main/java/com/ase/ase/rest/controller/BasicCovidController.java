@@ -33,7 +33,7 @@ public class BasicCovidController {
     @CrossOrigin
     @GetMapping(value = "/hospital/{province-id}", produces = "application/json")
     @ResponseBody
-    public static ResponseEntity<HospitalSituationPerDateDto> listHospitalCasesFor(@PathVariable("province-id") int provinceId) {
+    public static ResponseEntity<DailyHospitalSituationPerProvinceDto> listHospitalCasesFor(@PathVariable("province-id") int provinceId) {
         String s = "2020-02-01";
         String e = "2020-12-31";
         LocalDate start = LocalDate.parse(s);
@@ -44,7 +44,7 @@ public class BasicCovidController {
             start = start.plusDays(1);
         }
         return ResponseEntity.ok(
-                new HospitalSituationPerDateDto(
+                new DailyHospitalSituationPerProvinceDto(
                         provinceId,
                         totalDates
                                 .stream()
@@ -58,9 +58,9 @@ public class BasicCovidController {
     @CrossOrigin
     @GetMapping(value = "/generalsituation/{province-id}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<GeneralSituationPerProvinceDto> listNewTableDataFor(@PathVariable("province-id") int provinceId) {
+    public ResponseEntity<DailyGeneralSituationPerProvinceDto> listNewTableDataFor(@PathVariable("province-id") int provinceId) {
         return ResponseEntity.ok(
-                new GeneralSituationPerProvinceDto(provinceId, Arrays.asList(
+                new DailyGeneralSituationPerProvinceDto(provinceId, Arrays.asList(
                         new GeneralSituationPerDate("10.10.2020", 12, 10, 24),
                         new GeneralSituationPerDate("10.10.2020", 12, 12, 24))));
 
