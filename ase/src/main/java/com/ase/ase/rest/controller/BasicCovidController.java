@@ -1,6 +1,7 @@
 package com.ase.ase.rest.controller;
 
 import com.ase.ase.dao.CasesTimelineRepository;
+import com.ase.ase.dao.BedAndTestTimelineRepository;
 import com.ase.ase.rest.response.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,81 @@ public class BasicCovidController {
 
     @Autowired
     private CasesTimelineRepository casesTimelineRepository;
+    private BedAndTestTimelineRepository bedAndTestTimelineRepository;
+    
+    @CrossOrigin
+    @GetMapping(value = "/{province-id}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<DailyCasesPerProvinceDto> listNewCasesFor(@PathVariable("province-id") int provinceId) {
+        return ResponseEntity.ok(
+                new DailyCasesPerProvinceDto(
+                        provinceId,
+                        casesTimelineRepository.findAllBy(provinceId)));
+    }
 
+    @CrossOrigin
+    @GetMapping(value = "/hospital/", produces = "application/json") 
+    @ResponseBody
+    public ResponseEntity getHospitalisationsBy(@RequestParam("area") Set<Integer> areas) {
+        String g = bedAndTestTimelineRepository.getHospitalisationsBy(areas);
+        return ResponseEntity.ok(g);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/new-cases/", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity getRelativeNewCasesBy(@RequestParam("area") Set<Integer> areas, @RequestParam("relative") boolean relative) {
+      String o ="";
+        if(relative == true){
+            o = casesTimelineRepository.getRelativeNewCasesBy(areas);
+        } else {
+            o = casesTimelineRepository.getNewCasesBy(areas);
+        }
+        return ResponseEntity.ok(o);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/deaths/", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity getRelativeNewDeathsBy(@RequestParam("area") Set<Integer> areas, @RequestParam("relative") boolean relative) {
+      String o ="";
+        if(relative == true){
+            o = casesTimelineRepository.getRelativeNewDeathsBy(areas);
+        } else {
+            o = casesTimelineRepository.getNewDeathsBy(areas);
+        }
+        return ResponseEntity.ok(o);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/tests/", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity getRelativeNewTestsBy(@RequestParam("area") Set<Integer> areas, @RequestParam("relative") boolean relative) {
+      String o ="";
+        if(relative == true){
+            o = casesTimelineRepository.getRelativeNewTestsBy(areas);
+        } else {
+            o = casesTimelineRepository.getNewTestsBy(areas);
+        }
+        return ResponseEntity.ok(o);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/cases/", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity getCasesBy(@RequestParam("area") Set<Integer> areas) {
+        String g = casesTimelineRepository.getCasesBy(areas);
+        return ResponseEntity.ok(g);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/generalSituation/", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity getGeneralSituationBy(@RequestParam("area") Set<Integer> areas) {  
+        String g = casesTimelineRepository.getGeneralSituationBy(areas);
+        return ResponseEntity.ok(g);
+    }
+/*
     @CrossOrigin
     @GetMapping(value = "/{province-id}", produces = "application/json")
     @ResponseBody
@@ -66,5 +141,6 @@ public class BasicCovidController {
 
 
     }
+*/
 
 }
