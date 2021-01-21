@@ -19,7 +19,6 @@ public class BasicCovidController {
 
     @Autowired
     private CasesTimelineRepository casesTimelineRepository;
-    private BedAndTestTimelineRepository bedAndTestTimelineRepository;
     
     @CrossOrigin
     @GetMapping(value = "/{province-id}", produces = "application/json")
@@ -29,14 +28,6 @@ public class BasicCovidController {
                 new DailyCasesPerProvinceDto(
                         provinceId,
                         casesTimelineRepository.findAllBy(provinceId)));
-    }
-
-    @CrossOrigin
-    @GetMapping(value = "/hospital/", produces = "application/json") 
-    @ResponseBody
-    public ResponseEntity getHospitalisationsBy(@RequestParam("area") Set<Integer> areas) {
-        String g = bedAndTestTimelineRepository.getHospitalisationsBy(areas);
-        return ResponseEntity.ok(g);
     }
 
     @CrossOrigin
@@ -93,54 +84,5 @@ public class BasicCovidController {
         String g = casesTimelineRepository.getGeneralSituationBy(areas);
         return ResponseEntity.ok(g);
     }
-/*
-    @CrossOrigin
-    @GetMapping(value = "/{province-id}", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<DailyCasesPerProvinceDto> listNewCasesFor(@PathVariable("province-id") int provinceId) {
-        return ResponseEntity.ok(
-                new DailyCasesPerProvinceDto(
-                        provinceId,
-                        casesTimelineRepository.findAllBy(provinceId)));
-    }
-
-
-    @CrossOrigin
-    @GetMapping(value = "/hospital/{province-id}", produces = "application/json")
-    @ResponseBody
-    public static ResponseEntity<DailyHospitalSituationPerProvinceDto> listHospitalCasesFor(@PathVariable("province-id") int provinceId) {
-        String s = "2020-02-01";
-        String e = "2020-12-31";
-        LocalDate start = LocalDate.parse(s);
-        LocalDate end = LocalDate.parse(e);
-        List<LocalDate> totalDates = new ArrayList<>();
-        while (!start.isAfter(end)) {
-            totalDates.add(start);
-            start = start.plusDays(1);
-        }
-        return ResponseEntity.ok(
-                new DailyHospitalSituationPerProvinceDto(
-                        provinceId,
-                        totalDates
-                                .stream()
-                                .map(item -> new HospitalSituationPerDate(
-                                        item.toString(),
-                                        (int) (Math.random() * 100),
-                                        (int) (Math.random() * 100))).collect(Collectors.toList())));
-
-    }
-
-    @CrossOrigin
-    @GetMapping(value = "/generalsituation/{province-id}", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<DailyGeneralSituationPerProvinceDto> listNewTableDataFor(@PathVariable("province-id") int provinceId) {
-        return ResponseEntity.ok(
-                new DailyGeneralSituationPerProvinceDto(provinceId, Arrays.asList(
-                        new GeneralSituationPerDate("10.10.2020", 12, 10, 24),
-                        new GeneralSituationPerDate("10.10.2020", 12, 12, 24))));
-
-
-    }
-*/
 
 }
