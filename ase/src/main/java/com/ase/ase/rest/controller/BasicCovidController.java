@@ -1,10 +1,6 @@
 package com.ase.ase.rest.controller;
 
 import com.ase.ase.dao.CasesTimelineRepository;
-import com.ase.ase.dao.DailyCasesPerProvinceDto;
-import com.ase.ase.dao.DailyHospitalSituationPerProvinceDto;
-import com.ase.ase.dao.DailyGeneralSituationPerProvinceDto;
-
 import com.ase.ase.dao.BedAndTestTimelineRepository;
 import com.ase.ase.rest.response.*;
 
