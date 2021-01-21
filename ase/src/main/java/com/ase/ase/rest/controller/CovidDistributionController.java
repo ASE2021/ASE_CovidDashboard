@@ -2,7 +2,6 @@ package com.ase.ase.rest.controller;
 
 import com.ase.ase.dao.SexAndAgeDistributionRepository;
 import com.ase.ase.rest.response.SexDistribution;
-import com.ase.ase.rest.response.SexDistributionPerProvinceDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class CovidDistributionController {
     private SexAndAgeDistributionRepository sexAndAgeDistributionRepository;
   
     @CrossOrigin
-    @GetMapping(value = "/sex?{area}", produces = "application/json")
+    @GetMapping(value = "/sex/", produces = "application/json")
     @ResponseBody
     public ResponseEntity getSexDistributionBy(@RequestParam("area") Set<Integer> areas) {
         String g = sexAndAgeDistributionRepository.getSexDistributionBy(areas);
@@ -26,7 +25,7 @@ public class CovidDistributionController {
     }
     
     @CrossOrigin
-    @GetMapping(value = "/age-sex/cases?{area}", produces = "application/json")
+    @GetMapping(value = "/age-sex/cases/", produces = "application/json")
     @ResponseBody
     public ResponseEntity getSexAndAgeCaseDistributionBy(@RequestParam("area") Set<Integer> areas) {
             String g = sexAndAgeDistributionRepository.getSexAndAgeCaseDistributionBy(areas);
@@ -34,10 +33,18 @@ public class CovidDistributionController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/age-sex/deaths?{area}", produces = "application/json")
+    @GetMapping(value = "/age-sex/deaths/", produces = "application/json")
     @ResponseBody
     public ResponseEntity getsexAndAgeDeathDistributionBy(@RequestParam("area") Set<Integer> areas) {
         String g = sexAndAgeDistributionRepository.getSexAndAgeDeathDistributionBy(areas);
+        return ResponseEntity.ok(g);
+    }
+    
+    @CrossOrigin
+    @GetMapping(value = "/age-sex/cured/", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity getsexAndAgeCureDistributionBy(@RequestParam("area") Set<Integer> areas) {
+        String g = sexAndAgeDistributionRepository.getSexAndAgeCureDistributionBy(areas);
         return ResponseEntity.ok(g);
     }
 
