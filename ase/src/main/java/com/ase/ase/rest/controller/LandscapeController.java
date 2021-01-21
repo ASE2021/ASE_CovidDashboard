@@ -20,8 +20,7 @@ public class LandscapeController {
     @ResponseBody
     public ResponseEntity getAllProvincesAndAustria(){
         String p = populationRepository.getAllProvincesAndAustria();
-            return ResponseEntity.ok(p);
-            
+            return ResponseEntity.ok(p);            
     }
 
     @CrossOrigin
