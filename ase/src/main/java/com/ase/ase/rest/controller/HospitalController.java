@@ -15,7 +15,7 @@ public class HospitalController {
     private BedAndTestTimelineRepository bedandTestTimelineRepository;
 
     @CrossOrigin
-    @GetMapping(value = "?{area}&{type}", produces = "application/json")
+    @GetMapping(value = "/", produces = "application/json")
     @ResponseBody
     public ResponseEntity getBedUtilizationBy(@RequestParam("area") Set<Integer> areas, @RequestParam("type") int type) {
         String b = bedandTestTimelineRepository.getBedUtilizationBy(areas,type);
