@@ -12,7 +12,7 @@ import java.util.*;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/distribution")
-public class CovidDistributionController {
+public class DistributionCovidController {
 
     @Autowired
     private SexAndAgeDistributionRepository sexAndAgeDistributionRepository;
