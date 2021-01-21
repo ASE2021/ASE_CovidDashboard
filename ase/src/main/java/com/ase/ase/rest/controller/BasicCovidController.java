@@ -1,7 +1,6 @@
 package com.ase.ase.rest.controller;
 
 import com.ase.ase.dao.CasesTimelineRepository;
-import com.ase.ase.dao.BedAndTestTimelineRepository;
 import com.ase.ase.rest.response.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
