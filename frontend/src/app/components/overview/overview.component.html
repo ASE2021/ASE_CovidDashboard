@@ -55,19 +55,25 @@
   <!-- TODO: change data of the line and pie charts -->
   <div class="p-col-12 chart-view">
     <p-tabView>
-      <p-tabPanel header="Comparison">
+      <p-tabPanel header="Compare Regions">
         <div class="p-col-12">
-              <app-comparison-chart class="app-comparison-chart"></app-comparison-chart>
+          <app-comparison-chart class="app-comparison-chart"></app-comparison-chart>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="Another Chart">
+      <p-tabPanel header="Compare Cases, Deaths and Cured">
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
-              <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
-                       [data]="positiveCasesPerDateData"></p-chart>
+              <div class="p-col-6 p-offset-3">
+                <p-checkbox name="dataPer100.000" label="Show data per 100.000 residents"
+                            [binary]="true" (onChange)="showRelativeComparisonData()"></p-checkbox>
+              </div>
+              <p-chart *ngIf="comparison" type="bar"
+                       [data]="comparison" [options]="options"></p-chart>
               <p-progressSpinner
-                *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
+                *ngIf="!comparison"></p-progressSpinner>
+
+              This is a comparison of active cases, cures and deaths in Austria since the beginning of the pandemic.
             </div>
           </div>
         </div>
@@ -95,6 +101,11 @@
             </div>
           </div>
         </div>
+      </p-tabPanel>
+      <p-tabPanel header="Age and Sex Distribution">
+
+        <app-age-sex-distribution-chart></app-age-sex-distribution-chart>
+
       </p-tabPanel>
 
       <!-- TABLE OVERVIEW -------------------------------->

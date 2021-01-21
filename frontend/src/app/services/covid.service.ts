@@ -1,12 +1,11 @@
 import {Inject, Injectable} from '@angular/core';
 import {CovidCasesDaily} from '../model/covid-cases-daily';
 import {HttpClient} from '@angular/common/http';
-import {SexDistribution} from '../model/sex-distribution';
 import {HospitalBedsDaily} from '../model/hospital-beds-daily';
-import {GeneralSituationDaily} from '../model/general-situation-daily';
 import {Area} from '../model/area';
 import {AreaResponse} from '../model/area-response';
 import {TreeNode} from 'primeng/api';
+import {SexDistribution} from '../model/sex-distribution';
 
 
 @Injectable({
@@ -35,7 +34,7 @@ export class CovidService {
 
   public getGeneralSituationPerDate(): Promise<any> {
     return this.http.get<any>(this.apiUrl + '/daily/generalSituation', {params: {area: ['10']}})
-      .toPromise().then(item => (item as {items: AreaResponse[] }).items[0].data.map(data => ({
+      .toPromise().then(item => (item as { items: AreaResponse[] }).items[0].data.map(data => ({
           date: data.date,
           values: {
             ...data.values.reduce((obj, curr) => ({...obj, [curr.identifier]: curr.value}), {}),
@@ -44,7 +43,39 @@ export class CovidService {
       )));
   }
 
+  public async getAgeSexDistributionData(regions: Area[], selectedData): Promise<any> {
+    let postfix = '';
+    if (selectedData === 'cured cases'){
+      postfix = 'cured';
+    }else if (selectedData === 'dead cases'){
+      postfix = 'dead';
+    }else{
+      postfix = 'cases';
+    }
 
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/distribution/age-sex/' + postfix,
+      {params: {area: regions.map(item => item.areaId.toString())}})
+      .toPromise()
+      .then(res => (res as { items: AreaResponse[] }).items), 'ageInterval');
+    return {...data};
+  }
+
+  public async getComparisonData(regions: Area[]): Promise<any> {
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
+      {params: {area: regions.map(item => item.areaId.toString())}})
+      .toPromise()
+      .then(res => (res as { items: AreaResponse[] }).items));
+    return {...data};
+  }
+
+
+  public async getComparisonCasesDataRelative(regions: Area[]): Promise<any> {
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/comparison/cases',
+      {params: {area: regions.map(item => item.areaId.toString()), relative: 'true'}})
+      .toPromise()
+      .then(res => (res as { items: AreaResponse[] }).items));
+    return {...data};
+  }
 
   public getProvinces(): Promise<Area[]> {
     return this.http.get<any>(this.apiUrl + '/provinces')
@@ -64,20 +95,20 @@ export class CovidService {
     let newData = {};
     if (casesValuesToLoad.length > 0) {
       newData = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/daily/cases',
-        {params: {'area-id': casesValuesToLoad.map(item => item.areaId.toString())}})
+        {params: {area: casesValuesToLoad.map(item => item.areaId.toString())}})
         .toPromise()
         .then(res => (res as { items: AreaResponse[] }).items));
     }
     return {...data, ...newData};
   }
 
-  private mapResponseDataToObject(responseData: AreaResponse[]): any {
-    const obj = {dates: []};
+  private mapResponseDataToObject(responseData: AreaResponse[], fieldname = 'date'): any {
+    const obj = {labels: []};
     responseData.forEach((item, idx) => {
       obj[item.areaId] = item.data.reduce((d, c) => {
         c.values.forEach(e => d[e.identifier] = [...d[e.identifier] || [], e.value]);
         if (idx === 0) {
-          obj.dates.push(c.date);
+          obj.labels.push(c[fieldname]);
         }
         return d;
       }, {});
@@ -85,9 +116,9 @@ export class CovidService {
     return obj;
   }
 
-  public buildCurrentChartData(loadedData: { dates: string[] }, selectedRegions: any[], selectedElements: any[]):
+  public buildCurrentChartData(loadedData: { labels: string[] }, selectedRegions: any[], selectedElements: any[]):
     { colors: string[][], names: string[], labels: string[], values: number[][] } {
-    const dataToShow = {dates: loadedData.dates};
+    const dataToShow = {dates: loadedData.labels};
 
     selectedRegions.forEach(item => dataToShow[item.areaId] = loadedData[item.areaId]);
 
@@ -108,7 +139,7 @@ export class CovidService {
     chartData.names = selectedRegions.map(item => item.areaName)
       .reduce((p, c) => [...p, ...selectedElements
         .map(i => c + ' ' + i.text)], []);
-    chartData.labels = loadedData.dates;
+    chartData.labels = loadedData.labels;
     chartData.values = selectedRegions
       .reduce((arr, reg) => [...arr, ...selectedElements
         .map(item => dataToShow[reg.areaId][item.id])], []);
@@ -165,6 +196,7 @@ export class CovidService {
 
   public getProvinceSituationPerDate(): Promise<Area[]> {
     return this.http.get<any>(this.apiUrl + '/daily/generalSituation', {params: {area: ['10']}})
-      .toPromise().then(item => (item as {items: AreaResponse[] }).items);
+      .toPromise().then(item => (item as { items: AreaResponse[] }).items);
   }
+
 }
