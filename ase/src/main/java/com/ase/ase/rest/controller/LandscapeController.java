@@ -19,16 +19,14 @@ public class LandscapeController {
     @GetMapping(value = "/provinces", produces = "application/json")
     @ResponseBody
     public ResponseEntity getAllProvincesAndAustria(){
-        String p = populationRepository.getAllProvincesAndAustria();
-            return ResponseEntity.ok(p);            
+        return ResponseEntity.ok(populationRepository.getAllProvincesAndAustria());            
     }
 
     @CrossOrigin
     @GetMapping(value = "/districts", produces = "application/json")
     @ResponseBody
     public ResponseEntity getAllDistricts(){
-        String d = populationRepository.getAllDistricts();
-            return ResponseEntity.ok(d);
+        return ResponseEntity.ok(populationRepository.getAllDistricts());
     }
     
 }
