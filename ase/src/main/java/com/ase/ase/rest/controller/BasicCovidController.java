@@ -30,9 +30,9 @@ public class BasicCovidController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/new-cases/", produces = "application/json")
+    @GetMapping(value = "/new-cases", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getRelativeNewCasesBy(@RequestParam("area") Set<Integer> areas, @RequestParam("relative") boolean relative) {
+    public ResponseEntity getRelativeNewCasesBy(@RequestParam("area") Set<Integer> areas, @RequestParam(value = "relative", defaultValue = "false", required = true) boolean relative) {
       String o ="";
         if(relative == true){
             o = casesTimelineRepository.getRelativeNewCasesBy(areas);
@@ -43,9 +43,9 @@ public class BasicCovidController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/deaths/", produces = "application/json")
+    @GetMapping(value = "/deaths", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getRelativeNewDeathsBy(@RequestParam("area") Set<Integer> areas, @RequestParam("relative") boolean relative) {
+    public ResponseEntity getRelativeNewDeathsBy(@RequestParam("area") Set<Integer> areas, @RequestParam(value = "relative", defaultValue = "false", required = true) boolean relative) {
       String o ="";
         if(relative == true){
             o = casesTimelineRepository.getRelativeNewDeathsBy(areas);
@@ -56,9 +56,9 @@ public class BasicCovidController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/tests/", produces = "application/json")
+    @GetMapping(value = "/tests", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getRelativeNewTestsBy(@RequestParam("area") Set<Integer> areas, @RequestParam("relative") boolean relative) {
+    public ResponseEntity getRelativeNewTestsBy(@RequestParam("area") Set<Integer> areas, @RequestParam(value = "relative", defaultValue = "false", required = true) boolean relative) {
       String o ="";
         if(relative == true){
             o = casesTimelineRepository.getRelativeNewTestsBy(areas);
@@ -69,19 +69,17 @@ public class BasicCovidController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/cases/", produces = "application/json")
+    @GetMapping(value = "/cases", produces = "application/json")
     @ResponseBody
     public ResponseEntity getCasesBy(@RequestParam("area") Set<Integer> areas) {
-        String g = casesTimelineRepository.getCasesBy(areas);
-        return ResponseEntity.ok(g);
+        return ResponseEntity.ok(casesTimelineRepository.getCasesBy(areas));
     }
 
     @CrossOrigin
-    @GetMapping(value = "/generalSituation/", produces = "application/json")
+    @GetMapping(value = "/generalSituation", produces = "application/json")
     @ResponseBody
     public ResponseEntity getGeneralSituationBy(@RequestParam("area") Set<Integer> areas) {  
-        String g = casesTimelineRepository.getGeneralSituationBy(areas);
-        return ResponseEntity.ok(g);
+        return ResponseEntity.ok(casesTimelineRepository.getGeneralSituationBy(areas));
     }
 
 }

@@ -19,14 +19,13 @@ public class OverviewController {
     @GetMapping(value = "/overview", produces = "application/json")
     @ResponseBody
     public ResponseEntity getOverview(){
-        String o = casesTimelineRepository.getOverview();
-            return ResponseEntity.ok(o);
+        return ResponseEntity.ok(casesTimelineRepository.getOverview());
     }
 
     @CrossOrigin
-    @GetMapping(value = "/area-info/", produces = "application/json")
+    @GetMapping(value = "/area-info", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getRelativeAreaInfoBy(@RequestParam("area") Set<Integer> areas, @RequestParam("relative") boolean relative){
+    public ResponseEntity getRelativeAreaInfoBy(@RequestParam("area") Set<Integer> areas, @RequestParam(value ="relative", defaultValue = "false", required = true) boolean relative){
         String o ="";
         if(relative == true){
             o = casesTimelineRepository.getRelativeAreaInfoBy(areas);

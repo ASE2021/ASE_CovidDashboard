@@ -17,35 +17,31 @@ public class DistributionCovidController {
     private SexAndAgeDistributionRepository sexAndAgeDistributionRepository;
   
     @CrossOrigin
-    @GetMapping(value = "/sex/", produces = "application/json")
+    @GetMapping(value = "/sex", produces = "application/json")
     @ResponseBody
     public ResponseEntity getSexDistributionBy(@RequestParam("area") Set<Integer> areas) {
-        String g = sexAndAgeDistributionRepository.getSexDistributionBy(areas);
-        return ResponseEntity.ok(g);
+        return ResponseEntity.ok(sexAndAgeDistributionRepository.getSexDistributionBy(areas));
     }
     
     @CrossOrigin
-    @GetMapping(value = "/age-sex/cases/", produces = "application/json")
+    @GetMapping(value = "/age-sex/cases", produces = "application/json")
     @ResponseBody
     public ResponseEntity getSexAndAgeCaseDistributionBy(@RequestParam("area") Set<Integer> areas) {
-            String g = sexAndAgeDistributionRepository.getSexAndAgeCaseDistributionBy(areas);
-        return ResponseEntity.ok(g);
+        return ResponseEntity.ok(sexAndAgeDistributionRepository.getSexAndAgeCaseDistributionBy(areas));
     }
 
     @CrossOrigin
-    @GetMapping(value = "/age-sex/cured/", produces = "application/json")
+    @GetMapping(value = "/age-sex/cured", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getsexAndAgeCureDistributionBy(@RequestParam("area") Set<Integer> areas) {
-        String g = sexAndAgeDistributionRepository.getSexAndAgeCureDistributionBy(areas);
-        return ResponseEntity.ok(g);
+    public ResponseEntity getSexAndAgeCureDistributionBy(@RequestParam("area") Set<Integer> areas) {
+        return ResponseEntity.ok(sexAndAgeDistributionRepository.getSexAndAgeCureDistributionBy(areas));
     }
 
     @CrossOrigin
-    @GetMapping(value = "/age-sex/deaths/", produces = "application/json")
+    @GetMapping(value = "/age-sex/deaths", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getsexAndAgeDeathDistributionBy(@RequestParam("area") Set<Integer> areas) {
-        String g = sexAndAgeDistributionRepository.getSexAndAgeDeathDistributionBy(areas);
-        return ResponseEntity.ok(g);
+    public ResponseEntity getSexAndAgeDeathDistributionBy(@RequestParam("area") Set<Integer> areas) {
+        return ResponseEntity.ok(sexAndAgeDistributionRepository.getSexAndAgeDeathDistributionBy(areas));
     }
 
 }

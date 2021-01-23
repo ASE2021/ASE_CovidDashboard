@@ -14,18 +14,16 @@ public class HospitalController {
     private BedAndTestTimelineRepository bedandTestTimelineRepository;
 
     @CrossOrigin
-    @GetMapping(value = "/hospital-bed-utilizations/", produces = "application/json")
+    @GetMapping(value = "/hospital-bed-utilizations", produces = "application/json")
     @ResponseBody
     public ResponseEntity getBedUtilizationBy(@RequestParam("area") Set<Integer> areas, @RequestParam("type") int type) {
-        String b = bedandTestTimelineRepository.getBedUtilizationBy(areas,type);
-        return ResponseEntity.ok(b);
+        return ResponseEntity.ok(bedandTestTimelineRepository.getBedUtilizationBy(areas,type));
     }
 
     @CrossOrigin
-    @GetMapping(value = "/daily/hospital/", produces = "application/json") 
+    @GetMapping(value = "/daily/hospital", produces = "application/json") 
     @ResponseBody
     public ResponseEntity getHospitalisationsBy(@RequestParam("area") Set<Integer> areas) {
-        String g = bedandTestTimelineRepository.getHospitalisationsBy(areas);
-        return ResponseEntity.ok(g);
+        return ResponseEntity.ok(bedandTestTimelineRepository.getHospitalisationsBy(areas));
     }
 }
