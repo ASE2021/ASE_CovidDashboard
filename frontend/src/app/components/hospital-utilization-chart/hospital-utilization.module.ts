@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HospitalUtilizationComponent } from './hospital-utilization.component';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {ChartModule} from 'primeng/chart';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {FormsModule} from '@angular/forms';
 
 
 
@@ -14,7 +16,9 @@ import {ChartModule} from 'primeng/chart';
   imports: [
     CommonModule,
     ProgressSpinnerModule,
-    ChartModule
+    ChartModule,
+    RadioButtonModule,
+    FormsModule
   ]
 })
 export class HospitalUtilizationModule { }

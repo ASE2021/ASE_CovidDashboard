@@ -42,9 +42,9 @@ export class CovidService {
       )));
   }
 
-  public async getHospitalUtilizationPerProvince(): Promise<any>{
-    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/daily/hospital',
-      {params: {'area-id': ['10']}})
+  public async getHospitalUtilizationPerProvince(chartType): Promise<any>{
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/hospital-bed-utilizations',
+      {params: {area: ['10'], type: chartType}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items));
     return {...data};

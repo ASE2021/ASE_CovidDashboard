@@ -12,6 +12,7 @@ export class HospitalUtilizationComponent implements OnInit {
 
   hospitalUtilizationData: any;
   options: string[];
+  bedTypes: string;
 
   constructor(private covidService: CovidService, private socketService: SocketService) {
 
@@ -19,7 +20,7 @@ export class HospitalUtilizationComponent implements OnInit {
 
   public ngOnInit(): void {
 
-    this.options = ['intense beds', 'normal beds', 'both'];
+    this.bedTypes = '2';
 
     this.initializeHospitalUtilisationPerProvinceChart();
 
@@ -30,7 +31,7 @@ export class HospitalUtilizationComponent implements OnInit {
 
 
   private async initializeHospitalUtilisationPerProvinceChart(): Promise<void> {
-    const data = await this.covidService.getHospitalUtilizationPerProvince();
+    const data = await this.covidService.getHospitalUtilizationPerProvince(this.bedTypes);
 
     this.hospitalUtilizationData = new ChartModelBuilder()
       .useLineChartStyle()
@@ -47,4 +48,7 @@ export class HospitalUtilizationComponent implements OnInit {
   }
 
 
+  selectionChanged() {
+    this.initializeHospitalUtilisationPerProvinceChart();
+  }
 }
