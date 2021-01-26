@@ -48,7 +48,7 @@ export class HospitalUtilizationComponent implements OnInit {
   }
 
 
-  selectionChanged() {
+  selectionChanged(): void {
     this.initializeHospitalUtilisationPerProvinceChart();
   }
 }

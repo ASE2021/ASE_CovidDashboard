@@ -111,7 +111,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     if (request.url.includes('/hospital-bed-utilization')) {
 
-      if (request.params.get('type') == '0'){
+      if (request.params.get('type') === '0'){
 
         return of(new HttpResponse({
           body: {
@@ -141,7 +141,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }));
       }
 
-      if (request.params.get('type') == '1'){
+      if (request.params.get('type') === '1'){
 
         return of(new HttpResponse({
           body: {
@@ -171,7 +171,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }));
       }
 
-      if (request.params.get('type') == '2'){
+      if (request.params.get('type') === '2'){
 
         return of(new HttpResponse({
           body: {
