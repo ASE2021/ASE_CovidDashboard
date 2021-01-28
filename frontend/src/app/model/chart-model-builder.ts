@@ -31,6 +31,16 @@ export class ChartModelBuilder {
     };
   }
 
+  public buildModelFromResponse(object: any, keyField: string): any {
+    return this.buildBasicChartModel(Object.keys(object[keyField])
+        .map(item => item[0].toUpperCase()
+          + item.substring(1, item.length)
+            .replace(/([A-Z])/g, ' $1')
+            .trim()
+            .toLowerCase()), object.labels,
+      Object.values(object[keyField]));
+  }
+
   public addDataSets(datasetNames: string[], data: any[][]): ChartModelBuilder {
     this.datasets = [...this.datasets, ...data.map((item, index) => {
 

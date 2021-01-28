@@ -26,7 +26,7 @@ export class TableComponent implements OnInit {
 
 
   private async loadTableData(): Promise<void> {
-    this.data = await this.covidService.getGeneralSituationPerDate();
+    this.data = await this.covidService.getGeneralSituationPerDate('10');
 
     this.columns =
       Object.keys(this.data[0].values).map(item => ({

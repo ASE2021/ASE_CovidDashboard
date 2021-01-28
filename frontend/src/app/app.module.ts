@@ -62,11 +62,7 @@ import {FakeBackendInterceptor} from './interceptors/fake-backend.interceptor';
     {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
     {provide: 'BACKEND_NOTIFICATION_URL', useValue: environment.backendNotificationUrl},
     {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort},
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: FakeBackendInterceptor,
-      multi: true,
-    },
+
   ],
   bootstrap: [AppComponent],
 })
