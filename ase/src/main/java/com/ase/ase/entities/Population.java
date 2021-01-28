@@ -1,10 +1,9 @@
 package com.ase.ase.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(indexes = @Index(name = "p_index", columnList = "id", unique = true))
 public class Population {
 
     @Id

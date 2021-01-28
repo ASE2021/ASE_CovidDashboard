@@ -1,12 +1,10 @@
 package com.ase.ase.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(indexes = @Index(name = "btT_index", columnList = "time, areaId", unique = true))
 public class BedAndTestTimeline {
 
     @Id
