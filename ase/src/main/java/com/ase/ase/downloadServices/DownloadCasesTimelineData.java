@@ -27,6 +27,7 @@ public class DownloadCasesTimelineData {
 
             in = fetchResult("https://covid19-dashboard.ages.at/data/CovidFaelle_Timeline_GKZ.csv");
             list.addAll(extractTimelineData(in));
+            casesTimelineRepository.deleteAll();
             casesTimelineRepository.saveAll(list);
         } catch (IOException e) {
             e.printStackTrace();

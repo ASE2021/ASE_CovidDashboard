@@ -21,6 +21,7 @@ public class DownloadSexAndAgeDistributionData {
         try {
             BufferedReader in = fetchResult("https://covid19-dashboard.ages.at/data/CovidFaelle_Altersgruppe.csv");
             List<SexAndAgeDistribution> list = extractSexAndAgeDistributions(in);
+            sexAndAgeDistributionRepository.deleteAll();
             sexAndAgeDistributionRepository.saveAll(list);
         } catch (IOException e) {
             e.printStackTrace();
