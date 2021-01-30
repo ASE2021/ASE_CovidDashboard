@@ -45,4 +45,38 @@ public interface BedAndTestTimelineRepository extends JpaRepository<BedAndTestTi
             "order by area_id" +
             ") areaItem", nativeQuery = true)
     String getBedUtilizationBy(@Param("areas") Set<Integer> areas, @Param("type") int type);
+
+    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
+            "Select json_build_object(" +
+            "'areaId', t1.area_id, " +
+            "'areaName', t1.area, " +
+            "'data', json_agg(json_build_object(" +
+            "'date', t1.time, " +
+            "'values', array[" +
+            "json_build_object('identifier', 'tests', 'value', t2.sum_tested - t1.sum_tested)" +
+            "]" +
+            ") order by t1.time)) as item " +
+            "from bed_and_test_timeline t1, bed_and_test_timeline t2 " +
+            "where t1.area_id in :areas and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time " +
+            "group by t1.area_id, t1.area " +
+            "order by t1.area_id" +
+            ") areaItem", nativeQuery = true)
+    String getNewTestsBy(@Param("areas") Set<Integer> areas);
+
+    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
+            "Select json_build_object(" +
+            "'areaId', t1.area_id, " +
+            "'areaName', t1.area, " +
+            "'data', json_agg(json_build_object(" +
+            "'date', t1.time, " +
+            "'values', array[" +
+            "json_build_object('identifier', 'tests', 'value', (t2.sum_tested - t1.sum_tested)/(p.population/100000.0))" +
+            "]" +
+            ") order by t1.time)) as item " +
+            "from bed_and_test_timeline t1, bed_and_test_timeline t2, population p " +
+            "where t1.area_id in :areas and t1.area_id = p.id and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time " +
+            "group by t1.area_id, t1.area " +
+            "order by t1.area_id" +
+            ") areaItem", nativeQuery = true)
+    String getRelativeNewTestsBy(@Param("areas") Set<Integer> areas);
 }
