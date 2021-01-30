@@ -55,7 +55,11 @@ p-header {
     width: 100%
   }
   .p-treetable {
-    width: 200px;
+    width: 300px;
+
+    input {
+      width: 100%;
+    }
 
     .p-checkbox {
       height: 26px;
