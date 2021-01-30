@@ -80,8 +80,6 @@ export class OverviewComponent implements OnInit {
               .trim()
               .toLowerCase()), data.labels,
         Object.values(data['10']));
-    console.log(this.comparison);
-    console.log(Object.values(data['10']));
   }
 
   private async initializePositiveCasesPerDateChart(): Promise<void> {

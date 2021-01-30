@@ -25,6 +25,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {MqttModule} from 'ngx-mqtt';
 import {TableWithFilterModule} from './components/tableWithFilter/table.module';
 import {FakeBackendInterceptor} from './interceptors/fake-backend.interceptor';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import {FakeBackendInterceptor} from './interceptors/fake-backend.interceptor';
     {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
     {provide: 'BACKEND_NOTIFICATION_URL', useValue: environment.backendNotificationUrl},
     {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort},
-
+    DatePipe
   ],
   bootstrap: [AppComponent],
 })

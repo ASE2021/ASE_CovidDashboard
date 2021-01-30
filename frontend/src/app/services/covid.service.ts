@@ -4,6 +4,7 @@ import {Area} from '../model/area';
 import {AreaResponse} from '../model/area-response';
 import {TreeNode} from 'primeng/api';
 import {CovidOverview} from '../model/covid-overview';
+import {DatePipe} from '@angular/common';
 
 
 @Injectable({
@@ -11,12 +12,15 @@ import {CovidOverview} from '../model/covid-overview';
 })
 export class CovidService {
 
-  constructor(@Inject('BACKEND_API_URL') private apiUrl: string, private http: HttpClient) {
+  constructor(@Inject('BACKEND_API_URL') private apiUrl: string, private http: HttpClient,
+              private datePipe: DatePipe) {
   }
 
-  private async executeRequest(path: string, params: { [key: string]: string | string[] }): Promise<any> {
+  private async executeRequest(path: string, params: { [key: string]: string | string[] }, formatLabel: boolean = true): Promise<any> {
     return this.mapResponseDataToObject(await this.http.get(this.apiUrl + path, {params})
-      .toPromise().then(item => (item as { items: AreaResponse[] }).items));
+        .toPromise().then(item => (item as { items: AreaResponse[] }).items),
+      formatLabel,
+    );
   }
 
   public getNewCasesPerDate(areas: string[]): Promise<any> {
@@ -24,7 +28,7 @@ export class CovidService {
   }
 
   public getHospitalBedsPerDate(areas: string[]): Promise<any> {
-    return this.executeRequest('/daily/hospital', {area: areas});
+    return this.executeRequest('/daily/hospital', {area: areas}, );
   }
 
   public async getSexDistributionCases(areas: string[]): Promise<AreaResponse[]> {
@@ -36,7 +40,7 @@ export class CovidService {
   public getGeneralSituationPerDate(area: string): Promise<any> {
     return this.http.get<any>(this.apiUrl + '/daily/generalSituation', {params: {area: [area]}})
       .toPromise().then(item => (item as { items: AreaResponse[] }).items[0].data.map(data => ({
-          date: data.date,
+          date: this.formatIfDate(data.date),
           values: {
             ...data.values.reduce((obj, curr) => ({...obj, [curr.identifier]: curr.value}), {}),
           },
@@ -49,7 +53,7 @@ export class CovidService {
     if (selectedData === 'cured cases') {
       postfix = 'cured';
     } else if (selectedData === 'dead cases') {
-      postfix = 'dead';
+      postfix = 'deaths';
     } else {
       postfix = 'cases';
     }
@@ -57,7 +61,7 @@ export class CovidService {
     const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/distribution/age-sex/' + postfix,
       {params: {area: regions.map(item => item.areaId.toString())}})
       .toPromise()
-      .then(res => (res as { items: AreaResponse[] }).items), 'ageInterval');
+      .then(res => (res as { items: AreaResponse[] }).items), false, 'ageInterval');
     return {...data};
   }
 
@@ -73,7 +77,7 @@ export class CovidService {
     return this.executeRequest('/daily/cases', {
       area: regions.map(item => item.areaId.toString(10)),
       relative: relative + '',
-    }).then(result => {
+    }, true).then(result => {
       const obj = {labels: result.labels} as any;
       Object.entries(result).forEach((item: [string, any]) => {
         if (item[0] !== 'labels') {
@@ -84,7 +88,6 @@ export class CovidService {
           };
         }
       });
-      console.log(obj);
       return obj;
     });
   }
@@ -115,18 +118,22 @@ export class CovidService {
     return {...data, ...newData};
   }
 
-  private mapResponseDataToObject(responseData: AreaResponse[], fieldname = 'date'): any {
+  private mapResponseDataToObject(responseData: AreaResponse[], formatLabel = true, fieldname = 'date'): any {
     const obj = {labels: []};
     responseData.forEach((item, idx) => {
       obj[item.areaId] = item.data.reduce((d, c) => {
         c.values.forEach(e => d[e.identifier] = [...d[e.identifier] || [], e.value]);
         if (idx === 0) {
-          obj.labels.push(c[fieldname]);
+          obj.labels.push(formatLabel ? this.formatIfDate(c[fieldname]) : c[fieldname]);
         }
         return d;
       }, {});
     });
     return obj;
+  }
+
+  private formatIfDate(value: string): string {
+    return !!Date.parse(value) ? this.datePipe.transform(new Date(value), 'dd.MM.yyyy') : value;
   }
 
   public buildCurrentChartData(loadedData: { labels: string[] }, selectedRegions: any[], selectedElements: any[]):
