@@ -1,0 +1,5 @@
+addons:
+  sonarcloud:
+    organization: "ase-project-group"
+    token:
+      secure: $TOKEN

@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <sonar.projectKey>ASE-Project-Group_ASE_CovidDashboard</sonar.projectKey>
+        <sonar.projectKey>aseFolder</sonar.projectKey>
         <sonar.organization>ase-project-group</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
