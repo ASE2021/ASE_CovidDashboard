@@ -4,6 +4,7 @@ import { AgeSexDistributionChartComponent } from './age-sex-distribution-chart.c
 import {ChartModule} from 'primeng/chart';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {FormsModule} from '@angular/forms';
+import {TreedropdownModule} from '../treedropdown/treedropdown.module';
 
 
 
@@ -12,11 +13,12 @@ import {FormsModule} from '@angular/forms';
   exports: [
     AgeSexDistributionChartComponent
   ],
-  imports: [
-    CommonModule,
-    ChartModule,
-    RadioButtonModule,
-    FormsModule,
-  ]
+    imports: [
+        CommonModule,
+        ChartModule,
+        RadioButtonModule,
+        FormsModule,
+        TreedropdownModule,
+    ],
 })
 export class AgeSexDistributionChartModule { }

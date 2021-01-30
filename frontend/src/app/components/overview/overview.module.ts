@@ -21,33 +21,35 @@ import {CalendarModule} from 'primeng/calendar';
 import {CompareRegionsChartModule} from '../comparison-chart/compare-regions-chart.module';
 import {AgeSexDistributionChartModule} from '../age-sex-distribution-chart/age-sex-distribution-chart.module';
 import {CheckboxModule} from 'primeng/checkbox';
+import {TreedropdownModule} from '../treedropdown/treedropdown.module';
 
 
 @NgModule({
   declarations: [OverviewComponent],
-  imports: [
-    CommonModule,
-    ChartModule,
-    CardModule,
-    PanelModule,
-    SelectButtonModule,
-    TabViewModule,
-    NoopAnimationsModule,
-    DropdownModule,
-    BrowserAnimationsModule,
-    TableModule,
-    TabMenuModule,
-    RoutingModule,
-    InputTextModule,
-    MultiSelectModule,
-    FormsModule,
-    ProgressSpinnerModule,
-    TableWithFilterModule,
-    CalendarModule,
-    CompareRegionsChartModule,
-    AgeSexDistributionChartModule,
-    CheckboxModule,
-  ],
+    imports: [
+        CommonModule,
+        ChartModule,
+        CardModule,
+        PanelModule,
+        SelectButtonModule,
+        TabViewModule,
+        NoopAnimationsModule,
+        DropdownModule,
+        BrowserAnimationsModule,
+        TableModule,
+        TabMenuModule,
+        RoutingModule,
+        InputTextModule,
+        MultiSelectModule,
+        FormsModule,
+        ProgressSpinnerModule,
+        TableWithFilterModule,
+        CalendarModule,
+        CompareRegionsChartModule,
+        AgeSexDistributionChartModule,
+        CheckboxModule,
+        TreedropdownModule,
+    ],
 
   exports: [OverviewComponent]
 })

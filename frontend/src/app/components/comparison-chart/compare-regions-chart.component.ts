@@ -4,6 +4,7 @@ import {SocketService} from '../../services/socket/socket.service';
 import {SelectItem, TreeNode} from 'primeng/api';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {TreeTable} from 'primeng/treetable';
+import {Area} from '../../model/area';
 
 @Component({
   selector: 'app-comparison-chart',
@@ -15,11 +16,8 @@ export class CompareRegionsChartComponent implements OnInit {
   elements: SelectItem[]; // Items for the multiselect "newData" etc.
   regionData: TreeNode[]; // Data for the treetable
   selectedElements: any[]; // Selected items for the multiselect "newData" etc.
-  selectedDistricts: any[]; // Selected districts from the treetable
-  selectedAreas: any[]; // Selected regions from the treetable
-  selectedRegionNames: string; // String including the selected region names (for displaying)
 
-  private areasToShowInChart: any[]; // All areas which should be shown (selectedAreas + selectedDistricts)
+  private areasToShowInChart: Area[]; // All areas which should be shown (selectedAreas + selectedDistricts)
   private loadedData: {
     labels: string[]
   } = {labels: []};
@@ -60,15 +58,8 @@ export class CompareRegionsChartComponent implements OnInit {
     this.elementChanged();
   }
 
-  async regionChanged(): Promise<void> {
-    this.areasToShowInChart = [
-      ...this.selectedAreas || [],
-      ...this.selectedDistricts?.filter(item => item.parent).map(item => item.data) || [],
-    ];
-    this.selectedRegionNames = this.areasToShowInChart
-      .map(item => item.areaName)
-      .join(', ');
-
+  async regionChanged(val: any): Promise<void> {
+    this.areasToShowInChart = val;
     this.loadDataAndUpdateChart(false);
 
   }
@@ -89,11 +80,4 @@ export class CompareRegionsChartComponent implements OnInit {
     }
   }
 
-  onFilter(tt: TreeTable, filterValue: string): void {
-    setTimeout(() => {
-      tt.filteredNodes.forEach(item => item.children.some(c => c.data.areaName.includes(filterValue)) ?
-        item.expanded = true : null);
-      tt.updateSerializedValue();
-    }, 300);
-  }
 }

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {SocketService} from '../../services/socket/socket.service';
+import {Area} from '../../model/area';
+import {TreeNode} from 'primeng/api';
 
 @Component({
   selector: 'app-table',
@@ -13,19 +15,31 @@ export class TableComponent implements OnInit {
 
   columns: { field: string, label: string }[];
   totals: any;
+  areaAustria: Area = {areaId: 10, areaName: 'Österreich'};
+  regionData: TreeNode[];
+
 
   constructor(private covidService: CovidService, private socketService: SocketService) {
   }
 
   ngOnInit(): void {
-    this.loadTableData();
+    this.loadTableData(this.areaAustria.areaId);
+    this.loadRegions();
     this.socketService.connectAndObserveNewData()
-      .subscribe(() => this.loadTableData());
+      .subscribe(() => {
+        this.loadTableData(this.areaAustria.areaId);
+        this.loadRegions();
+      });
   }
 
 
-  private async loadTableData(): Promise<void> {
-    this.data = await this.covidService.getGeneralSituationPerDate('10');
+  private async loadRegions(): Promise<void> {
+    this.regionData = await this.covidService.loadProvincesAndDistrictsAsTableData();
+  }
+
+
+  private async loadTableData(areaId: number): Promise<void> {
+    this.data = await this.covidService.getGeneralSituationPerDate(areaId.toString(10));
 
     this.columns =
       Object.keys(this.data[0].values).map(item => ({
@@ -41,4 +55,5 @@ export class TableComponent implements OnInit {
         return obj;
       }, {...this.data[0].values});
   }
+
 }
