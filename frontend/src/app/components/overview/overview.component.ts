@@ -59,11 +59,11 @@ export class OverviewComponent implements OnInit {
     this.provinces = await this.covidService.loadProvinces();
   }
 
-  private async initializeBasicInformation(): Promise<void> {
+  async initializeBasicInformation(): Promise<void> {
     this.covidOverview = await this.covidService.getBasicInformation();
   }
 
-  private async initializeComparisonCasesChart(relative, areaId: number): Promise<void> {
+  async initializeComparisonCasesChart(relative, areaId: number): Promise<void> {
 
     const data = await this.covidService.getComparisonCasesData(areaId, relative);
 
@@ -87,7 +87,7 @@ export class OverviewComponent implements OnInit {
         Object.values(data[areaId.toString(10)]));
   }
 
-  private async initializePositiveCasesPerDateChart(areaId: number): Promise<void> {
+  async initializePositiveCasesPerDateChart(areaId: number): Promise<void> {
     console.log(areaId);
     const data = await this.covidService.getNewCasesPerDate([areaId.toString(10)]);
     console.log(data);
@@ -97,7 +97,7 @@ export class OverviewComponent implements OnInit {
         data.labels, Object.values(data[areaId.toString(10)]));
   }
 
-  private async initializeSexDistributionCharts(areaId: number): Promise<void> {
+  async initializeSexDistributionCharts(areaId: number): Promise<void> {
     const response = await this.covidService.getSexDistributionCases([areaId.toString(10)]);
     const male = response[0].data.find(item => item.sex === 'M').values;
     const female = response[0].data.find(item => item.sex === 'W').values;
@@ -126,7 +126,7 @@ export class OverviewComponent implements OnInit {
         ]);
   }
 
-  private async initializeHospitalBedsPerDateChart(areaId: number): Promise<void> {
+  async initializeHospitalBedsPerDateChart(areaId: number): Promise<void> {
     this.hospitalBedsPerDate = new ChartModelBuilder()
       .useLineChartStyle()
       .buildModelFromResponse(

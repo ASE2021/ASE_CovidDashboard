@@ -15,7 +15,7 @@ export class AgeSexDistributionChartComponent implements OnInit {
 
   ageSexDistributionData: any;
   selectedValue: string;
-  private provinces: TreeNode[];
+  provinces: TreeNode[];
   areaAustria: Area = {areaId: 10, areaName: 'Österreich'};
   selectedProvince = 10;
 
@@ -36,7 +36,7 @@ export class AgeSexDistributionChartComponent implements OnInit {
       });
   }
 
-  private async initializeAgeSexDistributionChart(areaId: number): Promise<any> {
+  async initializeAgeSexDistributionChart(areaId: number): Promise<any> {
 
     const data = await this.covidService.getAgeSexDistributionData(areaId, this.selectedValue);
     this.ageSexDistributionData = new ChartModelBuilder()
@@ -63,4 +63,3 @@ export class AgeSexDistributionChartComponent implements OnInit {
     this.initializeAgeSexDistributionChart(areaId);
   }
 }
-

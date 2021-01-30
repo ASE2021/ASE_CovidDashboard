@@ -38,7 +38,7 @@ export class TableComponent implements OnInit {
   }
 
 
-  private async loadTableData(areaId: number): Promise<void> {
+  async loadTableData(areaId: number): Promise<void> {
     this.data = await this.covidService.getGeneralSituationPerDate(areaId.toString(10));
 
     this.columns =
