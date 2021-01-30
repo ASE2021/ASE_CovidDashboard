@@ -1,6 +1,8 @@
 package com.ase.ase.rest.controller;
 
+import com.ase.ase.dao.BedAndTestTimelineRepository;
 import com.ase.ase.dao.CasesTimelineRepository;
+import com.ase.ase.entities.BedAndTestTimeline;
 import com.ase.ase.rest.response.DailyCasesPerProvinceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ public class BasicCovidController {
 
   @Autowired
   private CasesTimelineRepository casesTimelineRepository;
+  @Autowired
+  private BedAndTestTimelineRepository bedAndTestTimelineRepository;
 
   @CrossOrigin
   @GetMapping(value = "/{province-id}", produces = "application/json")
@@ -70,9 +74,9 @@ public class BasicCovidController {
       @RequestParam(value = "relative", defaultValue = "false", required = true) boolean relative) {
     String o = "";
     if (relative == true) {
-      o = casesTimelineRepository.getRelativeNewTestsBy(areas);
+      o = bedAndTestTimelineRepository.getRelativeNewTestsBy(areas);
     } else {
-      o = casesTimelineRepository.getNewTestsBy(areas);
+      o = bedAndTestTimelineRepository.getNewTestsBy(areas);
     }
     return ResponseEntity.ok(o);
   }
