@@ -15,7 +15,7 @@ import {CovidOverview} from '../../model/covid-overview';
 export class OverviewComponent implements OnInit {
 
   positiveCasesPerDateData: any;
-  sexDistributionCasesData: any;
+  sexDistributionCuredData: any;
   sexDistributionDeathsData: any;
   hospitalBedsPerDate: any;
   activeCases: number;
@@ -50,7 +50,6 @@ export class OverviewComponent implements OnInit {
 
   private async initializeBasicInformation(): Promise<void> {
     this.covidOverview = await this.covidService.getBasicInformation();
-    console.log(this.covidOverview);
   }
 
   private async initializeComparisonCasesChart(relative): Promise<void> {
@@ -63,7 +62,6 @@ export class OverviewComponent implements OnInit {
 
     const data = await this.covidService.getComparisonCasesData(dummyAreaData, relative);
 
-    console.log(data);
     this.options = {
       scales: {
         yAxes: [{
@@ -96,12 +94,11 @@ export class OverviewComponent implements OnInit {
 
   private async initializeSexDistributionCharts(): Promise<void> {
     const response = await this.covidService.getSexDistributionCases(['10']);
-    console.log(response);
     const male = response[0].data.find(item => item.sex === 'M').values;
     const female = response[0].data.find(item => item.sex === 'W').values;
 
 
-    this.sexDistributionCasesData =
+    this.sexDistributionCuredData =
       new ChartModelBuilder().useCustomColors([['#1B2771', '#A93226']])
         .useBarChartStyle()
         .buildBasicChartModel(['Covid Cases Distributed per sex'],
@@ -111,7 +108,6 @@ export class OverviewComponent implements OnInit {
             male.find(item => item.identifier === 'cured').value,
           ]]);
 
-    console.log(this.sexDistributionCasesData);
 
     this.sexDistributionDeathsData = new ChartModelBuilder()
       .useCustomColors([['#1B2771', '#A93226']])
