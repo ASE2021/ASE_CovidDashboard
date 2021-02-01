@@ -2,4 +2,4 @@ addons:
   sonarcloud:
     organization: "ase-project-group"
     token:
-      secure: $TOKEN
+      secure: "99d2ca74c4e5bc455f1cbdb7421c517ff09f5fd3" # encrypted value of your token
