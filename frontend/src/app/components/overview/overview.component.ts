@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
-import {MessageResponse} from '../../model/MessageResponse';
-import {IMqttMessage} from 'ngx-mqtt';
 import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
 import {SexDistribution} from '../../model/sex-distribution';
 import {Area} from '../../model/area';
@@ -21,6 +19,7 @@ export class OverviewComponent implements OnInit {
   sexDistributionCasesData: SexDistribution;
   sexDistributionDeathsData: SexDistribution;
   hospitalBedsPerDate: HospitalBedsDaily;
+  hospitalUtilizationData: any;
   activeCases: number;
   numberOfCases: number;
   deaths: number;
@@ -41,25 +40,12 @@ export class OverviewComponent implements OnInit {
     this.initializeSexDistributionCharts();
     this.initializeHospitalBedsPerDateChart();
 
-
-    this.socketService.connectToMqtt(
-      () => {
-        this.socketService.observe('new-data')
-          .subscribe((message: IMqttMessage) => {
-            console.log(message.payload.toString());
-            try {
-              if ((JSON.parse(message.payload.toString()) as MessageResponse).update) {
-                this.initializeComparisonCasesChart(this.relative);
-                this.initializePositiveCasesPerDateChart();
-                this.initializeBasicInformation();
-                this.initializeHospitalBedsPerDateChart();
-                this.initializeSexDistributionCharts();
-              }
-            } catch (e) {
-            }
-          });
-      },
-    );
+    this.socketService.connectAndObserveNewData()
+      .subscribe(() => (
+        this.initializePositiveCasesPerDateChart(),
+        this.initializeBasicInformation(),
+        this.initializeHospitalBedsPerDateChart(),
+        this.initializeSexDistributionCharts()));
   }
 
   // TODO: get data from backend (receive object with these (or more) properties)
@@ -156,8 +142,10 @@ export class OverviewComponent implements OnInit {
 
   }
 
+
   public showRelativeComparisonData(): void {
     this.relative = !this.relative;
     this.initializeComparisonCasesChart(this.relative);
   }
+
 }

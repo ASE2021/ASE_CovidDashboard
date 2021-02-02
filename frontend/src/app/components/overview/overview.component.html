@@ -52,7 +52,6 @@
     </div>
   </div>
 
-  <!-- TODO: change data of the line and pie charts -->
   <div class="p-col-12 chart-view">
     <p-tabView>
       <p-tabPanel header="Compare Regions">
@@ -60,7 +59,7 @@
           <app-comparison-chart class="app-comparison-chart"></app-comparison-chart>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="Compare Cases, Deaths and Cured">
+      <p-tabPanel header="Cases, Deaths and Cured">
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6 p-offset-3">
@@ -88,6 +87,9 @@
           </div>
         </div>
       </p-tabPanel>
+      <p-tabPanel header="Hospital Utilization">
+        <app-hospital-utilization></app-hospital-utilization>
+      </p-tabPanel>
       <p-tabPanel header="Sex Distribution">
         <div class="p-col-12">
           <div class="p-grid">
@@ -103,19 +105,15 @@
         </div>
       </p-tabPanel>
       <p-tabPanel header="Age and Sex Distribution">
-
         <app-age-sex-distribution-chart></app-age-sex-distribution-chart>
-
-      </p-tabPanel>
-
-      <!-- TABLE OVERVIEW -------------------------------->
-      <p-tabPanel header="Table Overview">
-
-        <app-table></app-table>
-
-
       </p-tabPanel>
     </p-tabView>
+  </div>
+  <div class="p-shadow-11">
+    <div class="p-col-12 chart-view">
+      <h2 class="display-3">Table Overview</h2>
+      <app-table></app-table>
+    </div>
   </div>
 </div>
 </body>
