@@ -21,19 +21,24 @@
     <div class="overview p-shadow-11">
       <h2 class="display-3">Overview</h2>
       <div class="p-grid">
-        <div class="p-col-4">
+        <div class="p-col-3">
           <p-card header="Active cases in Austria" class="card-style-active">
-            {{activeCases}}
+            {{covidOverview?.activeCases}}
           </p-card>
         </div>
-        <div class="p-col-4">
+        <div class="p-col-3">
           <p-card header="Total number of Cases">
-            {{numberOfCases}}
+            {{covidOverview?.sumCases}}
           </p-card>
         </div>
-        <div class="p-col-4">
+        <div class="p-col-3">
           <p-card header="Deaths">
-            {{deaths}}
+            {{covidOverview?.sumDeaths}}
+          </p-card>
+        </div>
+        <div class="p-col-3">
+          <p-card header="Cured">
+            {{covidOverview?.sumCured}}
           </p-card>
         </div>
       </div>
@@ -94,8 +99,8 @@
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-5 p-offset-1">
-              <h3>Active Cases Sex Distribution</h3>
-              <p-chart type="pie" [data]="sexDistributionCasesData"></p-chart>
+              <h3>Cured Sex Distribution</h3>
+              <p-chart type="pie" [data]="sexDistributionCuredData"></p-chart>
             </div>
             <div class="p-col-5 p-offset-1">
               <h3>Death Sex Distribution</h3>

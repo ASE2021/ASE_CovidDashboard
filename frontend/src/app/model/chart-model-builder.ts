@@ -1,3 +1,5 @@
+import {DatePipe} from '@angular/common';
+
 export class ChartModelBuilder {
   private defaultBackgroundColors: string[] | string[][] = ['#1B2771', '#A93226', '#5B2C6F', '#0e6655', '#1D8348', '#9C640C', '#5F6A6A'];
   private colors = this.defaultBackgroundColors;
@@ -29,6 +31,18 @@ export class ChartModelBuilder {
         },
       ),
     };
+  }
+
+
+
+  public buildModelFromResponse(object: any, keyField: string): any {
+    return this.buildBasicChartModel(Object.keys(object[keyField])
+        .map(item => item[0].toUpperCase()
+          + item.substring(1, item.length)
+            .replace(/([A-Z])/g, ' $1')
+            .trim()
+            .toLowerCase()), object.labels,
+      Object.values(object[keyField]));
   }
 
   public addDataSets(datasetNames: string[], data: any[][]): ChartModelBuilder {

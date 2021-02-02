@@ -3,8 +3,8 @@ import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
 import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
-import {SexDistribution} from '../../model/sex-distribution';
 import {Area} from '../../model/area';
+import {CovidOverview} from '../../model/covid-overview';
 
 
 @Component({
@@ -16,17 +16,16 @@ import {Area} from '../../model/area';
 export class OverviewComponent implements OnInit {
 
   positiveCasesPerDateData: any;
-  sexDistributionCasesData: SexDistribution;
-  sexDistributionDeathsData: SexDistribution;
-  hospitalBedsPerDate: HospitalBedsDaily;
+  sexDistributionCuredData: any;
+  sexDistributionDeathsData: any;
+  hospitalBedsPerDate: any;
   hospitalUtilizationData: any;
   activeCases: number;
-  numberOfCases: number;
   deaths: number;
   comparison: any;
-  province: any;
   relative = false;
   options: any;
+  covidOverview: CovidOverview;
 
 
   constructor(private covidService: CovidService, private socketService: SocketService) {
@@ -34,53 +33,45 @@ export class OverviewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+
+    this.initializeAll();
+
+    this.socketService.connectAndObserveNewData()
+      .subscribe(() => {
+        this.initializeAll();
+      });
+  }
+
+  private initializeAll(): void {
     this.initializeComparisonCasesChart(this.relative);
     this.initializePositiveCasesPerDateChart();
     this.initializeBasicInformation();
     this.initializeSexDistributionCharts();
     this.initializeHospitalBedsPerDateChart();
-
-    this.socketService.connectAndObserveNewData()
-      .subscribe(() => (
-        this.initializePositiveCasesPerDateChart(),
-        this.initializeBasicInformation(),
-        this.initializeHospitalBedsPerDateChart(),
-        this.initializeSexDistributionCharts()));
   }
 
-  // TODO: get data from backend (receive object with these (or more) properties)
   private async initializeBasicInformation(): Promise<void> {
-    this.activeCases = 41000;
-    this.numberOfCases = 200000;
-    this.deaths = 2000;
+    this.covidOverview = await this.covidService.getBasicInformation();
   }
 
   private async initializeComparisonCasesChart(relative): Promise<void> {
-    let data;
-
     const dummyAreaData: Area[] = [{
       areaId: 10,
-      areaName: 'Austria'
-    }
+      areaName: 'Austria',
+    },
     ];
 
-    if (relative) {
-      data = await this.covidService.getComparisonCasesDataRelative(dummyAreaData);
 
-    } else {
-      data = await this.covidService.getComparisonData(dummyAreaData);
-    }
+    const data = await this.covidService.getComparisonCasesData(dummyAreaData, relative);
 
-
-    console.log(data);
     this.options = {
       scales: {
         yAxes: [{
           ticks: {
-            beginAtZero: true
-          }
-        }]
-      }
+            beginAtZero: true,
+          },
+        }],
+      },
     };
 
     this.comparison = new ChartModelBuilder()
@@ -91,54 +82,50 @@ export class OverviewComponent implements OnInit {
               .trim()
               .toLowerCase()), data.labels,
         Object.values(data['10']));
-    console.log(this.comparison);
-    console.log(Object.values(data['10']));
   }
 
   private async initializePositiveCasesPerDateChart(): Promise<void> {
-    const data = await this.covidService.getNewCasesPerDate();
+    const data = await this.covidService.getNewCasesPerDate(['10']);
     this.positiveCasesPerDateData = new ChartModelBuilder()
       .useBarChartStyle()
       .buildBasicChartModel(['Positive Covid-19 cases per date'],
-        data.map(item => item.date.split('T')[0]),
-        [data.map(item => item.cases)]);
+        data.labels, Object.values(data['10']));
   }
 
   private async initializeSexDistributionCharts(): Promise<void> {
-    const data = await this.covidService.getSexDistribution();
-    this.sexDistributionCasesData =
+    const response = await this.covidService.getSexDistributionCases(['10']);
+    const male = response[0].data.find(item => item.sex === 'M').values;
+    const female = response[0].data.find(item => item.sex === 'W').values;
+
+
+    this.sexDistributionCuredData =
       new ChartModelBuilder().useCustomColors([['#1B2771', '#A93226']])
         .useBarChartStyle()
         .buildBasicChartModel(['Covid Cases Distributed per sex'],
           ['female', 'male'],
-          data.reduce((dataArray, current) =>
-            [
-              [...dataArray[0], current.femaleCases, current.maleCases],
-            ], [[], []]));
+          [[
+            female.find(item => item.identifier === 'cured').value,
+            male.find(item => item.identifier === 'cured').value,
+          ]]);
+
 
     this.sexDistributionDeathsData = new ChartModelBuilder()
       .useCustomColors([['#1B2771', '#A93226']])
       .useBarChartStyle()
       .buildBasicChartModel(['Deaths Distributed per sex'],
         ['female', 'male'],
-        data.reduce((dataArray, current) =>
-          [
-            [...dataArray[0], current.femaleDeaths, current.maleDeaths],
-          ], [[], []]),
-      );
+        [[
+          female.find(item => item.identifier === 'dead').value,
+          male.find(item => item.identifier === 'dead').value,
+        ],
+        ]);
   }
 
   private async initializeHospitalBedsPerDateChart(): Promise<void> {
-    const data = await this.covidService.getHospitalBedsPerDate();
     this.hospitalBedsPerDate = new ChartModelBuilder()
       .useLineChartStyle()
-      .buildBasicChartModel(['intense beds', 'normal beds'],
-        data.map(item => item.date.split('T')[0]),
-        data.reduce((dataArray, current) =>
-          [
-            [...dataArray[0], current.intenseBeds],
-            [...dataArray[1], current.normalBeds],
-          ], [[], []]));
+      .buildModelFromResponse(
+        await this.covidService.getHospitalBedsPerDate(['10']), '10');
 
   }
 

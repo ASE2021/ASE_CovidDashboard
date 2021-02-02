@@ -4,7 +4,8 @@ export class CovidInformation {
 }
 
 export class InformationPerData {
-  date: string;
+  date?: string;
+  sex?: string;
   values: CovidInformation[];
 }
 

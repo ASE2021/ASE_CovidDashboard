@@ -90,40 +90,6 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
 
     @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
             "Select json_build_object(" +
-                "'areaId', t1.area_id, " +
-                "'areaName', t1.area, " +
-                "'data', json_agg(json_build_object(" +
-                    "'date', t1.time, " +
-                    "'values', array[" +
-                        "json_build_object('identifier', 'tests', 'value', t2.sum_tested - t1.sum_tested)" +
-                    "]" +
-            ") order by t1.time)) as item " +
-            "from bed_and_test_timeline t1, bed_and_test_timeline t2 " +
-            "where t1.area_id in :areas and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time " +
-            "group by t1.area_id, t1.area " +
-            "order by t1.area_id" +
-            ") areaItem", nativeQuery = true)
-    String getNewTestsBy(@Param("areas") Set<Integer> areas);
-
-    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
-            "Select json_build_object(" +
-                "'areaId', t1.area_id, " +
-                "'areaName', t1.area, " +
-                "'data', json_agg(json_build_object(" +
-                    "'date', t1.time, " +
-                    "'values', array[" +
-                        "json_build_object('identifier', 'tests', 'value', (t2.sum_tested - t1.sum_tested)/(p.population/100000.0))" +
-                "]" +
-            ") order by t1.time)) as item " +
-            "from bed_and_test_timeline t1, bed_and_test_timeline t2, population p " +
-            "where t1.area_id in :areas and t1.area_id = p.id and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time " +
-            "group by t1.area_id, t1.area " +
-            "order by t1.area_id" +
-            ") areaItem", nativeQuery = true)
-    String getRelativeNewTestsBy(@Param("areas") Set<Integer> areas);
-
-    @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
-            "Select json_build_object(" +
                 "'areaId', ct.area_id, " +
                 "'areaName', ct.area, " +
                 "'data', json_agg(json_build_object(" +
@@ -139,8 +105,8 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                     "]" +
             ") order by ct.time )) as item " +
             "from cases_timeline ct " +
-                "left join bed_and_test_timeline t2 on ct.time = t2.time " +
-                "left join bed_and_test_timeline t1 on t1.time + interval '1 day' = t2.time " +
+                "left join bed_and_test_timeline t2 on ct.time = t2.time and ct.area_id = t2.area_id " +
+                "left join bed_and_test_timeline t1 on t1.time + interval '1 day' = t2.time and t1.area_id = t2.area_id " +
             "where ct.area_id in :areas " +
                 "and (t2.area_id is null or ct.area_id = t2.area_id) " +
                 "and (t1.area_id is null or ct.area_id = t1.area_id) " +
@@ -151,32 +117,32 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
 
     @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
             "Select json_build_object(" +
-                "'areaId', t.area_id, " +
-                "'areaName', t.area, " +
+                "'areaId', ct1.area_id, " +
+                "'areaName', ct1.area, " +
                 "'data', json_agg(json_build_object(" +
-                    "'date', t.time, " +
+                    "'date', ct1.time, " +
                     "'values', array[" +
                         "json_build_object('identifier', 'deaths', 'value', ct2.new_dead)," +
                         "json_build_object('identifier', 'newCases', 'value', ct2.new_cases)," +
                         "json_build_object('identifier', 'hospitalisations', 'value', t.usedib + t.usednb)," +
                         "json_build_object('identifier', 'casesDifference', 'value', ct2.new_cases - ct1.new_cases)" +
                     "]" +
-            ") order by t.time)) as item " +
-            "from bed_and_test_timeline t, cases_timeline ct1, cases_timeline ct2 " +
-            "where t.area_id in :areas " +
-                "and t.area_id = ct1.area_id and ct1.time + interval '1 day' = ct2.time " +
-                "and t.area_id = ct2.area_id and t.time = ct2.time " +
-            "group by t.area_id, t.area " +
-            "order by t.area_id" +
+            ") order by ct1.time)) as item " +
+            "from cases_timeline ct1 " +
+                "join cases_timeline ct2 on ct1.area_id = ct2.area_id and ct1.time + interval '1 day' = ct2.time " +
+                "left join bed_and_test_timeline t on t.area_id = ct1.area_id and t.time = ct2.time " +
+            "where ct1.area_id in :areas " +
+            "group by ct1.area_id, ct1.area " +
+            "order by ct1.area_id" +
             ") areaItem", nativeQuery = true)
     String getGeneralSituationBy(@Param("areas") Set<Integer> areas);
 
     @Query(value = "Select CAST(json_build_object('items', json_agg(item)) AS VARCHAR) from (" +
             "Select json_build_object(" +
-                "'areaId', t1.area_id, " +
-                "'areaName', t1.area, " +
+                "'areaId', ct.area_id, " +
+                "'areaName', ct.area, " +
                 "'data', json_agg(json_build_object(" +
-                    "'date', t1.time, " +
+                    "'date', ct.time, " +
                     "'values', array[" +
                         "json_build_object('identifier', 'activeCases', 'value', (ct.sum_cases - ct.sum_dead - ct.sum_cured)/(p.population/100000.0))," +
                         "json_build_object('identifier', 'newCases', 'value', ct.new_cases/(p.population/100000.0))," +
@@ -184,11 +150,14 @@ public interface CasesTimelineRepository extends JpaRepository<CasesTimeline, Lo
                         "json_build_object('identifier', 'deaths', 'value', ct.new_dead/(p.population/100000.0))," +
                         "json_build_object('identifier', 'tests', 'value', (t2.sum_tested - t1.sum_tested)/(p.population/100000.0))" +
                 "]" +
-            ") order by t1.time)) as item " +
-            "from bed_and_test_timeline t1, bed_and_test_timeline t2, cases_timeline ct , population p " +
-            "where t1.area_id in :areas and t1.area_id = p.id and t1.area_id = t2.area_id and t1.time + interval '1 day' = t2.time  and t1.area_id = ct.area_id and t1.time = ct.time " +
-            "group by t1.area_id, t1.area " +
-            "order by t1.area_id" +
+            ") order by ct.time)) as item " +
+            "from cases_timeline ct " +
+                "join population p on ct.area_id = p.id " +
+                "left join bed_and_test_timeline t2 on ct.area_id = t2.area_id and ct.time = t2.time " +
+                "left join bed_and_test_timeline t1 on ct.area_id = t1.area_id and t1.time + interval '1 day' = t2.time " +
+            "where ct.area_id in :areas " +
+            "group by ct.area_id, ct.area " +
+            "order by ct.area_id" +
             ") areaItem", nativeQuery = true)
     String getRelativeCasesBy(@Param("areas") Set<Integer> areas);
 
