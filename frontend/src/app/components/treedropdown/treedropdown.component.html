@@ -1,0 +1,34 @@
+<button pButton pRipple icon="pi pi-angle-down" iconPos="right" type="button" label="Select areas"
+        class="p-button-outlined p-button-secondary" (click)="op.toggle($event)"></button>
+<p-overlayPanel #op>
+  <ng-template pTemplate>
+
+    <p-treeTable #tt [scrollable]="true" style="height: 300px" scrollHeight="300px"
+                 (onNodeUnselect)="regionChanged(false, $event.node.data)" (onNodeSelect)="regionChanged(true, $event.node.data)" [value]="regionData"
+                 selectionMode="checkbox" [(selection)]="selectedDistricts">
+      <ng-template pTemplate="caption">
+        {{selectedRegionNames}}
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>
+            <input pInputText type="text"
+                   (input)="tt.filter($event.target.value, 'areaName', 'contains');onFilter(tt,$event.target.value);">
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr>
+          <td>
+            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+            <p-treeTableCheckbox [value]="rowNode" *ngIf="rowData.selectable"></p-treeTableCheckbox>
+            <p-checkbox *ngIf="!rowData.selectable" name="groupname" [value]="rowData"
+                        [(ngModel)]="selectedAreas"
+                        (onChange)="regionChanged($event.checked, rowData)"></p-checkbox>
+            {{rowData.areaName}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-treeTable>
+  </ng-template>
+</p-overlayPanel>

@@ -1,15 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { OverviewComponent } from './overview.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {OverviewComponent} from './overview.component';
 import {ChartModule} from 'primeng/chart';
 import {CardModule} from 'primeng/card';
 import {PanelModule} from 'primeng/panel';
 import {TableModule} from 'primeng/table';
 import {SelectButtonModule} from 'primeng/selectbutton';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TabViewModule} from 'primeng/tabview';
 import {DropdownModule} from 'primeng/dropdown';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TabMenuModule} from 'primeng/tabmenu';
 import {RoutingModule} from '../../routing.module';
 import {InputTextModule} from 'primeng/inputtext';
@@ -22,6 +21,7 @@ import {CompareRegionsChartModule} from '../comparison-chart/compare-regions-cha
 import {HospitalUtilizationModule} from '../hospital-utilization-chart/hospital-utilization.module';
 import {AgeSexDistributionChartModule} from '../age-sex-distribution-chart/age-sex-distribution-chart.module';
 import {CheckboxModule} from 'primeng/checkbox';
+import {TreedropdownModule} from '../treedropdown/treedropdown.module';
 
 
 @NgModule({
@@ -46,11 +46,13 @@ import {CheckboxModule} from 'primeng/checkbox';
     TableWithFilterModule,
     CalendarModule,
     CompareRegionsChartModule,
-    HospitalUtilizationModule,
     AgeSexDistributionChartModule,
     CheckboxModule,
+    HospitalUtilizationModule,
+    TreedropdownModule,
   ],
 
-  exports: [OverviewComponent]
+  exports: [OverviewComponent],
 })
-export class OverviewModule { }
+export class OverviewModule {
+}

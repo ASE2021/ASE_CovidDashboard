@@ -1,6 +1,16 @@
 <div class="p-col-12">
   <div class="p-grid">
-    <div class="p-col-6 p-offset-2">
+    <div class="p-col-6"><span class="dropdown-text">Select the province you want to show</span>
+    </div>
+    <div class="p-col-4">
+      <app-treedropdown (regionChange)="regionSelected($event[0].areaId)"
+                        [initSelected]="areaAustria"
+                        [multipleSelection]="false"
+                        [regionData]="provinces"></app-treedropdown>
+    </div>
+  </div>
+  <div class="p-grid">
+    <div class="p-col-8 p-offset-1">
       <h3>Active Cases Age and Sex Distribution</h3>
       <p-chart type="bar" [data]="ageSexDistributionData"></p-chart>
     </div>

@@ -45,7 +45,19 @@ p-header {
 
 }
 
-.app-comparison-chart {
+.data-info {
+  font-size: small;
+  color: darkred;
+  margin: 10px;
+}
+
+.dropdown-text {
+  font-family: Helvetica;
+  font-size: medium;
+  line-height: 38px;
+}
+
+.app-comparison-chart, app-treedropdown {
   .p-multiselect {
     width: 100%;
     text-align: center;

@@ -5,6 +5,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {ChartModule} from 'primeng/chart';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {FormsModule} from '@angular/forms';
+import {TreedropdownModule} from '../treedropdown/treedropdown.module';
 
 
 
@@ -13,12 +14,13 @@ import {FormsModule} from '@angular/forms';
   exports: [
     HospitalUtilizationComponent
   ],
-  imports: [
-    CommonModule,
-    ProgressSpinnerModule,
-    ChartModule,
-    RadioButtonModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        ProgressSpinnerModule,
+        ChartModule,
+        RadioButtonModule,
+        FormsModule,
+        TreedropdownModule,
+    ],
 })
 export class HospitalUtilizationModule { }

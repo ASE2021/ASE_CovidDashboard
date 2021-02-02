@@ -10,20 +10,22 @@ import {ButtonModule} from 'primeng/button';
 import {RippleModule} from 'primeng/ripple';
 import { InputTextModule} from 'primeng/inputtext';
 import { InputNumberModule} from 'primeng/inputnumber';
+import {TreedropdownModule} from '../treedropdown/treedropdown.module';
 
 @NgModule({
   declarations: [TableComponent],
-  imports: [
-    CommonModule,
-    TableModule,
-    MultiSelectModule,
-    FormsModule,
-    ProgressSpinnerModule,
-    ButtonModule,
-    RippleModule,
-    InputTextModule,
-    InputNumberModule
-  ],
+    imports: [
+        CommonModule,
+        TableModule,
+        MultiSelectModule,
+        FormsModule,
+        ProgressSpinnerModule,
+        ButtonModule,
+        RippleModule,
+        InputTextModule,
+        InputNumberModule,
+        TreedropdownModule,
+    ],
 
   exports: [TableComponent]
 })

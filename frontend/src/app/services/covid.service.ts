@@ -48,17 +48,15 @@ export class CovidService {
         }
       )));
   }
-
-  public async getHospitalUtilizationPerProvince(chartType): Promise<any> {
+  public async getHospitalUtilizationPerProvince(chartType, areaId: number): Promise<any>{
     const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/hospital-bed-utilizations',
-      {params: {area: ['10'], type: chartType}})
+      {params: {area: [areaId.toString(10)], type: chartType}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items));
     return {...data};
   }
+  public async getAgeSexDistributionData(areaId: number, selectedData): Promise<any> {
 
-
-  public async getAgeSexDistributionData(regions: Area[], selectedData): Promise<any> {
     let postfix = '';
     if (selectedData === 'cured cases') {
       postfix = 'cured';
@@ -69,7 +67,7 @@ export class CovidService {
     }
 
     const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/distribution/age-sex/' + postfix,
-      {params: {area: regions.map(item => item.areaId.toString())}})
+      {params: {area: [areaId.toString()]}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items), false, 'ageInterval');
     return {...data};
@@ -83,9 +81,9 @@ export class CovidService {
     return {...data};
   }
 
-  public async getComparisonCasesData(regions: Area[], relative: boolean): Promise<any> {
+  public async getComparisonCasesData(areaId: number, relative: boolean): Promise<any> {
     return this.executeRequest('/daily/cases', {
-      area: regions.map(item => item.areaId.toString(10)),
+      area: [areaId.toString(10)],
       relative: relative + '',
     }, true).then(result => {
       const obj = {labels: result.labels} as any;
@@ -146,7 +144,7 @@ export class CovidService {
     return !!Date.parse(value) ? this.datePipe.transform(new Date(value), 'dd.MM.yyyy') : value;
   }
 
-  public buildCurrentChartData(loadedData: { labels: string[] }, selectedRegions: any[], selectedElements: any[]):
+  public buildCurrentChartData(loadedData: { labels: string[] }, selectedRegions: Area[], selectedElements: any[]):
     { colors: string[][], names: string[], labels: string[], values: number[][] } {
     const dataToShow = {dates: loadedData.labels};
 
@@ -202,6 +200,16 @@ export class CovidService {
         '#610B5E', '#B40486', '#FF00BF', '#F781D8',
         '#E2A9F3',
       ]])[col][row];
+  }
+
+  async loadProvinces(): Promise<TreeNode[]> {
+    return this.getProvinces().then(result => result.map(p => ({
+      data: {
+        areaName: p.areaName,
+        areaId: p.areaId,
+        selectable: false,
+      },
+    })));
   }
 
   async loadProvincesAndDistrictsAsTableData(): Promise<TreeNode[]> {
