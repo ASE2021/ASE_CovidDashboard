@@ -39,6 +39,7 @@ export class CovidService {
 
   public getGeneralSituationPerDate(area: string): Promise<any> {
     return this.http.get<any>(this.apiUrl + '/daily/generalSituation', {params: {area: [area]}})
+
       .toPromise().then(item => (item as { items: AreaResponse[] }).items[0].data.map(data => ({
           date: this.formatIfDate(data.date),
           values: {
@@ -47,8 +48,15 @@ export class CovidService {
         }
       )));
   }
-
+  public async getHospitalUtilizationPerProvince(chartType, areaId: number): Promise<any>{
+    const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/hospital-bed-utilizations',
+      {params: {area: [areaId.toString(10)], type: chartType}})
+      .toPromise()
+      .then(res => (res as { items: AreaResponse[] }).items));
+    return {...data};
+  }
   public async getAgeSexDistributionData(areaId: number, selectedData): Promise<any> {
+
     let postfix = '';
     if (selectedData === 'cured cases') {
       postfix = 'cured';

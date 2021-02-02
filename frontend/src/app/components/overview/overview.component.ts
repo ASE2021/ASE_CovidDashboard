@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
+import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
 import {Area} from '../../model/area';
 import {CovidOverview} from '../../model/covid-overview';
 import {TreeNode} from 'primeng/api';
@@ -135,6 +136,7 @@ export class OverviewComponent implements OnInit {
 
   }
 
+
   public showRelativeComparisonData(): void {
     this.relative = !this.relative;
     this.initializeComparisonCasesChart(this.relative, this.selectedAreaForComparison);
@@ -145,4 +147,5 @@ export class OverviewComponent implements OnInit {
     this.selectedAreaForComparison = areaId;
     this.initializeComparisonCasesChart(this.relative, areaId);
   }
+
 }
