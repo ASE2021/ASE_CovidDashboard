@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
+import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
 import {Area} from '../../model/area';
 import {CovidOverview} from '../../model/covid-overview';
 
@@ -18,6 +19,7 @@ export class OverviewComponent implements OnInit {
   sexDistributionCuredData: any;
   sexDistributionDeathsData: any;
   hospitalBedsPerDate: any;
+  hospitalUtilizationData: any;
   activeCases: number;
   deaths: number;
   comparison: any;
@@ -127,8 +129,10 @@ export class OverviewComponent implements OnInit {
 
   }
 
+
   public showRelativeComparisonData(): void {
     this.relative = !this.relative;
     this.initializeComparisonCasesChart(this.relative);
   }
+
 }

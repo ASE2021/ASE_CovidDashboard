@@ -109,95 +109,108 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       }));
     }
 
-    if (request.url.includes('/distribution/age-sex/cases')) {
+    if (request.url.includes('/hospital-bed-utilization')) {
 
-      return of(new HttpResponse({
-        body: {
-          items: request.params.getAll('area').map(area =>
-            ({
-              areaId: area,
-              areaName: 'A-' + area,
-              data: getAgeRanges.map((range, idx) =>
-                ({
-                  ageIntervalId: idx,
-                  ageInterval: range
-                  ,
-                  values: [
-                    {
-                      identifier: 'maleCases',
-                      value: (0.5 + Math.random()),
-                    },
-                    {
-                      identifier: 'femaleCases',
-                      value: (0.5 + Math.random()),
-                    }
-                  ],
-                })),
-            })),
-        },
-        status: 200,
-      }));
+      if (request.params.get('type') === '0'){
+
+        return of(new HttpResponse({
+          body: {
+            items: request.params.getAll('area-id').map(area =>
+              ({
+                areaId: area,
+                areaName: 'A-' + area,
+                data: getDatesBetweenDates(new Date(2020, 1, 1), new Date()).map((date, idx) =>
+                  ({
+                    date: date.toLocaleDateString()
+                    ,
+                    values: [
+                      {
+                        identifier: 'normal beds used',
+                        value: (100 - parseInt(area, 10) + Math.abs(50 - Math.abs(50 - (idx / (3))))) * (0.95 + (Math.random() / 10)),
+                      },
+                      {
+                        identifier: 'normal beds free',
+                        value: (100 - parseInt(area, 10) + Math.abs(150 - Math.abs(50 - (idx / (1.3))))) * (0.95 + (Math.random() / 10)),
+                      },
+
+                    ],
+                  })),
+              })),
+          },
+          status: 200,
+        }));
+      }
+
+      if (request.params.get('type') === '1'){
+
+        return of(new HttpResponse({
+          body: {
+            items: request.params.getAll('area-id').map(area =>
+              ({
+                areaId: area,
+                areaName: 'A-' + area,
+                data: getDatesBetweenDates(new Date(2020, 1, 1), new Date()).map((date, idx) =>
+                  ({
+                    date: date.toLocaleDateString()
+                    ,
+                    values: [
+                      {
+                        identifier: 'intense beds used',
+                        value: (100 - parseInt(area, 10) + Math.abs(50 - Math.abs(50 - (idx / (3))))) * (0.95 + (Math.random() / 10)),
+                      },
+                      {
+                        identifier: 'intense beds free',
+                        value: (100 - parseInt(area, 10) + Math.abs(150 - Math.abs(50 - (idx / (1.3))))) * (0.95 + (Math.random() / 10)),
+                      },
+
+                    ],
+                  })),
+              })),
+          },
+          status: 200,
+        }));
+      }
+
+      if (request.params.get('type') === '2'){
+
+        return of(new HttpResponse({
+          body: {
+            items: request.params.getAll('area-id').map(area =>
+              ({
+                areaId: area,
+                areaName: 'A-' + area,
+                data: getDatesBetweenDates(new Date(2020, 1, 1), new Date()).map((date, idx) =>
+                  ({
+                    date: date.toLocaleDateString()
+                    ,
+                    values: [
+                      {
+                        identifier: 'intense beds used',
+                        value: (100 - parseInt(area, 10) + Math.abs(50 - Math.abs(50 - (idx / (3))))) * (0.95 + (Math.random() / 10)),
+                      },
+                      {
+                        identifier: 'intense beds free',
+                        value: (100 - parseInt(area, 10) + Math.abs(150 - Math.abs(50 - (idx / (1.3))))) * (0.95 + (Math.random() / 10)),
+                      },
+                      {
+                        identifier: 'normal beds used',
+                        value: (100 - parseInt(area, 10) + Math.abs(50 - Math.abs(50 - (idx / (3))))) * (0.95 + (Math.random() / 10)),
+                      },
+                      {
+                        identifier: 'normal beds free',
+                        value: (100 - parseInt(area, 10) + Math.abs(150 - Math.abs(50 - (idx / (1.3))))) * (0.95 + (Math.random() / 10)),
+                      },
+
+                    ],
+                  })),
+              })),
+          },
+          status: 200,
+        }));
+      }
+
     }
 
-    if (request.url.includes('/distribution/age-sex/cured')) {
-
-      return of(new HttpResponse({
-        body: {
-          items: request.params.getAll('area').map(area =>
-            ({
-              areaId: area,
-              areaName: 'A-' + area,
-              data: getAgeRanges.map((range, idx) =>
-                ({
-                  ageIntervalId: idx,
-                  ageInterval: range
-                  ,
-                  values: [
-                    {
-                      identifier: 'maleCases',
-                      value: (0.5 + Math.random()),
-                    },
-                    {
-                      identifier: 'femaleCases',
-                      value: (0.5 + Math.random()),
-                    }
-                  ],
-                })),
-            })),
-        },
-        status: 200,
-      }));
-    }
-
-    if (request.url.includes('/distribution/age-sex/dead')) {
-
-      return of(new HttpResponse({
-        body: {
-          items: request.params.getAll('area').map(area =>
-            ({
-              areaId: area,
-              areaName: 'A-' + area,
-              data: getAgeRanges.map((range, idx) =>
-                ({
-                  ageIntervalId: idx,
-                  ageInterval: range
-                  ,
-                  values: [
-                    {
-                      identifier: 'maleCases',
-                      value: (0.5 + Math.random()),
-                    },
-                    {
-                      identifier: 'femaleCases',
-                      value: (0.5 + Math.random()),
-                    }
-                  ],
-                })),
-            })),
-        },
-        status: 200,
-      }));
-    }
 
     if (request.url.includes('/comparison/cases')) {
 
@@ -267,6 +280,96 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }));
       }
 
+      if (request.url.includes('/distribution/age-sex/cases')) {
+
+        return of(new HttpResponse({
+          body: {
+            items: request.params.getAll('area').map(area =>
+              ({
+                areaId: area,
+                areaName: 'A-' + area,
+                data: getAgeRanges.map((range, idx) =>
+                  ({
+                    ageIntervalId: idx,
+                    ageInterval: range
+                    ,
+                    values: [
+                      {
+                        identifier: 'maleCases',
+                        value: (0.5 + Math.random()),
+                      },
+                      {
+                        identifier: 'femaleCases',
+                        value: (0.5 + Math.random()),
+                      }
+                    ],
+                  })),
+              })),
+          },
+          status: 200,
+        }));
+      }
+
+      if (request.url.includes('/distribution/age-sex/cured')) {
+
+        return of(new HttpResponse({
+          body: {
+            items: request.params.getAll('area').map(area =>
+              ({
+                areaId: area,
+                areaName: 'A-' + area,
+                data: getAgeRanges.map((range, idx) =>
+                  ({
+                    ageIntervalId: idx,
+                    ageInterval: range
+                    ,
+                    values: [
+                      {
+                        identifier: 'maleCases',
+                        value: (0.5 + Math.random()),
+                      },
+                      {
+                        identifier: 'femaleCases',
+                        value: (0.5 + Math.random()),
+                      }
+                    ],
+                  })),
+              })),
+          },
+          status: 200,
+        }));
+      }
+
+      if (request.url.includes('/distribution/age-sex/dead')) {
+
+        return of(new HttpResponse({
+          body: {
+            items: request.params.getAll('area').map(area =>
+              ({
+                areaId: area,
+                areaName: 'A-' + area,
+                data: getAgeRanges.map((range, idx) =>
+                  ({
+                    ageIntervalId: idx,
+                    ageInterval: range
+                    ,
+                    values: [
+                      {
+                        identifier: 'maleCases',
+                        value: (0.5 + Math.random()),
+                      },
+                      {
+                        identifier: 'femaleCases',
+                        value: (0.5 + Math.random()),
+                      }
+                    ],
+                  })),
+              })),
+          },
+          status: 200,
+        }));
+      }
+
       return next.handle(request);
     }
   }
@@ -283,5 +386,4 @@ const
     return dates;
   };
 
-const
-  getAgeRanges = ['<5', '5-18', '18-25', '25-45', '45-60', '>60'];
+const getAgeRanges = ['<5', '5-18', '18-25', '25-45', '45-60', '>60'];

@@ -1,0 +1,26 @@
+<div class="p-grid">
+  <div class="p-col-8 p-offset-2">
+    <div class="p-grid">
+      <div class="p-col-5 p-offset-4">
+        <h3>Hospital Utilization</h3>
+      </div>
+      <div class="p-col-5 p-offset-3">
+        <div class="p-d-flex p-flex-column">
+          <div class="p-mb-2">
+            <p-radioButton name="selection" value="0" label="Normal Beds" [(ngModel)]="bedTypes" (onClick)="selectionChanged()"></p-radioButton>
+          </div>
+          <div class="p-mb-2">
+            <p-radioButton name="selection" value="1" label="Intense Beds" [(ngModel)]="bedTypes" (onClick)="selectionChanged()"></p-radioButton>
+          </div>
+          <div class="p-mb-2">
+            <p-radioButton name="selection" value="2" label="Both Bed Types" [(ngModel)]="bedTypes" (onClick)="selectionChanged()"></p-radioButton>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p-chart *ngIf="hospitalUtilizationData" type="line"
+             [data]="hospitalUtilizationData"></p-chart>
+    <p-progressSpinner
+      *ngIf="!hospitalUtilizationData"></p-progressSpinner>
+  </div>
+</div>
