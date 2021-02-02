@@ -20,6 +20,7 @@ export class OverviewComponent implements OnInit {
   sexDistributionCuredData: any;
   sexDistributionDeathsData: any;
   hospitalBedsPerDate: any;
+  hospitalUtilizationData: any;
   activeCases: number;
   deaths: number;
   comparison: any;
