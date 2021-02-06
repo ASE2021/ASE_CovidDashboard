@@ -3,15 +3,20 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TableComponent } from './table.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {TableModule} from 'primeng/table';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {FormsModule} from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
+import {By} from "@angular/platform-browser";
+import {MqttModule, MqttService} from "ngx-mqtt";
+
 describe('TableComponent', () => {
   let component: TableComponent;
   let fixture: ComponentFixture<TableComponent>;
+  let backendUrl: string;
+  let expectedValue = '';
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,9 +24,14 @@ describe('TableComponent', () => {
         TableModule,
         MultiSelectModule,
         FormsModule,
-        ProgressSpinnerModule],
+        ProgressSpinnerModule,
+        MqttModule.forRoot({
+          connectOnCreate: false,
+        }),
+
+      ],
       declarations: [ TableComponent ],
-      providers: [HttpClient, {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
+      providers: [HttpClient, MqttService, DatePipe, {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
         {provide: 'BACKEND_NOTIFICATION_URL', useValue: environment.backendNotificationUrl},
         {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort}]
     })
