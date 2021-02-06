@@ -4,7 +4,7 @@ import {CompareRegionsChartComponent} from './compare-regions-chart.component';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MqttModule} from 'ngx-mqtt';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {ChartModule} from 'primeng/chart';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {MultiSelectModule} from 'primeng/multiselect';
@@ -48,7 +48,8 @@ describe('ComparisonChartComponent', () => {
         AutoCompleteModule,
         InputTextModule
       ],
-      providers: [HttpClient, {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
+      providers: [HttpClient, DatePipe,
+        {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
         {provide: 'BACKEND_NOTIFICATION_URL', useValue: environment.backendNotificationUrl},
         {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort}],
     })

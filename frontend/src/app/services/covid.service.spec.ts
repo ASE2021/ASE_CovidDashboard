@@ -27,6 +27,7 @@ import {ProgressBarModule} from 'primeng/progressbar';
 import {MqttModule} from 'ngx-mqtt';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FakeBackendInterceptor} from '../interceptors/fake-backend.interceptor';
+import {DatePipe} from "@angular/common";
 
 describe('CovidService', () => {
   let service: CovidService;
@@ -60,7 +61,7 @@ describe('CovidService', () => {
         }),
         HttpClientTestingModule,
       ],
-      providers: [HttpClient,
+      providers: [HttpClient, DatePipe,
         {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
         {
           provide: HTTP_INTERCEPTORS,
