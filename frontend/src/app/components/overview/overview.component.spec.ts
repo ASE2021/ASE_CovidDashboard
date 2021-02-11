@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OverviewComponent } from './overview.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {ChartModule} from 'primeng/chart';
 import {CardModule} from 'primeng/card';
 import {PanelModule} from 'primeng/panel';
@@ -50,7 +50,8 @@ describe('OverviewComponent', () => {
         CalendarModule,
         MqttModule.forRoot({connectOnCreate: false}),
         CompareRegionsChartModule],
-      providers: [HttpClient, {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
+      providers: [HttpClient, DatePipe,
+        {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
         {provide: 'BACKEND_NOTIFICATION_URL', useValue: environment.backendNotificationUrl},
         {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort}]
     })
