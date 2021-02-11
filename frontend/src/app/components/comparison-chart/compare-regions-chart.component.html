@@ -6,13 +6,20 @@
     <div class="p-grid">
       <div class="p-col-6"><span>Select the province/district you want to compare</span></div>
       <div class="p-col-4">
-       <app-treedropdown [regionData]="regionData" (regionChange)="regionChanged($event)"></app-treedropdown>
+       <app-treedropdown [regionData]="regionData" (regionChange)="regionChanged($event, calendarComparison);"></app-treedropdown>
       </div>
       <div class="p-col-6"><span>Select which elements you want to see</span></div>
       <div class="p-col-4">
         <p-multiSelect [options]="elements" placeholder="Select elements" dropdownIcon="pi pi-angle-down"
                        [(ngModel)]="selectedElements"
                        (onChange)="elementChanged()"></p-multiSelect>
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-6"><span class="dropdown-text">Select the range you want to show</span></div>
+      <div class="p-col-4">
+        <app-calendar-range-selector #calendarComparison [initialDataset]="chartData"
+                                     (filterDataChange)="chartData = $event"></app-calendar-range-selector>
       </div>
     </div>
   </div>

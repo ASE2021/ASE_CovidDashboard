@@ -17,6 +17,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {InputTextModule} from 'primeng/inputtext';
 import {TreedropdownModule} from '../treedropdown/treedropdown.module';
+import {CalendarRangeSelectorModule} from '../calendar-range-selector/calendar-range-selector.module';
 
 @NgModule({
   declarations: [CompareRegionsChartComponent],
@@ -39,6 +40,7 @@ import {TreedropdownModule} from '../treedropdown/treedropdown.module';
         AutoCompleteModule,
         InputTextModule,
         TreedropdownModule,
+        CalendarRangeSelectorModule,
     ],
   exports: [CompareRegionsChartComponent],
 })
