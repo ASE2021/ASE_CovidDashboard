@@ -14,20 +14,20 @@
         or the more region specific Austrian Map views which you can find in the above Tab.</p>
       <p>Hope you like this page and learn some new interesting facts.</p>
       <p> Stay happy and healthy!</p>
-      <p> Corinna, Emir, Michael, Manuel, Selene and Chiara :)</p>
+      <p> Corinna, Michael, Manuel, Selene and Chiara :)</p>
     </p-panel>
   </div>
   <div class="p-col-12">
     <div class="overview p-shadow-11">
-      <h2 class="display-3">Overview</h2>
+      <h2 class="display-3">Overview of Austria</h2>
       <div class="p-grid">
         <div class="p-col-3">
-          <p-card header="Active cases in Austria" class="card-style-active">
+          <p-card header="Active Cases" class="card-style-active">
             {{covidOverview?.activeCases}}
           </p-card>
         </div>
         <div class="p-col-3">
-          <p-card header="Total number of Cases">
+          <p-card header="Total Cases">
             {{covidOverview?.sumCases}}
           </p-card>
         </div>
@@ -59,20 +59,17 @@
           <p-progressSpinner
             *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
         </div>
-
       </div>
-
     </div>
   </div>
-
   <div class="p-col-12 chart-view">
     <p-tabView>
-      <p-tabPanel header="Compare Regions">
+      <p-tabPanel header="Compare Regions in Austria">
         <div class="p-col-12">
           <app-comparison-chart class="app-comparison-chart"></app-comparison-chart>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="Cases, Deaths and Cured">
+      <p-tabPanel header="Compare Cases, Deaths and Cured per Region">
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6"><span class="dropdown-text">Select the province or district you want to show</span>
@@ -100,7 +97,11 @@
           </div>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="Hospital Situation">
+    </p-tabView>
+  </div>
+  <div class="p-col-12 chart-view">
+    <p-tabView>
+      <p-tabPanel header="Hospital Bed Situation per Region">
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6"><span class="dropdown-text">Select the province you want to show</span></div>
@@ -119,10 +120,14 @@
           </div>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="Hospital Utilization">
+      <p-tabPanel header="Hospital Bed Utilization Per Region">
         <app-hospital-utilization></app-hospital-utilization>
       </p-tabPanel>
-      <p-tabPanel header="Sex Distribution">
+    </p-tabView>
+  </div>
+  <div class="p-col-12 chart-view">
+    <p-tabView>
+      <p-tabPanel header="Compare Sex Distribution per Region">
         <div class="p-col-12">
           <div class="p-grid">
             <div class="p-col-6"><span class="dropdown-text">Select the province you want to show</span></div>
@@ -145,11 +150,9 @@
           </div>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="Age and Sex Distribution">
+      <p-tabPanel header="Compare Age and Sex Distribution per Region">
         <app-age-sex-distribution-chart></app-age-sex-distribution-chart>
-
       </p-tabPanel>
-
     </p-tabView>
   </div>
   <div class="p-shadow-11">
