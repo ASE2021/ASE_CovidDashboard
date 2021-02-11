@@ -16,13 +16,13 @@
     </div>
     <div class="p-d-flex p-flex-column">
         <div class="p-mb-2">
-          <p-radioButton name="selection" value="cases" label="Show Cases" [(ngModel)]="selectedValue" (onClick)="selectionChanged()"></p-radioButton>
+          <p-radioButton id = 'cases' name="selection" value="cases" label="Show Cases" [(ngModel)]="selectedValue" (onClick)="selectionChanged()"></p-radioButton>
         </div>
         <div class="p-mb-2">
-          <p-radioButton name="selection" value="cured cases" label="Show Cured Cases" [(ngModel)]="selectedValue" (onClick)="selectionChanged()"></p-radioButton>
+          <p-radioButton id = 'cured' name="selection" value="cured cases" label="Show Cured Cases" [(ngModel)]="selectedValue" (onClick)="selectionChanged()"></p-radioButton>
         </div>
         <div class="p-mb-2">
-          <p-radioButton name="selection" value="dead cases" label="Show Dead Cases" [(ngModel)]="selectedValue" (onClick)="selectionChanged()"></p-radioButton>
+          <p-radioButton id = 'dead' name="selection" value="dead cases" label="Show Dead Cases" [(ngModel)]="selectedValue" (onClick)="selectionChanged()"></p-radioButton>
         </div>
     </div>
   </div>

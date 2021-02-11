@@ -63,6 +63,7 @@ import {DatePipe} from '@angular/common';
     {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
     {provide: 'BACKEND_NOTIFICATION_URL', useValue: environment.backendNotificationUrl},
     {provide: 'BACKEND_NOTIFICATION_PORT', useValue: environment.backendNotificationPort},
+    {provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true},
     DatePipe
   ],
   bootstrap: [AppComponent],
