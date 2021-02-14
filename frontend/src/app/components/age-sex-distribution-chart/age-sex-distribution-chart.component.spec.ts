@@ -2,9 +2,15 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AgeSexDistributionChartComponent } from './age-sex-distribution-chart.component';
 import {environment} from "../../../environments/environment";
-import {HttpClient, HttpHandler} from "@angular/common/http";
-import {DatePipe} from "@angular/common";
+import {HttpClient, HttpClientModule, HttpHandler} from "@angular/common/http";
+import {CommonModule, DatePipe} from "@angular/common";
 import {MqttModule} from "ngx-mqtt";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import {InputNumberModule} from "primeng/inputnumber";
+import {FormsModule} from "@angular/forms";
+import {PanelModule} from "primeng/panel";
+import {RadioButtonModule} from "primeng/radiobutton";
 
 
 describe('AgeSexDistributionChartComponent', () => {
@@ -16,12 +22,14 @@ describe('AgeSexDistributionChartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        MqttModule.forRoot({
-          connectOnCreate: false,
-
-        }),
-      ],
+      imports: [HttpClientModule,  CommonModule,
+        BrowserAnimationsModule,
+        LeafletModule,
+        InputNumberModule,
+        FormsModule,
+        PanelModule,
+        RadioButtonModule,
+        MqttModule.forRoot({connectOnCreate: false,})],
       declarations: [ AgeSexDistributionChartComponent ],
       providers: [HttpClient, HttpHandler, DatePipe,
         {provide: 'BACKEND_API_URL', useValue: environment.backendApiUrl},
@@ -39,20 +47,23 @@ describe('AgeSexDistributionChartComponent', () => {
   });
 
   it('should create', () => {
+    console.log('******************' + fixture.nativeElement.innerHTML);
     expect(fixture.nativeElement.querySelector('.p-radiobutton .pradiobutton-box')
       .getAttribute('aria-checked')).toEqual('false');
     expect(component).toBeTruthy();
   });
 
-
   /*
+
   it('show dead cases should be selected after clicking', () => {
     fixture.detectChanges();
-    radioB = fixture.nativeElement.querySelector('p-radioButton')[0].getElementById('dead');
+    radioB = fixture.nativeElement.querySelector('p-radioButton .p-radiobutton-box')[2];
     expect(radioB.getAttribute('aria-checked')).toBe('true');
   })
 
+
    */
+
 
   afterEach(() => {
     expectedValue = "";
