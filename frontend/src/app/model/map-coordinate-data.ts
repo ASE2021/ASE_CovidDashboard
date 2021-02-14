@@ -8,13 +8,13 @@ export class ProvinceCoordinates {
   public coordinates: number[][][];
   public border: number[][][];
   private covidData: CovidDataMap;
-  private bezirke: ProvinceCoordinates[];
+  private districts: ProvinceCoordinates[];
   private layers: Layer[];
 
   constructor(provinceName: string, provinceId: string, border: any, beizrke?: ProvinceCoordinates[]) {
     this.provinceName = provinceName;
     this.provinceId = provinceId;
-    this.bezirke = beizrke;
+    this.districts = beizrke;
     this.border = border.map(item => item.length === 1 && item[0].length > 2 ? [...item[0]] : item) || [];
   }
 
@@ -22,8 +22,8 @@ export class ProvinceCoordinates {
     return this.covidData;
   }
 
-  public getBezirke(): ProvinceCoordinates[] {
-    return this.bezirke;
+  public getDistricts(): ProvinceCoordinates[] {
+    return this.districts;
   }
 
   createBorderMapLayers(eventOptions: LayerEventControlOptions): Layer[] {
@@ -32,7 +32,7 @@ export class ProvinceCoordinates {
     console.log(this.covidData);
     this.layers = this.border.map(region => polygon(region.map(item => new LatLng(Number(item[0]) > Number(item[1]) ? Number(item[0]) : Number(item[1]), Number(item[0]) > Number(item[1]) ? Number(item[1]) : Number(item[0]))),
       {
-        attribution: !this.bezirke ? this.provinceName : this.provinceId, ...this.defaultStyle(this.covidData),
+        attribution: !this.districts ? this.provinceName : this.provinceId, ...this.defaultStyle(this.covidData),
       })
       .on('click', (event => {
         console.log(event);
@@ -45,7 +45,7 @@ export class ProvinceCoordinates {
         if (eventOptions && eventOptions.onMouseEnter) {
           eventOptions.onMouseEnter(event, `<div class="map-info-box">
         <ul>
-            <li><span>${!this.bezirke ? 'District' : 'Province'}:</span> ${this.covidData.provinceName}</li>
+            <li><span>${!this.districts ? 'District' : 'Province'}:</span> ${this.covidData.provinceName}</li>
             <li><span>Active cases:</span> ${this.covidData.activeCases} / ${this.covidData.activeCasesRelative}</li>
             <li><span>Deaths:</span> ${this.covidData.sumDeaths} / ${this.covidData.sumDeathsRelative}</li>
             <li><span>Cured:</span> ${this.covidData.sumCured} / ${this.covidData.sumCuredRelative}</li>
@@ -133,6 +133,10 @@ export class ProvinceCoordinates {
   updateCovidInfo(covidDataMap: CovidDataMap): void {
     console.log(covidDataMap);
     this.covidData = covidDataMap;
+  }
+
+  hasCovidInformationForDistricts(): boolean {
+    return this.districts.every(district => !!district.getCovidData());
   }
 }
 
