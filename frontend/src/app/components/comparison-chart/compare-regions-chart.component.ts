@@ -3,7 +3,6 @@ import {CovidService} from '../../services/covid.service';
 import {SocketService} from '../../services/socket/socket.service';
 import {SelectItem, TreeNode} from 'primeng/api';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
-import {TreeTable} from 'primeng/treetable';
 import {Area} from '../../model/area';
 
 @Component({
@@ -53,14 +52,17 @@ export class CompareRegionsChartComponent implements OnInit {
     this.regionData = await this.covidService.loadProvincesAndDistrictsAsTableData();
   }
 
-  private async loadDataAndUpdateChart(forceUpdate: boolean): Promise<void> {
+  private async loadDataAndUpdateChart(forceUpdate: boolean, calendar?): Promise<void> {
     this.loadedData = await this.covidService.getInfosForAndMap(this.loadedData, this.areasToShowInChart, forceUpdate);
     this.elementChanged();
+    if (calendar) {
+      calendar.reloadData(this.chartData);
+    }
   }
 
-  async regionChanged(val: any): Promise<void> {
+  async regionChanged(val: any, calendar?): Promise<void> {
     this.areasToShowInChart = val;
-    this.loadDataAndUpdateChart(false);
+    this.loadDataAndUpdateChart(false, calendar);
 
   }
 

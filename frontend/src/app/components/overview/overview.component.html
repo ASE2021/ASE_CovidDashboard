@@ -47,17 +47,24 @@
         <div class="p-grid">
           <div class="p-col-6"><span class="dropdown-text">Select the province or district you want to show</span></div>
           <div class="p-col-4">
-            <app-treedropdown (regionChange)="initializePositiveCasesPerDateChart($event[0].areaId)"
+            <app-treedropdown (regionChange)="initializePositiveCasesPerDateChart($event[0].areaId, calendarCases);"
                               [initSelected]="areaAustria"
                               [multipleSelection]="false"
                               [regionData]="regionData"></app-treedropdown>
           </div>
         </div>
+        <div class="p-grid">
+          <div class="p-col-6"><span class="dropdown-text">Select the range you want to show</span></div>
+          <div class="p-col-4">
+            <app-calendar-range-selector #calendarCases [initialDataset]="positiveCasesPerDateData"
+                                         (filterDataChange)="positiveCasesPerDateData = $event"></app-calendar-range-selector>
+          </div>
+        </div>
         <div class="p-col-12">
           <p-chart *ngIf="positiveCasesPerDateData && positiveCasesPerDateData.datasets.length > 0" type="bar"
                    [data]="positiveCasesPerDateData"></p-chart>
-          <p-progressSpinner
-            *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinner>
+          <p-progressSpinnerca
+            *ngIf="!positiveCasesPerDateData || positiveCasesPerDateData.datasets.length == 0"></p-progressSpinnerca>
         </div>
       </div>
     </div>
@@ -75,17 +82,24 @@
             <div class="p-col-6"><span class="dropdown-text">Select the province or district you want to show</span>
             </div>
             <div class="p-col-4">
-              <app-treedropdown (regionChange)="comparisonRegionChanged($event[0].areaId)"
+              <app-treedropdown (regionChange)="comparisonRegionChanged($event[0].areaId,calendarComparison);"
                                 [initSelected]="areaAustria"
                                 [multipleSelection]="false"
                                 [regionData]="regionData"></app-treedropdown>
             </div>
           </div>
           <div class="p-grid">
+            <div class="p-col-6"><span class="dropdown-text">Select the range you want to show</span></div>
+            <div class="p-col-4">
+              <app-calendar-range-selector #calendarComparison [initialDataset]="comparison"
+                                           (filterDataChange)="comparison = $event"></app-calendar-range-selector>
+            </div>
+          </div>
+          <div class="p-grid">
             <div class="p-col-10 p-offset-1">
               <div class="p-col-6 p-offset-3">
                 <p-checkbox name="dataPer100.000" label="Show data per 100.000 residents"
-                            [binary]="true" (onChange)="showRelativeComparisonData()"></p-checkbox>
+                            [binary]="true" (onChange)="showRelativeComparisonData(calendarComparison);"></p-checkbox>
               </div>
               <p-chart *ngIf="comparison" type="bar"
                        [data]="comparison" [options]="options"></p-chart>
@@ -106,10 +120,17 @@
           <div class="p-grid">
             <div class="p-col-6"><span class="dropdown-text">Select the province you want to show</span></div>
             <div class="p-col-4">
-              <app-treedropdown (regionChange)="initializeHospitalBedsPerDateChart($event[0].areaId)"
+              <app-treedropdown (regionChange)="initializeHospitalBedsPerDateChart($event[0].areaId,calendarHospital);"
                                 [initSelected]="areaAustria"
                                 [multipleSelection]="false"
                                 [regionData]="provinces"></app-treedropdown>
+            </div>
+          </div>
+          <div class="p-grid">
+            <div class="p-col-6"><span class="dropdown-text">Select the range you want to show</span></div>
+            <div class="p-col-4">
+              <app-calendar-range-selector #calendarHospital [initialDataset]="hospitalBedsPerDate"
+                                           (filterDataChange)="hospitalBedsPerDate = $event"></app-calendar-range-selector>
             </div>
           </div>
           <div class="p-grid">
