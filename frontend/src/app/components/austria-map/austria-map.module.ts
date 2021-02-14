@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {AustriaMapComponent} from './austria-map.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {InputNumberModule} from 'primeng/inputnumber';
@@ -18,6 +18,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     PanelModule,
     InputSwitchModule,
   ],
+  providers: [DatePipe],
   exports: [AustriaMapComponent],
 })
 export class AustriaMapModule {

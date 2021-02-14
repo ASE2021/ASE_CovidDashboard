@@ -1,7 +1,7 @@
 package com.ase.ase;
 
 import com.ase.ase.entities.Population;
-import com.ase.ase.services.DownloadPopulationData;
+import com.ase.ase.downloadServices.DownloadPopulationData;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;

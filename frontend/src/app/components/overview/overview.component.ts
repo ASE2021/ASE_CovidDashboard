@@ -1,23 +1,36 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
-import {MessageResponse} from '../../model/MessageResponse';
-import {IMqttMessage} from 'ngx-mqtt';
+import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
+import {Area} from '../../model/area';
+import {CovidOverview} from '../../model/covid-overview';
+import {TreeNode} from 'primeng/api';
+
 
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss'],
 })
+
 export class OverviewComponent implements OnInit {
 
   positiveCasesPerDateData: any;
+  sexDistributionCuredData: any;
+  sexDistributionDeathsData: any;
   hospitalBedsPerDate: any;
+  hospitalUtilizationData: any;
   activeCases: number;
-  numberOfCases: number;
   deaths: number;
-  province: any;
+  comparison: any;
+  relative = false;
+  options: any;
+  covidOverview: CovidOverview;
+  regionData: any;
+  areaAustria: Area = {areaId: 10, areaName: 'Österreich'};
+  provinces: TreeNode[];
+  private selectedAreaForComparison = 10;
 
 
   constructor(private covidService: CovidService, private socketService: SocketService) {
@@ -25,59 +38,115 @@ export class OverviewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.initializePositiveCasesPerDateChart();
+
+    this.initializeAll();
+
+    this.socketService.connectAndObserveNewData()
+      .subscribe(() => {
+        this.initializeAll();
+      });
+  }
+
+  private initializeAll(): void {
+    this.initializeComparisonCasesChart(this.relative, this.selectedAreaForComparison);
+    this.initializePositiveCasesPerDateChart(10);
     this.initializeBasicInformation();
-    this.initializeHospitalBedsPerDateChart();
+    this.initializeSexDistributionCharts(10);
+    this.initializeHospitalBedsPerDateChart(10);
+    this.loadRegionData();
+  }
 
-    this.socketService.connectToMqtt(
-      () => {
-        this.socketService.observe('new-data')
-          .subscribe((message: IMqttMessage) => {
-            console.log(message.payload.toString());
-            try {
-              if ((JSON.parse(message.payload.toString()) as MessageResponse).update) {
-                this.initializePositiveCasesPerDateChart();
-                this.initializeBasicInformation();
-                this.initializeHospitalBedsPerDateChart();
-              }
-            } catch (e) {
-            }
-          });
+  private async loadRegionData(): Promise<void> {
+    this.regionData = await this.covidService.loadProvincesAndDistrictsAsTableData();
+    this.provinces = await this.covidService.loadProvinces();
+  }
+
+  async initializeBasicInformation(): Promise<void> {
+    this.covidOverview = await this.covidService.getBasicInformation();
+  }
+
+  async initializeComparisonCasesChart(relative, areaId: number): Promise<void> {
+
+    const data = await this.covidService.getComparisonCasesData(areaId, relative);
+
+    this.options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          },
+        }],
       },
-    );
+    };
+
+    this.comparison = new ChartModelBuilder()
+      .buildBasicChartModel(Object.keys(data[areaId.toString(10)])
+          .map(item => item[0].toUpperCase()
+            + item.substring(1, item.length)
+              .replace(/([A-Z])/g, ' $1')
+              .trim()
+              .toLowerCase()), data.labels,
+        Object.values(data[areaId.toString(10)]));
   }
 
-  // TODO: get data from backend (receive object with these (or more) properties)
-  private async initializeBasicInformation(): Promise<void> {
-    this.activeCases = 41000;
-    this.numberOfCases = 200000;
-    this.deaths = 2000;
-  }
-
-  private async initializePositiveCasesPerDateChart(): Promise<void> {
-    const data = await this.covidService.getNewCasesPerDate();
+  async initializePositiveCasesPerDateChart(areaId: number): Promise<void> {
+    console.log(areaId);
+    const data = await this.covidService.getNewCasesPerDate([areaId.toString(10)]);
+    console.log(data);
     this.positiveCasesPerDateData = new ChartModelBuilder()
+      .useBarChartStyle()
       .buildBasicChartModel(['Positive Covid-19 cases per date'],
-        data.map(item => item.date.split('T')[0]),
-        [data.map(item => item.cases)]);
+        data.labels, Object.values(data[areaId.toString(10)]));
+  }
+
+  async initializeSexDistributionCharts(areaId: number): Promise<void> {
+    const response = await this.covidService.getSexDistributionCases([areaId.toString(10)]);
+    const male = response[0].data.find(item => item.sex === 'M').values;
+    const female = response[0].data.find(item => item.sex === 'W').values;
+
+
+    this.sexDistributionCuredData =
+      new ChartModelBuilder().useCustomColors([['#1B2771', '#A93226']])
+        .useBarChartStyle()
+        .buildBasicChartModel(['Covid Cases Distributed per sex'],
+          ['female', 'male'],
+          [[
+            female.find(item => item.identifier === 'cured').value,
+            male.find(item => item.identifier === 'cured').value,
+          ]]);
+
+
+    this.sexDistributionDeathsData = new ChartModelBuilder()
+      .useCustomColors([['#1B2771', '#A93226']])
+      .useBarChartStyle()
+      .buildBasicChartModel(['Deaths Distributed per sex'],
+        ['female', 'male'],
+        [[
+          female.find(item => item.identifier === 'dead').value,
+          male.find(item => item.identifier === 'dead').value,
+        ],
+        ]);
+  }
+
+  async initializeHospitalBedsPerDateChart(areaId: number): Promise<void> {
+    this.hospitalBedsPerDate = new ChartModelBuilder()
+      .useLineChartStyle()
+      .buildModelFromResponse(
+        await this.covidService.getHospitalBedsPerDate([areaId.toString(10)]),
+        areaId.toString(10));
+
   }
 
 
-  private async initializeHospitalBedsPerDateChart(): Promise<void> {
-    const data = await  this.covidService.getHospitalBedsPerDate();
-    this.hospitalBedsPerDate = new ChartModelBuilder()
-      .buildBasicChartModel(['Intense beds used', 'Normal beds used'],
-        data.map(item => item.date.split('T')[0]),
-        data.reduce((dataArray, current) =>
-        [
-          [...dataArray[0], current.intenseBeds],
-          [...dataArray[1], current.normalBeds],
-        ], [[], []]));
+  public showRelativeComparisonData(): void {
+    this.relative = !this.relative;
+    this.initializeComparisonCasesChart(this.relative, this.selectedAreaForComparison);
+  }
 
 
-
+  comparisonRegionChanged(areaId: number): void {
+    this.selectedAreaForComparison = areaId;
+    this.initializeComparisonCasesChart(this.relative, areaId);
   }
 
 }
-
-

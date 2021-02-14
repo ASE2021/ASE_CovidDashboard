@@ -1,0 +1,56 @@
+<div class="p-grid">
+  <p class="data-info">The hospitalization data is only available for provinces,
+    not for districts. The hospitalization data for provinces is available from April 1st.</p>
+  <div class="p-col-6"><span class="dropdown-text">Select the province or district you want to show</span>
+  </div>
+  <div class="p-col-4">
+    <app-treedropdown (regionChange)="loadTableData($event[0].areaId)"
+                      [initSelected]="areaAustria"
+                      [multipleSelection]="false"
+                      [regionData]="regionData"></app-treedropdown>
+  </div>
+</div>
+<p-table #generalSituation [value]="data" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+         [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"
+         [paginator]="true"
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         [globalFilterFields]="['date','cases','deaths','hospitalBedsSum']">
+  <ng-template pTemplate="caption">
+    <div class="p-d-flex">
+                <span class="p-input-icon-left p-ml-auto">
+                    <em class="pi pi-search"></em>
+                    <input pInputText type="text" (input)="generalSituation.filterGlobal($event.target, 'contains')" placeholder="Search keyword" />
+                </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <th>
+      <div class="p-d-flex p-jc-between p-ai-center">
+        Date
+        <p-columnFilter type="date" [field]="'date'" display="menu"></p-columnFilter>
+      </div>
+    </th>
+    <th *ngFor="let i of columns">
+      <div class="p-d-flex p-jc-between p-ai-center">
+        {{i.label}}
+        <p-columnFilter type="numeric" [field]="'values.' + i.field" display="menu"></p-columnFilter>
+      </div>
+    </th>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-rowData>
+    <tr>
+      <td >{{rowData.date}}</td>
+      <td *ngFor="let i of columns">{{rowData.values[i.field]}}</td>
+    </tr>
+  </ng-template>
+
+
+  <ng-template pTemplate="footer">
+    <tr>
+      <td colspan="1" class="p-text-right">Totals</td>
+      <td *ngFor="let i of columns">{{totals[i.field]}}</td>
+    </tr>
+
+  </ng-template>
+</p-table>

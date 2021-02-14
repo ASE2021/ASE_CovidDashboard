@@ -1,10 +1,13 @@
 export interface CovidDataMap {
   provinceId: string;
   provinceName: string;
-  casesPer100Thousand: number;
   activeCases: number;
-  deaths: number;
-  normalBeds: number;
-  intensiveBeds: number;
+  activeCasesRelative: number;
+  sumDeaths: number;
+  sumDeathsRelative: number;
+  sumCured: number;
+  sumCuredRelative: number;
+  sumCased: number;
+  sumCasedRelative: number;
   geoId?: string;
 }

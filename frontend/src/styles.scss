@@ -5,7 +5,7 @@ html {
   margin: 0;
 }
 
-body{
+body {
   margin-left: 4rem;
   margin-right: 4rem;
 }
@@ -14,15 +14,19 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
+
 p-header {
   color: #85e085;
 }
 
 .map-info-box {
+  span {
+    font-weight: bolder;
+  }
   color: white;
   font-width: bold;
   font-size: larger;
-  background-color: red;
+  background-color: dodgerblue;
   border-radius: 10px;
   ul {
     list-style: none;
@@ -57,3 +61,63 @@ p-header {
 
 }
 
+.data-info {
+  font-size: small;
+  color: darkred;
+  margin: 10px;
+}
+
+.dropdown-text {
+  font-family: Helvetica;
+  font-size: medium;
+  line-height: 38px;
+}
+
+.app-comparison-chart, app-treedropdown {
+  .p-multiselect {
+    width: 100%;
+    text-align: center;
+    padding-left: 16px;
+  }
+  .p-button {
+    width: 100%
+  }
+  .p-treetable {
+    width: 300px;
+
+    input {
+      width: 100%;
+    }
+
+    .p-checkbox {
+      height: 26px;
+    }
+  }
+  .p-treetable .p-treetable-tbody > tr > td {
+    padding: 0;
+  }
+  .p-treetable .p-treetable-thead > tr > th {
+    padding: 0;
+  }
+  .p-button-icon-right {
+    margin-right: -4px;
+  }
+
+  .p-overlaypanel {
+    height: 420px;
+  }
+  .p-treetable-scrollable-body {
+    height: 300px;
+  }
+  .p-button.p-button-secondary.p-button-outlined, .p-buttonset.p-button-secondary > .p-button.p-button-outlined, .p-splitbutton.p-button-secondary > .p-button.p-button-outlined {
+    border-color: lightgray;
+  }
+}
+
+.card-style-active {
+  background-color: #85e085
+}
+
+.chart-view {
+  min-height: 300px;
+}

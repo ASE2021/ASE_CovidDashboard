@@ -1,0 +1,37 @@
+<div class="p-col-12">
+  <div class="p-grid">
+    <div class="p-col-6"><span class="dropdown-text">Select the province you want to show</span>
+    </div>
+    <div class="p-col-4">
+      <app-treedropdown (regionChange)="regionSelected($event[0].areaId)"
+                        [initSelected]="areaAustria"
+                        [multipleSelection]="false"
+                        [regionData]="provinces"></app-treedropdown>
+    </div>
+  </div>
+  <div class="p-grid">
+    <div class="p-col-8 p-offset-1">
+      <h3>Hospital Utilization</h3>
+      <p-chart *ngIf="hospitalUtilizationData" type="line"
+               [data]="hospitalUtilizationData"></p-chart>
+      <p-progressSpinner
+        *ngIf="!hospitalUtilizationData"></p-progressSpinner>
+    </div>
+    <div class="p-d-flex p-flex-column">
+      <div class="p-mb-2">
+        <p-radioButton name="selection" value="1" label="Normal Beds" [(ngModel)]="bedTypes"
+                       (onClick)="selectionChanged()"></p-radioButton>
+      </div>
+      <div class="p-mb-2">
+        <p-radioButton name="selection" value="0" label="Intense Beds" [(ngModel)]="bedTypes"
+                       (onClick)="selectionChanged()"></p-radioButton>
+      </div>
+      <div class="p-mb-2">
+        <p-radioButton name="selection" value="2" label="Both Bed Types" [(ngModel)]="bedTypes"
+                       (onClick)="selectionChanged()"></p-radioButton>
+      </div>
+    </div>
+  </div>
+
+</div>
+

@@ -16,28 +16,53 @@ export class AustrianProvinceData {
     return this.provinceCoordinates.find(item => item.provinceId === name);
   }
 
-  public getAllLayers(eventOptions?: LayerEventControlOptions): Layer[] {
-    return this.provinceCoordinates.reduce((layers, curr) => [...layers, ...curr.createBorderMapLayers(eventOptions), ...curr.createBezirkeMapLayers(eventOptions)], []);
-  }
-
   public getBorderLayers(eventOptions?: LayerEventControlOptions): Layer[] {
-    return this.provinceCoordinates.reduce((layers, curr) => [...layers, ...curr.createBorderMapLayers(eventOptions)], []);
+    return this.provinceCoordinates.reduce((layers, curr) =>
+      [...layers, ...curr.createBorderMapLayers(eventOptions)], []);
   }
 
-  public getBezirkLayersFor(provinceId: string, eventOptions?: LayerEventControlOptions): Layer[] {
-    return this.getProvinceDatasFor(provinceId).createBezirkeMapLayers(eventOptions);
-  }
-  public getBezirkLayer(eventOptions?: LayerEventControlOptions): Layer[] {
-    return this.provinceCoordinates.reduce((layers, curr) => [...layers, ...curr.createBezirkeMapLayers(eventOptions)], []);
-  }
 
   getColoredLayersFor(provinces: Provinces, color: string): Layer[] {
     return this.getProvinceDatasFor(provinces)
       .createColoredLayers(color);
   }
 
-  public fillWithCovidData(cases: CovidDataMap[], casesBezirke: CovidDataMap[] ): void {
+  public fillWithBezirkeCovid(id: string, data: CovidDataMap[]): void {
+    this.getProvinceDatasFor(id)
+      .getBezirke()
+      .forEach(item => {
+        console.log(item);
+        console.log(data);
+          return item.updateCovidInfo(data.find(caseInfo => caseInfo.provinceName === item.provinceName ||
+            caseInfo.provinceName === item.provinceName.replace(' Stadt', '(Stadt)') ||
+            caseInfo.provinceName === item.provinceName.replace(' Land', '(Land)') ||
+            caseInfo.provinceName === item.provinceName + '(Stadt)' ||
+            caseInfo.provinceName === item.provinceName.split(' ')[0] + '(Land)' ||
+            caseInfo.provinceName === item.provinceName + ' Stadt',
+          ));
+        },
+      );
+  }
+
+  public findBezirkInfo(provinceId: string, districtName: string): CovidDataMap {
+    return this.getProvinceDatasFor(provinceId)
+      .getBezirke().find(item => {
+        const caseInfo = item.getCovidData();
+        return caseInfo.provinceName === item.provinceName ||
+        caseInfo.provinceName === item.provinceName.replace(' Stadt', '(Stadt)') ||
+        caseInfo.provinceName === item.provinceName.replace(' Land', '(Land)') ||
+        caseInfo.provinceName === item.provinceName + '(Stadt)' ||
+        caseInfo.provinceName === item.provinceName.split(' ')[0] + '(Land)';
+      }).getCovidData();
+  }
+
+  public fillWithCovidData(cases: CovidDataMap[]): void {
     console.log(cases);
     this.provinceCoordinates.forEach(item => item.updateCovidInfo(cases.find(caseInfo => caseInfo.geoId === item.provinceId)));
+  }
+
+  getBezirkLayersFor(attribution: string, eventOptions?: LayerEventControlOptions): Layer[] {
+    return this.getProvinceDatasFor(attribution).getBezirke()
+      .reduce((layers, curr) => [...layers, ...curr.createBorderMapLayers(eventOptions)], []);
   }
 }
