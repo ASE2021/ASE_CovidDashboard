@@ -6,6 +6,7 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import {FormsModule} from '@angular/forms';
 import {PanelModule} from 'primeng/panel';
 import {InputSwitchModule} from 'primeng/inputswitch';
+import {ProgressBarModule} from 'primeng/progressbar';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     FormsModule,
     PanelModule,
     InputSwitchModule,
+    ProgressBarModule,
   ],
   providers: [DatePipe],
   exports: [AustriaMapComponent],

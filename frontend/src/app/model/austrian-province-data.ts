@@ -1,6 +1,5 @@
 import {ProvinceCoordinates} from './map-coordinate-data';
 import {Layer} from 'leaflet';
-import {Provinces} from './Provinces';
 import {LayerEventControlOptions} from './layer-event-control-options';
 import {CovidDataMap} from './covid-data-map';
 
@@ -12,7 +11,7 @@ export class AustrianProvinceData {
     this.provinceCoordinates = provinceCoordinates;
   }
 
-  public getProvinceDatasFor(name: string): ProvinceCoordinates {
+  public getProvinceDataFor(name: string): ProvinceCoordinates {
     return this.provinceCoordinates.find(item => item.provinceId === name);
   }
 
@@ -21,14 +20,8 @@ export class AustrianProvinceData {
       [...layers, ...curr.createBorderMapLayers(eventOptions)], []);
   }
 
-
-  getColoredLayersFor(provinces: Provinces, color: string): Layer[] {
-    return this.getProvinceDatasFor(provinces)
-      .createColoredLayers(color);
-  }
-
-  public fillWithBezirkeCovid(id: string, data: CovidDataMap[]): void {
-    const districts = this.getProvinceDatasFor(id).getDistricts();
+  public fillProvinceWithDistrictCovidData(id: string, data: CovidDataMap[]): void {
+    const districts = this.getProvinceDataFor(id).getDistricts();
     if (districts.some(district => !district.getCovidData())) {
       districts
         .forEach(item => {
@@ -43,17 +36,18 @@ export class AustrianProvinceData {
         );
     }
   }
-  public fillWithCovidData(cases: CovidDataMap[]): void {
-    console.log(cases);
-    this.provinceCoordinates.forEach(item => item.updateCovidInfo(cases.find(caseInfo => caseInfo.geoId === item.provinceId)));
+
+  public fillProvincesWithCovidData(cases: CovidDataMap[]): void {
+    this.provinceCoordinates.forEach(item => item.updateCovidInfo(
+      cases.find(caseInfo => caseInfo.geoId === item.provinceId)));
   }
 
-  getBezirkLayersFor(attribution: string, eventOptions?: LayerEventControlOptions): Layer[] {
-    return this.getProvinceDatasFor(attribution).getDistricts()
+  getDestrictLayersFor(attribution: string, eventOptions?: LayerEventControlOptions): Layer[] {
+    return this.getProvinceDataFor(attribution).getDistricts()
       .reduce((layers, curr) => [...layers, ...curr.createBorderMapLayers(eventOptions)], []);
   }
 
   hasCovidInformation(attribution: string): boolean {
-    return this.getProvinceDatasFor(attribution).hasCovidInformationForDistricts();
+    return this.getProvinceDataFor(attribution).hasCovidInformationForDistricts();
   }
 }

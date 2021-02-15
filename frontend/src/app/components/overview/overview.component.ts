@@ -38,9 +38,7 @@ export class OverviewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-
     this.initializeAll();
-
     this.socketService.connectAndObserveNewData()
       .subscribe(() => {
         this.initializeAll();

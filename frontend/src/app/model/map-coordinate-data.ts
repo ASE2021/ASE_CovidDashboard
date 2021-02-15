@@ -27,15 +27,13 @@ export class ProvinceCoordinates {
   }
 
   createBorderMapLayers(eventOptions: LayerEventControlOptions): Layer[] {
-    console.log(this.border);
-    console.log(this.provinceName);
-    console.log(this.covidData);
-    this.layers = this.border.map(region => polygon(region.map(item => new LatLng(Number(item[0]) > Number(item[1]) ? Number(item[0]) : Number(item[1]), Number(item[0]) > Number(item[1]) ? Number(item[1]) : Number(item[0]))),
+    this.layers = this.border.map(region => polygon(region.map(
+      item => new LatLng(Number(item[0]) > Number(item[1]) ? Number(item[0]) : Number(item[1]),
+        Number(item[0]) > Number(item[1]) ? Number(item[1]) : Number(item[0]))),
       {
         attribution: !this.districts ? this.provinceName : this.provinceId, ...this.defaultStyle(this.covidData),
       })
       .on('click', (event => {
-        console.log(event);
         if (eventOptions && eventOptions.onClick) {
           eventOptions.onClick(event);
         }
@@ -92,7 +90,7 @@ export class ProvinceCoordinates {
       return '#72C600';
     }
     if (data.activeCasesRelative < 150) {
-      return '#DE6501';
+      return '#c0de39';
     }
     if (data.activeCasesRelative < 200) {
       return '#E5B100';
@@ -131,7 +129,6 @@ export class ProvinceCoordinates {
   }
 
   updateCovidInfo(covidDataMap: CovidDataMap): void {
-    console.log(covidDataMap);
     this.covidData = covidDataMap;
   }
 

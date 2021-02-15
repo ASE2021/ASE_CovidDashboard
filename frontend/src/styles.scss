@@ -18,6 +18,33 @@ h1, h2, h3, h4, h5, h6 {
 p-header {
   color: #85e085;
 }
+.map-color-legend {
+  width: 100%;
+  td, th {
+    width: 15%;
+    padding: 0;
+    margin: 0;
+    height:10px;
+    &.cases-less-100 {
+      background-color: #72C600;
+    }
+    &.cases-greater-100 {
+      background-color: #c0de39;
+    }
+    &.cases-greater-150 {
+      background-color: #E5B100;
+    }
+    &.cases-greater-200 {
+      background-color: #E57D00;
+    }
+    &.cases-greater-250 {
+      background-color: #E55E00;
+    }
+    &.cases-greater-300 {
+      background-color: #E50000;
+    }
+  }
+}
 
 .map-info-box {
   span {
