@@ -89,7 +89,7 @@ export class AustriaMapComponent implements OnInit {
     this.mapData = await this.mapService.loadCoordinateData();
     this.mapData.fillProvincesWithCovidData(this.cases);
     this.borderLayers = this.mapData.getBorderLayers({
-      onClick: this.handleProvinceClick,
+      onClick: event => this.handleProvinceClick(event),
       onMouseEnter: (ev, info) => {
         this.control.getContainer().innerHTML = info;
         this.cd.detectChanges();

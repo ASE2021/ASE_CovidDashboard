@@ -25,12 +25,16 @@ export class AustrianProvinceData {
     if (districts.some(district => !district.getCovidData())) {
       districts
         .forEach(item => {
+            console.log(item);
+            console.log(data);
             return item.updateCovidInfo(data.find(caseInfo => caseInfo.provinceName === item.provinceName ||
               caseInfo.provinceName === item.provinceName.replace(' Stadt', '(Stadt)') ||
               caseInfo.provinceName === item.provinceName.replace(' Land', '(Land)') ||
               caseInfo.provinceName === item.provinceName + '(Stadt)' ||
               caseInfo.provinceName === item.provinceName.split(' ')[0] + '(Land)' ||
-              caseInfo.provinceName === item.provinceName + ' Stadt',
+              caseInfo.provinceName === item.provinceName + ' Stadt' ||
+              caseInfo.provinceName === item.provinceName + '-Stadt' ||
+              caseInfo.provinceName === item.provinceName.replace(' ', '-'),
             ));
           },
         );
