@@ -22,35 +22,37 @@ import {HospitalUtilizationModule} from '../hospital-utilization-chart/hospital-
 import {AgeSexDistributionChartModule} from '../age-sex-distribution-chart/age-sex-distribution-chart.module';
 import {CheckboxModule} from 'primeng/checkbox';
 import {TreedropdownModule} from '../treedropdown/treedropdown.module';
+import {CalendarRangeSelectorModule} from '../calendar-range-selector/calendar-range-selector.module';
 
 
 @NgModule({
   declarations: [OverviewComponent],
-  imports: [
-    CommonModule,
-    ChartModule,
-    CardModule,
-    PanelModule,
-    SelectButtonModule,
-    TabViewModule,
-    NoopAnimationsModule,
-    DropdownModule,
-    BrowserAnimationsModule,
-    TableModule,
-    TabMenuModule,
-    RoutingModule,
-    InputTextModule,
-    MultiSelectModule,
-    FormsModule,
-    ProgressSpinnerModule,
-    TableWithFilterModule,
-    CalendarModule,
-    CompareRegionsChartModule,
-    AgeSexDistributionChartModule,
-    CheckboxModule,
-    HospitalUtilizationModule,
-    TreedropdownModule,
-  ],
+    imports: [
+        CommonModule,
+        ChartModule,
+        CardModule,
+        PanelModule,
+        SelectButtonModule,
+        TabViewModule,
+        NoopAnimationsModule,
+        DropdownModule,
+        BrowserAnimationsModule,
+        TableModule,
+        TabMenuModule,
+        RoutingModule,
+        InputTextModule,
+        MultiSelectModule,
+        FormsModule,
+        ProgressSpinnerModule,
+        TableWithFilterModule,
+        CalendarModule,
+        CompareRegionsChartModule,
+        AgeSexDistributionChartModule,
+        CheckboxModule,
+        HospitalUtilizationModule,
+        TreedropdownModule,
+        CalendarRangeSelectorModule,
+    ],
 
   exports: [OverviewComponent],
 })

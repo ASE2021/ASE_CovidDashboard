@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {CovidService} from '../../services/covid.service';
 import {ChartModelBuilder} from '../../model/chart-model-builder';
 import {SocketService} from '../../services/socket/socket.service';
-import {HospitalBedsDaily} from '../../model/hospital-beds-daily';
 import {Area} from '../../model/area';
 import {CovidOverview} from '../../model/covid-overview';
 import {TreeNode} from 'primeng/api';
@@ -33,7 +32,9 @@ export class OverviewComponent implements OnInit {
   private selectedAreaForComparison = 10;
 
 
-  constructor(private covidService: CovidService, private socketService: SocketService) {
+  constructor(private covidService: CovidService,
+              private socketService: SocketService,
+              private ngZone: NgZone) {
 
   }
 
@@ -52,6 +53,7 @@ export class OverviewComponent implements OnInit {
     this.initializeSexDistributionCharts(10);
     this.initializeHospitalBedsPerDateChart(10);
     this.loadRegionData();
+
   }
 
   private async loadRegionData(): Promise<void> {
@@ -63,7 +65,7 @@ export class OverviewComponent implements OnInit {
     this.covidOverview = await this.covidService.getBasicInformation();
   }
 
-  async initializeComparisonCasesChart(relative, areaId: number): Promise<void> {
+  async initializeComparisonCasesChart(relative, areaId: number, calendar?): Promise<void> {
 
     const data = await this.covidService.getComparisonCasesData(areaId, relative);
 
@@ -85,9 +87,13 @@ export class OverviewComponent implements OnInit {
               .trim()
               .toLowerCase()), data.labels,
         Object.values(data[areaId.toString(10)]));
+
+    if (calendar) {
+      calendar.reloadData(this.comparison);
+    }
   }
 
-  async initializePositiveCasesPerDateChart(areaId: number): Promise<void> {
+  async initializePositiveCasesPerDateChart(areaId: number, calendar?): Promise<void> {
     console.log(areaId);
     const data = await this.covidService.getNewCasesPerDate([areaId.toString(10)]);
     console.log(data);
@@ -95,6 +101,9 @@ export class OverviewComponent implements OnInit {
       .useBarChartStyle()
       .buildBasicChartModel(['Positive Covid-19 cases per date'],
         data.labels, Object.values(data[areaId.toString(10)]));
+    if (calendar) {
+      calendar.reloadData(this.positiveCasesPerDateData);
+    }
   }
 
   async initializeSexDistributionCharts(areaId: number): Promise<void> {
@@ -126,25 +135,28 @@ export class OverviewComponent implements OnInit {
         ]);
   }
 
-  async initializeHospitalBedsPerDateChart(areaId: number): Promise<void> {
+  async initializeHospitalBedsPerDateChart(areaId: number, calendar?): Promise<void> {
     this.hospitalBedsPerDate = new ChartModelBuilder()
       .useLineChartStyle()
       .buildModelFromResponse(
         await this.covidService.getHospitalBedsPerDate([areaId.toString(10)]),
         areaId.toString(10));
-
+    if (calendar) {
+      calendar.reloadData(this.hospitalBedsPerDate);
+    }
   }
 
 
-  public showRelativeComparisonData(): void {
+  public showRelativeComparisonData(calendar?): void {
     this.relative = !this.relative;
-    this.initializeComparisonCasesChart(this.relative, this.selectedAreaForComparison);
+    this.initializeComparisonCasesChart(this.relative, this.selectedAreaForComparison, calendar);
   }
 
 
-  comparisonRegionChanged(areaId: number): void {
+  comparisonRegionChanged(areaId: number, calendar?): void {
     this.selectedAreaForComparison = areaId;
-    this.initializeComparisonCasesChart(this.relative, areaId);
+    this.initializeComparisonCasesChart(this.relative, areaId, calendar);
+
   }
 
 }
