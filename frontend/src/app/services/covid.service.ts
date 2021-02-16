@@ -5,6 +5,8 @@ import {AreaResponse} from '../model/area-response';
 import {TreeNode} from 'primeng/api';
 import {CovidOverview} from '../model/covid-overview';
 import {DatePipe} from '@angular/common';
+import {CovidDataMap} from '../model/covid-data-map';
+import {of} from 'rxjs';
 
 
 @Injectable({
@@ -48,13 +50,15 @@ export class CovidService {
         }
       )));
   }
-  public async getHospitalUtilizationPerProvince(chartType, areaId: number): Promise<any>{
+
+  public async getHospitalUtilizationPerProvince(chartType, areaId: number): Promise<any> {
     const data = this.mapResponseDataToObject(await this.http.get<any>(this.apiUrl + '/hospital-bed-utilizations',
       {params: {area: [areaId.toString(10)], type: chartType}})
       .toPromise()
       .then(res => (res as { items: AreaResponse[] }).items));
     return {...data};
   }
+
   public async getAgeSexDistributionData(areaId: number, selectedData): Promise<any> {
 
     let postfix = '';
@@ -112,6 +116,60 @@ export class CovidService {
       .toPromise()
       .then(res => (res as { items: Area[] }).items);
   }
+
+  async getDetailedInformationForMap(areaid: string): Promise<CovidDataMap[]> {
+    const provinces = (await this.http.get(this.apiUrl + '/districts').toPromise() as any)
+      .items.filter(item => item.areaId.toString(10)[0] === areaid);
+
+    const absolute = await this.http.get(this.apiUrl + '/area-info',
+      {params: {area: provinces.map(i => i.areaId)}}).toPromise() as any;
+    const relative = await this.http.get(this.apiUrl + '/area-info',
+      {params: {area: provinces.map(i => i.areaId), relative: 'true'}}).toPromise() as any;
+    console.log(absolute);
+    console.log(relative);
+    return absolute.items.map(item => {
+      let obj: any = {};
+
+      obj.provinceId = item.areaId;
+      obj.provinceName = item.areaName;
+      obj.geoId = `AUT.${item.areaId.toString(10)[0]}.${item.areaId.toString(10)[1]}${item.areaId.toString(10)[2]}_1`;
+      obj = {
+        ...obj, ...item.data.reduce((p, c: any) => ({...p, [c.identifier]: c.value}), {}),
+        ...relative.items.find(ir => ir.areaId === item.areaId).data.reduce((p, c: any) => ({
+          ...p,
+          [c.identifier + 'Relative']: c.value,
+        }), {}),
+      };
+      return obj;
+    }) as CovidDataMap[];
+  }
+
+  async getSimpleDataForMap(): Promise<CovidDataMap[]> {
+    const provinces = await this.http.get(this.apiUrl + '/provinces').toPromise() as any;
+    console.log(provinces);
+    const absolute = await this.http.get(this.apiUrl + '/area-info',
+      {params: {area: provinces.items.map(i => i.areaId)}}).toPromise() as any;
+    const relative = await this.http.get(this.apiUrl + '/area-info',
+      {params: {area: provinces.items.map(i => i.areaId), relative: 'true'}}).toPromise() as any;
+    console.log(absolute);
+    console.log(relative);
+    return absolute.items.map(item => {
+      let obj: any = {};
+
+      obj.provinceId = item.areaId;
+      obj.provinceName = item.areaName;
+      obj.geoId = `AUT.${item.areaId}_1`;
+      obj = {
+        ...obj, ...item.data.reduce((p, c: any) => ({...p, [c.identifier]: c.value}), {}),
+        ...relative.items.find(ir => ir.areaId === item.areaId).data.reduce((p, c: any) => ({
+          ...p,
+          [c.identifier + 'Relative']: c.value,
+        }), {}),
+      };
+      return obj;
+    }) as CovidDataMap[];
+  }
+
 
   async getInfosForAndMap(data: any, regions: Area[], forceUpdate: boolean): Promise<any> {
     const casesValuesToLoad = regions.filter(item => (!data[item.areaId] || forceUpdate));

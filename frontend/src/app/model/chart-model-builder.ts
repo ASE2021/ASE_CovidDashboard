@@ -1,5 +1,3 @@
-import {DatePipe} from '@angular/common';
-
 export class ChartModelBuilder {
   private defaultBackgroundColors: string[] | string[][] = ['#1B2771', '#A93226', '#5B2C6F', '#0e6655', '#1D8348', '#9C640C', '#5F6A6A'];
   private colors = this.defaultBackgroundColors;
@@ -32,7 +30,6 @@ export class ChartModelBuilder {
       ),
     };
   }
-
 
 
   public buildModelFromResponse(object: any, keyField: string): any {
