@@ -64,6 +64,7 @@ export class AustriaMapComponent implements OnInit {
     }, 100);
   }
 
+
   private async loadAndFillCovidDestrictData(province: string): Promise<void> {
     if (!this.mapData.hasCovidInformation(province)) {
       this.mapData.fillProvinceWithDistrictCovidData(province,
