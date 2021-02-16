@@ -1,0 +1,6 @@
+--require ./test/tshook
+--timeout 6000
+--slow 1500
+--watch-extensions ts
+./test/unit/*.spec.ts
+

@@ -4,12 +4,12 @@
       not for districts. If you choose districts, the numbers will be zero. The hospitalization data for
     provinces is available from April 1st. All values before that date are zero.</p>
     <div class="p-grid">
-      <div class="p-col-6"><span>Select the province/district you want to compare</span></div>
-      <div class="p-col-4">
+      <div class="p-col-12 p-md-6 p-lg-6"><span>Select the province/district you want to compare</span></div>
+      <div class="p-col-12 p-md-4 p-lg-4">
        <app-treedropdown [regionData]="regionData" (regionChange)="regionChanged($event)"></app-treedropdown>
       </div>
-      <div class="p-col-6"><span>Select which elements you want to see</span></div>
-      <div class="p-col-4">
+      <div class="p-col-12 p-md-6 p-lg-6"><span>Select which elements you want to see</span></div>
+      <div class="p-col-12 p-md-4 p-lg-4">
         <p-multiSelect [options]="elements" placeholder="Select elements" dropdownIcon="pi pi-angle-down"
                        [(ngModel)]="selectedElements"
                        (onChange)="elementChanged()"></p-multiSelect>

@@ -1,8 +1,8 @@
 <div class="p-col-12">
   <div class="p-grid">
-    <div class="p-col-6"><span class="dropdown-text">Select the province you want to show</span>
+    <div class="p-col-12 p-md-6 p-lg-6"><span class="dropdown-text">Select the province you want to show</span>
     </div>
-    <div class="p-col-4">
+    <div class="p-col-12 p-md-4 p-lg-4">
       <app-treedropdown (regionChange)="regionSelected($event[0].areaId)"
                         [initSelected]="areaAustria"
                         [multipleSelection]="false"

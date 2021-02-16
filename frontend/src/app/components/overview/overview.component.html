@@ -21,22 +21,22 @@
     <div class="overview p-shadow-11">
       <h2 class="display-3">Overview of Austria</h2>
       <div class="p-grid">
-        <div class="p-col-3">
+        <div class="p-col-12 p-md-3 p-lg-3">
           <p-card header="Active Cases" class="card-style-active">
             {{covidOverview?.activeCases}}
           </p-card>
         </div>
-        <div class="p-col-3">
+        <div class="p-col-12 p-md-3 p-lg-3">
           <p-card header="Total Cases">
             {{covidOverview?.sumCases}}
           </p-card>
         </div>
-        <div class="p-col-3">
+        <div class="p-col-12 p-md-3 p-lg-3">
           <p-card header="Deaths">
             {{covidOverview?.sumDeaths}}
           </p-card>
         </div>
-        <div class="p-col-3">
+        <div class="p-col-12 p-md-3 p-lg-3">
           <p-card header="Cured">
             {{covidOverview?.sumCured}}
           </p-card>
@@ -45,8 +45,8 @@
 
       <div class="p-col-12">
         <div class="p-grid">
-          <div class="p-col-6"><span class="dropdown-text">Select the province or district you want to show</span></div>
-          <div class="p-col-4">
+          <div class="p-col-12 p-md-6 p-lg-6"><span class="dropdown-text">Select the province or district you want to show</span></div>
+          <div class="p-col-12 p-md-4 p-lg-4">
             <app-treedropdown (regionChange)="initializePositiveCasesPerDateChart($event[0].areaId)"
                               [initSelected]="areaAustria"
                               [multipleSelection]="false"
@@ -72,9 +72,9 @@
       <p-tabPanel header="Compare Cases, Deaths and Cured per Region">
         <div class="p-col-12">
           <div class="p-grid">
-            <div class="p-col-6"><span class="dropdown-text">Select the province or district you want to show</span>
+            <div class="p-col-12 p-md-6 p-lg-6"><span class="dropdown-text">Select the province or district you want to show</span>
             </div>
-            <div class="p-col-4">
+            <div class="p-col-12 p-md-4 p-lg-4">
               <app-treedropdown (regionChange)="comparisonRegionChanged($event[0].areaId)"
                                 [initSelected]="areaAustria"
                                 [multipleSelection]="false"
@@ -92,7 +92,7 @@
               <p-progressSpinner
                 *ngIf="!comparison"></p-progressSpinner>
 
-              This is a comparison of active cases, cures and deaths in Austria since the beginning of the pandemic.
+              <p>This is a comparison of active cases, cures and deaths in Austria since the beginning of the pandemic.</p>
             </div>
           </div>
         </div>
@@ -104,8 +104,8 @@
       <p-tabPanel header="Hospital Bed Situation per Region">
         <div class="p-col-12">
           <div class="p-grid">
-            <div class="p-col-6"><span class="dropdown-text">Select the province you want to show</span></div>
-            <div class="p-col-4">
+            <div class="p-col-12 p-md-6 p-lg-6"><span class="dropdown-text">Select the province you want to show</span></div>
+            <div class="p-col-12 p-md-4 p-lg-4">
               <app-treedropdown (regionChange)="initializeHospitalBedsPerDateChart($event[0].areaId)"
                                 [initSelected]="areaAustria"
                                 [multipleSelection]="false"
@@ -130,8 +130,8 @@
       <p-tabPanel header="Compare Sex Distribution per Region">
         <div class="p-col-12">
           <div class="p-grid">
-            <div class="p-col-6"><span class="dropdown-text">Select the province you want to show</span></div>
-            <div class="p-col-4">
+            <div class="p-col-12 p-md-6 p-lg-6"><span class="dropdown-text">Select the province you want to show</span></div>
+            <div class="p-col-12 p-md-4 p-lg-4">
               <app-treedropdown (regionChange)="initializeSexDistributionCharts($event[0].areaId)"
                                 [initSelected]="areaAustria"
                                 [multipleSelection]="false"
