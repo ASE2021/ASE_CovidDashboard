@@ -1,48 +1,25 @@
 <div class="p-grid p-nested-grid">
   <div class="p-col-12">
+    <p class="data-info">The number of tested persons and the hospitalization data is only available for provinces,
+      not for districts. If you choose districts, the numbers will be zero. The hospitalization data for
+    provinces is available from April 1st. All values before that date are zero.</p>
     <div class="p-grid">
       <div class="p-col-6"><span>Select the province/district you want to compare</span></div>
       <div class="p-col-4">
-        <button pButton pRipple icon="pi pi-angle-down" iconPos="right" type="button" label="Select areas"
-                class="p-button-outlined p-button-secondary" (click)="op.toggle($event)"></button>
-        <p-overlayPanel #op>
-          <ng-template pTemplate>
-
-            <p-treeTable #tt [scrollable]="true" style="height: 300px" scrollHeight="300px"
-                         (onNodeUnselect)="regionChanged()" (onNodeSelect)="regionChanged()" [value]="regionData"
-                         selectionMode="checkbox" [(selection)]="selectedDistricts">
-              <ng-template pTemplate="caption">
-                {{selectedRegionNames}}
-              </ng-template>
-              <ng-template pTemplate="header" let-columns>
-                <tr>
-                  <th>
-                    <input pInputText type="text"
-                           (input)="tt.filter($event.target.value, 'areaName', 'contains');onFilter(tt,$event.target.value);">
-                  </th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-                <tr>
-                  <td>
-                    <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-                    <p-treeTableCheckbox [value]="rowNode" *ngIf="rowData.selectable"></p-treeTableCheckbox>
-                    <p-checkbox *ngIf="!rowData.selectable" name="groupname" [value]="rowData"
-                                [(ngModel)]="selectedAreas"
-                                (onChange)="regionChanged()"></p-checkbox>
-                    {{rowData.areaName}}
-                  </td>
-                </tr>
-              </ng-template>
-            </p-treeTable>
-          </ng-template>
-        </p-overlayPanel>
+       <app-treedropdown [regionData]="regionData" (regionChange)="regionChanged($event, calendarComparison);"></app-treedropdown>
       </div>
       <div class="p-col-6"><span>Select which elements you want to see</span></div>
       <div class="p-col-4">
         <p-multiSelect [options]="elements" placeholder="Select elements" dropdownIcon="pi pi-angle-down"
                        [(ngModel)]="selectedElements"
                        (onChange)="elementChanged()"></p-multiSelect>
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-6"><span class="dropdown-text">Select the range you want to show</span></div>
+      <div class="p-col-4">
+        <app-calendar-range-selector #calendarComparison [initialDataset]="chartData"
+                                     (filterDataChange)="chartData = $event"></app-calendar-range-selector>
       </div>
     </div>
   </div>

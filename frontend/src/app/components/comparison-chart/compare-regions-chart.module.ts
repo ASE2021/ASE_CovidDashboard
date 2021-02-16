@@ -16,28 +16,32 @@ import {RippleModule} from 'primeng/ripple';
 import {CheckboxModule} from 'primeng/checkbox';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {InputTextModule} from 'primeng/inputtext';
+import {TreedropdownModule} from '../treedropdown/treedropdown.module';
+import {CalendarRangeSelectorModule} from '../calendar-range-selector/calendar-range-selector.module';
 
 @NgModule({
   declarations: [CompareRegionsChartComponent],
-  imports: [
-    CommonModule,
-    ChartModule,
-    ProgressSpinnerModule,
-    MultiSelectModule,
-    FormsModule,
-    OverlayPanelModule,
-    ListboxModule,
-    ButtonModule,
-    SelectButtonModule,
-    BrowserAnimationsModule,
-    InputSwitchModule,
-    SelectButtonModule,
-    TreeTableModule,
-    RippleModule,
-    CheckboxModule,
-    AutoCompleteModule,
-    InputTextModule,
-  ],
+    imports: [
+        CommonModule,
+        ChartModule,
+        ProgressSpinnerModule,
+        MultiSelectModule,
+        FormsModule,
+        OverlayPanelModule,
+        ListboxModule,
+        ButtonModule,
+        SelectButtonModule,
+        BrowserAnimationsModule,
+        InputSwitchModule,
+        SelectButtonModule,
+        TreeTableModule,
+        RippleModule,
+        CheckboxModule,
+        AutoCompleteModule,
+        InputTextModule,
+        TreedropdownModule,
+        CalendarRangeSelectorModule,
+    ],
   exports: [CompareRegionsChartComponent],
 })
 

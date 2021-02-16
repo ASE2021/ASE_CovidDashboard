@@ -9,22 +9,48 @@
     <h2 class="display-2">Austrian Map View</h2>
     <p-panel header="Map View Description">
       <p>This is our Austrian Map View.</p>
-      <p>Below you can see the Austrian Map separated in regions. Depending on the amount of COVID cases,
-      the regions appear in the three different traffic light colours: Red, Orange and Green.</p>
+      <p>Below you can see the Austrian Map separated in regions. Depending on the active Covid cases per 100.000
+        residents,
+        the regions appear in different colors.</p>
+      <table class="map-color-legend">
+        <thead>
+        <tr>
+          <th><= 100</th>
+          <th>> 100</th>
+          <th>> 150</th>
+          <th>> 200</th>
+          <th>> 250</th>
+          <th>> 300</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="cases-less-100"></td>
+          <td class="cases-greater-100"></td>
+          <td class="cases-greater-150"></td>
+          <td class="cases-greater-200"></td>
+          <td class="cases-greater-250"></td>
+          <td class="cases-greater-300"></td>
+        </tr>
+        </tbody>
+      </table>
     </p-panel>
   </div>
-  <div class="p-field">
-    <label>Number of Covid cases:</label>
-
-    <p-inputNumber [(ngModel)]="cases" (onInput)="updateCovid($event)" [step]="100"
-                   (ngModelChange)="updateCovid($event)" [showButtons]="true" inputId="minmax-buttons" [min]="0">
-    </p-inputNumber>
-  </div>
 </div>
-<div class="austriaMap p-shadow-15"
+<div *ngIf="cases"
+     class="austriaMap p-shadow-15"
      leaflet
+     (leafletDoubleClick)="doubleClick($event)"
      [leafletOptions]="options"
+     [leafletFitBounds]="fitBounds"
+     [leafletZoom]="zoom"
+     (leafletMapReady)="onMapReady($event)"
      [leafletLayers]="layers">
+</div>
+<div *ngIf="!cases">
+  <p>
+    <p-progressBar mode="indeterminate" [style]="{'height': '8px'}"></p-progressBar>
+  </p>
 </div>
 
 </body>

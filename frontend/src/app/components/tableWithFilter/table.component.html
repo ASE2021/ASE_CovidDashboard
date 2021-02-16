@@ -1,3 +1,15 @@
+<div class="p-grid">
+  <p class="data-info">The hospitalization data is only available for provinces,
+    not for districts. The hospitalization data for provinces is available from April 1st.</p>
+  <div class="p-col-6"><span class="dropdown-text">Select the province or district you want to show</span>
+  </div>
+  <div class="p-col-4">
+    <app-treedropdown (regionChange)="loadTableData($event[0].areaId)"
+                      [initSelected]="areaAustria"
+                      [multipleSelection]="false"
+                      [regionData]="regionData"></app-treedropdown>
+  </div>
+</div>
 <p-table #generalSituation [value]="data" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
          [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"
          [paginator]="true"

@@ -75,17 +75,6 @@ describe('CovidService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('#getHospitalBedsPerDate should return expected hospital situations', () => {
-    const expectedSituations: HospitalBedsDaily[] = [{date: '10.10.2020', intenseBeds: 12, normalBeds: 10},
-      {date: '12.10.2020', intenseBeds: 12, normalBeds: 12}];
-
-    service.getHospitalBedsPerDate().then(
-      situations => {
-        expect(situations).toEqual(expectedSituations, 'expected situations');
-      },
-      fail,
-    );
-  });
 
   it('getColorsFromMatrixAt returns correct values', () => {
     const colorMatrix = [[
