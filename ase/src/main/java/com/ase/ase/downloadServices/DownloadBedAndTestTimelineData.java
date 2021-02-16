@@ -25,6 +25,7 @@ public class DownloadBedAndTestTimelineData {
         try {
             BufferedReader in = fetchResult("https://covid19-dashboard.ages.at/data/CovidFallzahlen.csv");
             List<BedAndTestTimeline> list = extractTimelineData(in);
+            bedAndTestTimelineRepository.deleteAll();
             bedAndTestTimelineRepository.saveAll(list);
         } catch (IOException e) {
             e.printStackTrace();

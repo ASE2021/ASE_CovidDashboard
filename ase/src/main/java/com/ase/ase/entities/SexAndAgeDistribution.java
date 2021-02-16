@@ -1,11 +1,9 @@
 package com.ase.ase.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(indexes = @Index(name = "saD_index", columnList = "ageIntervalId, areaId, sex", unique = true))
 public class SexAndAgeDistribution {
 
     @Id
