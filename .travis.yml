@@ -9,13 +9,40 @@ before_install:
   - export BACKEND_VERSION=$(cat ./ase/pom.xml | grep "<version>.*</version>" | head -2 | tail -1 | awk -F'[><]' '{print $3}')
   - if [[ "$TRAVIS_BRANCH" != "master" ]]; then export POSTFIX="-SNAPSHOT"; fi
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then export POSTFIX=""; fi
+  - echo "-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAxrQu7SYFYeKamL3K/HDTbpgTMNXM79HHsWsfrQbI3/Zdy7cp
+ELAwVHfu+BM1UUyaRYwAHnqxfpPtdRdC2MKPjs0r5kXK878D1tFDDVvS8uKsYo9a
+QvnwdkIx7RgMV9qTvNlDELGo07W0doBSLn3+FDu/OGh/Ys8Ojs8QnR5ZhY5QwGBo
+0G0/hEUnw98WyYu+DF0IbFCBEiPHfOgzr6LA2VRy/Zk5v+5WzJjUnaYsOlAkikUP
+WBXM51a+kWXbtN8geltAs+zcq+/Rn4rLj4j1J7lNO/oNf6NtWNVhZVXfaV/+0vtQ
+XQsFe/tnJSaAYtb7yBWIjwOK79muvIyxBNzAfQIDAQABAoIBAC0ZmokTFyengkVm
+1prDlQnGFJ0B+fj42WVolhD0uEU1Kwbg9L4n72BMtH20BmcEhwOACkrguEatlrj7
+5Z1DU8gqw2sJrk3yrhFk/94ZWGDumAfq16baCf0dey2ARtTt9Jhpi7JPUK100ZgP
++hc5W6EGCpnoBfnMW1aIoxG2YMVSKIOB/lj3PeksBQibjw5LAT2FBaLei77hcQ7X
+sYcZJhqZ3u+pVTLCXxUueoJuAaJK2HCybyCUDV7NxwExSqN/FdxXs6ZgEQj9zOXw
+kaT7Ah9yFIrepAufjjCYw/9beJdge2/c7IqiEfvyut9XapWHCxfrP0SE/cZVwLEF
+wmguuJUCgYEA6wa4tptlaP2EHrKWGKILjqg+FBC9gWvqqC+jbBHlZPDcv/CYGgTv
+mzjbds3BxBohU0GSmK6cet/bDbgy/FTd6883SQkh+SeavGrZssmHjJKiCX3Sehkp
+KGVx8D2g4wqJcFNYtsm/MTnOZK2TF8wo5CuTrm3hANXL2Q3QGXgvo38CgYEA2G+p
+Aa8b2v5vJXQPkYtEO7RZjVtzWx0Sn9bMeZJwL34/U7/Y0gIUgZY5u1m4Cb2Pk8QL
+QNzyON7dZVBbMt1iijH9MXl5Kw7pKQlMEEMg+FSVgDPiuD4XqKVpCtJjdmjnnXK9
+FEp4Rawx4hf8bP7OtjzC/TC9cT6rA5GKZmYFKgMCgYA720th3nPWaHKkqtEFVwfg
+fkLJM3ZAJu7thKx3Upt8uMdP7wOd5NHtU265dC+8NPd1z8Z5MkdSF/8fIGGD2E1o
+yC6JYFURsp97Cy+ElET8bT/tcOkRBaVwz11UVS3LhRx5yhBXBUy3ScSh6X8D2ZA0
+hFCpZPygDNNM5XKxeeWQGwKBgQC9HHtwhD9zjuMwt4Mu6Z+6BzBEKgbWMsXmMXnC
+M+igJtBQbg2WGckvHULeZ1s974q3UxF+IE/ozxplftvgyr1iAKG5i+kKbWHewEfc
+4bq6ILXsKenMkDx91+G7We8cNDdERE/fnd4PCpEfe1PNLKsTYm4BaofsnhQw7wcd
+x8B1XwKBgAYIvxtjAL15jUMnqiiD2f2TzjATMjdbKV/FkWBkW7SBE5Ej2y1buYKV
+djzfCmE6yGhAuxRusAzygwu6Wm9RHIH04VCXRzDi3sEI93WThIIe6BeN8xWJg7Vi
+6yQNo7LI0Clv40Bk12whbI8/K/75ekepabnNyRgEkdwOcH8Epr/P
+-----END RSA PRIVATE KEY-----" > key.pem
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 deploy:
  provider: script
  skip_cleanup: true
- script: ssh -i "dci.pem" ec2-user@ec2-34-224-17-7.compute-1.amazonaws.com -o ConnectTimeout=300 -o StrictHostKeyChecking=no << EOF
+ script: ssh -i "key.pem" ec2-user@ec2-34-224-17-7.compute-1.amazonaws.com -o ConnectTimeout=300 -o StrictHostKeyChecking=no << EOF
          ./ASE_CovidDashboard/deploy.sh
          EOF
  on:
