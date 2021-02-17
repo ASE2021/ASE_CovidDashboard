@@ -15,14 +15,23 @@ before_install:
 script:
   - curl 127.0.0.1:80
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend
+  - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend:latest
   - docker tag covid-19-dashboard-frontend manuel57/covid-19-dashboard-frontend:$FRONTEND_VERSION$POSTFIX
-  - docker push manuel57/covid-19-dashboard-frontend
+  - docker push manuel57/covid-19-dashboard-frontend:latest
   - docker push manuel57/covid-19-dashboard-frontend:$FRONTEND_VERSION$POSTFIX
-  - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend
+  - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend:latest
   - docker tag covid-19-dashboard-backend manuel57/covid-19-dashboard-backend:$BACKEND_VERSION$POSTFIX
-  - docker push manuel57/covid-19-dashboard-backend
+  - docker push manuel57/covid-19-dashboard-backend:latest
   - docker push manuel57/covid-19-dashboard-backend:$BACKEND_VERSION$POSTFIX
+
+deploy:
+ provider: script
+ skip_cleanup: true
+ script: chmod 600 dci.pem && ssh -i "dci.pem" ec2-user@ec2-34-224-17-7.compute-1.amazonaws.com -o ConnectTimeout=300 -o StrictHostKeyChecking=no -t 'cd ./ASE_CovidDashboard && ./deploy.sh'
+ 
+ on:
+    branch: master
+
 
 addons:
   sonarcloud:

@@ -3,8 +3,7 @@ COPY pom.xml /tmp/
 COPY src /tmp/src/
 WORKDIR /tmp/
 
-RUN mvn package
-
+RUN mvn clean package
 FROM openjdk:11-jdk
 
 

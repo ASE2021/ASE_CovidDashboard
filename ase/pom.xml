@@ -64,24 +64,32 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>com.lazerycode.jmeter</groupId>
-                <artifactId>jmeter-maven-plugin</artifactId>
-                <version>2.6.0</version>
-                <executions>
-                    <execution>
-                        <id>jmeter-tests</id>
-                        <goals>
-                            <goal>jmeter</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <testFilesDirectory>${project.basedir}/src/main/resources</testFilesDirectory>
-                    <resultsDirectory>${project.basedir}/src/main/resources</resultsDirectory>
-                    <jmeterExtensions>
-                        <artifact>kg.apc:jmeter-plugins-casutg:2.9</artifact>
-                    </jmeterExtensions>
-                </configuration>
+              <groupId>com.lazerycode.jmeter</groupId>
+              <artifactId>jmeter-maven-plugin</artifactId>
+              <version>3.3.0</version>
+              <executions>
+                <!-- Generate JMeter configuration -->
+                <execution>
+                  <id>configuration</id>
+                  <goals>
+                    <goal>configure</goal>
+                  </goals>
+                </execution>
+                <!-- Run JMeter tests -->
+                <execution>
+                  <id>jmeter-tests</id>
+                  <goals>
+                    <goal>jmeter</goal>
+                  </goals>
+                </execution>
+                <!-- Fail build on errors in test -->
+                <execution>
+                  <id>jmeter-check-results</id>
+                  <goals>
+                    <goal>results</goal>
+                  </goals>
+                </execution>
+              </executions>
             </plugin>
         </plugins>
     </build>
