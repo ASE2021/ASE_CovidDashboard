@@ -27,9 +27,9 @@ script:
 deploy:
 provider: script
 skip_cleanup: true
-script: ssh -i "dci.pem" ec2-user@ec2-3-87-229-110.compute-1.amazonaws.com << EOF
-    ./ASE_CovidDashboard/deploy.sh
-    EOF
+script: ssh -i "dci.pem" ec2-user@ec2-3-87-229-110.compute-1.amazonaws.com -o StrictHostKeyChecking=no << EOF
+        ./ASE_CovidDashboard/deploy.sh
+        EOF
 
 
 addons:
