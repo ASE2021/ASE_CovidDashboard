@@ -24,6 +24,14 @@ script:
   - docker push manuel57/covid-19-dashboard-backend
   - docker push manuel57/covid-19-dashboard-backend:$BACKEND_VERSION$POSTFIX
 
+deploy:
+provider: script
+skip_cleanup: true
+script: ssh -i "dci.pem" ec2-user@ec2-3-87-229-110.compute-1.amazonaws.com << EOF
+    ./ASE_CovidDashboard/deploy.sh
+EOF
+
+
 addons:
   sonarcloud:
     organization: "ase-project-group"
