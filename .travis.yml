@@ -9,14 +9,13 @@ before_install:
   - export BACKEND_VERSION=$(cat ./ase/pom.xml | grep "<version>.*</version>" | head -2 | tail -1 | awk -F'[><]' '{print $3}')
   - if [[ "$TRAVIS_BRANCH" != "master" ]]; then export POSTFIX="-SNAPSHOT"; fi
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then export POSTFIX=""; fi
-  - echo "$KEY" > key.pem
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 deploy:
  provider: script
  skip_cleanup: true
- script: ssh -i "key.pem" ec2-user@ec2-34-224-17-7.compute-1.amazonaws.com -o ConnectTimeout=300 -o StrictHostKeyChecking=no << EOF
+ script: chmod 600 dci.pem ssh -i "dci.pem" ec2-user@ec2-34-224-17-7.compute-1.amazonaws.com -o ConnectTimeout=300 -o StrictHostKeyChecking=no << EOF
          ./ASE_CovidDashboard/deploy.sh
          EOF
  on:
