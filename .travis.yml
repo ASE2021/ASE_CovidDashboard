@@ -10,7 +10,6 @@ before_install:
   - if [[ "$TRAVIS_BRANCH" != "master" ]]; then export POSTFIX="-SNAPSHOT"; fi
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then export POSTFIX=""; fi
 script:
-  - curl 127.0.0.1:80
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 deploy:
