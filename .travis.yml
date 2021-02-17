@@ -30,7 +30,7 @@ deploy:
  script: chmod 600 dci.pem && ssh -i "dci.pem" ec2-user@ec2-34-224-17-7.compute-1.amazonaws.com -o ConnectTimeout=300 -o StrictHostKeyChecking=no -t 'cd ./ASE_CovidDashboard && ./deploy.sh'
  
  on:
-    all_branches: true
+    branch: master
 
 
 addons:
