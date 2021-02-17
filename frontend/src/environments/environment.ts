@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  backendApiUrl: 'http://localhost:8080',
-  backendNotificationUrl: 'localhost',
+  backendApiUrl: 'http://ec2-34-224-17-7.compute-1.amazonaws.com:8080',
+  backendNotificationUrl: 'ec2-34-224-17-7.compute-1.amazonaws.com',
   backendNotificationPort: 61614,
 };
 
